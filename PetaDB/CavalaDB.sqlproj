@@ -70,5 +70,23 @@
     <Build Include="dbo\Tables\AspNetUserRoles.sql" />
     <Build Include="dbo\Tables\AspNetUsers.sql" />
     <Build Include="dbo\Tables\Customer.sql" />
+    <Build Include="dbo\Tables\CardIssue.sql" />
+    <Build Include="dbo\Tables\CardTransaction.sql" />
+    <Build Include="dbo\Tables\CashCard.sql" />
+    <Build Include="dbo\Tables\Config.sql" />
+    <Build Include="dbo\Tables\CourseTbl.sql" />
+    <Build Include="dbo\Tables\DiscountsTbl.sql" />
+    <Build Include="dbo\Tables\InventoryTransaction.sql" />
+    <Build Include="dbo\Tables\ItemsTbl.sql" />
+    <Build Include="dbo\Tables\ItemTypes.sql" />
+    <Build Include="dbo\Tables\LocationTbl.sql" />
+    <Build Include="dbo\Tables\LocationType.sql" />
+    <Build Include="dbo\Tables\MenuTbl.sql" />
+    <Build Include="dbo\Tables\OrderTicketDetails.sql" />
+    <Build Include="dbo\Tables\OrderTickets.sql" />
+    <Build Include="dbo\Tables\StockTbl.sql" />
+    <Build Include="dbo\Tables\TableReservation.sql" />
+    <Build Include="dbo\Tables\TablesTbl.sql" />
+    <Build Include="dbo\Tables\UnitsTbl.sql" />
   </ItemGroup>
 </Project>

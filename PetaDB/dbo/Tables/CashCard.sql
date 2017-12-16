@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[CashCard]
+(
+	[CardId] INT NOT NULL IDENTITY PRIMARY KEY, 
+    [Amount] VARCHAR(MAX) NULL
+)
