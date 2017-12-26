@@ -532,7 +532,13 @@ namespace Cavala
 
 
 
-		[Column] public string Amount { get; set; }
+		[Column] public string CardName { get; set; }
+
+
+
+
+
+		[Column] public decimal? Amount { get; set; }
 
 
 
@@ -996,6 +1002,8 @@ namespace Cavala
 
 
 
+	[PrimaryKey("LocationId", AutoIncrement=false)]
+
 
 	[ExplicitColumns]
 
@@ -1010,7 +1018,7 @@ namespace Cavala
 
 
 
-		[Column] public int? ItemId { get; set; }
+		[Column] public int ItemId { get; set; }
 
 
 

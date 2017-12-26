@@ -9,6 +9,7 @@ namespace Cavala.Controllers
     public class LocationTypesController : EAController
     {
         // GET: Clients
+        [EAAuthorize(FunctionName = "LocationType", Writable = false)]
         public ActionResult Index(int? page, string PropName)
         {
             if (PropName?.Length > 0) page = 1;
@@ -18,6 +19,7 @@ namespace Cavala.Controllers
 
 
         // GET: Clients/Create
+        [EAAuthorize(FunctionName = "LocationType", Writable = true)]
         public ActionResult Manage(int? id)
         {
             return View(base.BaseCreateEdit<LocationType>(id, "LocationTypeID"));

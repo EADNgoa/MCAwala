@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 //using System.Web.Mvc; for dynamic roles
 //using Microsoft.AspNet.Identity;for dynamic roles
 //using Cavala.Models;for dynamic roles
@@ -38,6 +40,56 @@ namespace Cavala
         public string LocationName { get; set; }
     }
 
+    public enum ItemTypesEnum
+    {
+        RawMaterial,
+        ReadyToServe,
+        Drinks,
+        Stationary,
+        Keys,
+        Maintenance,
+        LaundryGuest,
+        LaundryStaff,
+        Linen,
+        Toiletries,
+        Menu
+    };
+
+    public class EAAuthorizeAttribute : AuthorizeAttribute
+    {
+        public string FunctionName { get; set; }
+        public bool Writable { get; set; }
+        private Repository rep;
+        
+
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            //TODO: might need to cache this at one point
+            //if(httpContext.Session["UserType"] == null)
+            //{
+            //    httpContext.Session["UserType"] = UserService.GetUserType(httpContext.User.Identity.GetUserId());
+            //}
+            //var userType = (Enums.UserType)httpContext.Session["UserType"];
+
+            rep = new Repository();
+
+            var CurrUser = httpContext.User.Identity.GetUserId();
+
+            int Perms;
+            
+            if(Writable)//We check for writable permissions only if the calling method writes to the DB
+                Perms= rep.ExecuteScalar<int>("Select count(1) from AspNetUsers u, UserGroups ug, UserFunctions uf,FunctionGroups fg " +
+                    " where u.id = ug.UserID and uf.FunctionID = fg.FunctionID and fg.GroupID = ug.GroupID and u.Id = @0 " +
+                    " and uf.FunctionName = @1 and fg.Writable = @2 ",CurrUser, FunctionName, Writable);
+            else
+                Perms = rep.ExecuteScalar<int>("Select count(1) from AspNetUsers u, UserGroups ug, UserFunctions uf,FunctionGroups fg " +
+                    " where u.id = ug.UserID and uf.FunctionID = fg.FunctionID and fg.GroupID = ug.GroupID and u.Id = @0 " +
+                    " and uf.FunctionName = @1", CurrUser, FunctionName);
+
+            return (Perms>0) ? true : false;
+            
+        }
+    }
     //[MetadataType(typeof(ConfigMetadata))]
     //public partial class Config
     //{

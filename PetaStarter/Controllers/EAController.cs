@@ -11,7 +11,7 @@ namespace Cavala.Controllers
     public class EAController : Controller
     {
         // GET: EA
-            protected Repository db;
+            public Repository db;
             public EAController()
             {
                 this.db = new Repository();

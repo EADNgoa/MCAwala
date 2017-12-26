@@ -9,6 +9,7 @@ namespace Cavala.Controllers
     public class TablesController : EAController
     {
         // GET: Clients
+        [EAAuthorize(FunctionName = "Table", Writable = false)]
         public ActionResult Index(int? page, string PropName)
         {
             if (PropName?.Length > 0) page = 1;
@@ -18,6 +19,7 @@ namespace Cavala.Controllers
 
 
         // GET: Clients/Create
+        [EAAuthorize(FunctionName = "Table", Writable = true)]
         public ActionResult Manage(int? id)
         {
             ViewBag.LocationId = new SelectList(db.Fetch<Location>("Select LocationId,LocationName from Location"), "LocationId", "LocationName");

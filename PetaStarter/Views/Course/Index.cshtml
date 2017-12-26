@@ -1,19 +1,19 @@
-﻿@model PagedList.IPagedList<ItemType>
+﻿@model PagedList.IPagedList<Course>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Item Types";
+    ViewBag.Title = "Meal Courses";
 }
 
 <center>
     <h2 class="section-to-print"><b>@ViewBag.Title</b></h2>
     
-    @using (Html.BeginForm("Index", "ItemTypes", FormMethod.Get))
+    @using (Html.BeginForm("Index", "Course", FormMethod.Get))
     {        
         <div class="row section-to-Not-print">
             <div>
                 <table>
                     <tr style="text-align:center">
-                        <td>&nbsp; Item Type: </td>
+                        <td>&nbsp; Meal Course: </td>
                         <td> @Html.TextBox("PropName", ViewBag.CurrentFilter as string, new { @class = "form-control" })</td>
 
                         <td class="col-lg-1"></td>
@@ -31,20 +31,20 @@
 <table class="table">
     <tr>
         <th>
-            Item Types
+            Course
         </th>
        
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var location in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ItemTypeName)
+            @Html.DisplayFor(modelLocation => location.CourseName)
         </td>
        
         <td>
-            @Html.ActionLink("Edit", "Manage", new { id = item.ItemTypeId })
+            @Html.ActionLink("Edit", "Manage", new { id = location.CourseId })
         </td>
     </tr>
 }

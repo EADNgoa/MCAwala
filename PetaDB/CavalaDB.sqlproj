@@ -88,11 +88,10 @@
     <Build Include="dbo\Tables\TableReservation.sql" />
     <Build Include="dbo\Tables\TablesTbl.sql" />
     <Build Include="dbo\Tables\UnitsTbl.sql" />
-    <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dbo\Tables\Groups.sql" />
     <Build Include="dbo\Tables\UserGroups.sql" />
     <Build Include="dbo\Tables\UserFunctions.sql" />
-    <Build Include="dbo\Tables\FuctionGroups.sql" />
+    <Build Include="dbo\Tables\FunctionGroups.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CavalaDB.refactorlog" />
