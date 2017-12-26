@@ -15,6 +15,29 @@ namespace Cavala
     {
     }
 
+    public class ItemsVw
+    {
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
+        public string Type { get; set; }
+        public int ExpiryDays {get; set;}
+        public string Unit { get; set; }
+    }
+
+    public class LocationVw
+    {
+        public int LocationId { get; set; }
+        public string LocationName { get; set; }
+        public string LocationTypeName { get; set; }
+    }
+
+    public class TablesVw
+    {
+        public int TableId { get; set; }
+        public string TableName { get; set; }
+        public string LocationName { get; set; }
+    }
+
     //[MetadataType(typeof(ConfigMetadata))]
     //public partial class Config
     //{

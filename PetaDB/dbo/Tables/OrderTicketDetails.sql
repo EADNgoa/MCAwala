@@ -10,7 +10,7 @@
     [NCtext] VARCHAR(50) NULL, 
     [NCUserId] NVARCHAR(128) NULL, 
     CONSTRAINT [FK_OrderTicketDetails_OrderTickets] FOREIGN KEY ([OTID]) REFERENCES [OrderTickets]([OTID]), 
-    CONSTRAINT [FK_OrderTicketDetails_ItemsTbl] FOREIGN KEY ([ItemId]) REFERENCES [ItemsTbl]([ItemId]), 
-    CONSTRAINT [FK_OrderTicketDetails_CourseTbl] FOREIGN KEY ([CourseId]) REFERENCES [CourseTbl]([CourseId]), 
+    CONSTRAINT [FK_OrderTicketDetails_ItemsTbl] FOREIGN KEY ([ItemId]) REFERENCES [Items]([ItemId]), 
+    CONSTRAINT [FK_OrderTicketDetails_CourseTbl] FOREIGN KEY ([CourseId]) REFERENCES [Course]([CourseId]), 
     CONSTRAINT [FK_OrderTicketDetails_AspNetUsers] FOREIGN KEY ([NCUserId]) REFERENCES [AspNetUsers]([Id])
 )

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[DiscountsTbl]
+﻿CREATE TABLE [dbo].[Discounts]
 (
 	[DiscountId] INT NOT NULL IDENTITY PRIMARY KEY, 
     [ItemId] INT NULL, 
@@ -6,5 +6,5 @@
     [Tto] DATETIME NULL, 
     [Percentage] DECIMAL(5, 2) NULL, 
     [Amount] DECIMAL(18, 2) NULL, 
-    CONSTRAINT [FK_DiscountsTbl_ItemsTbl] FOREIGN KEY ([ItemId]) REFERENCES [ItemsTbl]([ItemId])
+    CONSTRAINT [FK_DiscountsTbl_ItemsTbl] FOREIGN KEY ([ItemId]) REFERENCES [Items]([ItemId])
 )

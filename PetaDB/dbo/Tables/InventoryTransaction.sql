@@ -10,10 +10,10 @@
     [ToPortionId] INT NULL, 
     [RecvdByUserId] NVARCHAR(128) NULL, 
     [ChkByUserId] NVARCHAR(128) NULL, 
-    CONSTRAINT [FK_InventoryTransaction_ItemTbl] FOREIGN KEY ([ItemId]) REFERENCES [ItemsTbl]([ItemId]),
-	CONSTRAINT [FK_InventoryTransaction_FromLocation] FOREIGN KEY ([FromLocationId]) REFERENCES [LocationTbl]([LocationId]),
-	CONSTRAINT [FK_InventoryTransaction_ToLocation] FOREIGN KEY ([ToLocationId]) REFERENCES [LocationTbl]([LocationId]),
-	CONSTRAINT [FK_InventoryTransaction_UnitTbl] FOREIGN KEY ([ToPortionId]) REFERENCES [UnitsTbl]([UnitId]), 
+    CONSTRAINT [FK_InventoryTransaction_ItemTbl] FOREIGN KEY ([ItemId]) REFERENCES [Items]([ItemId]),
+	CONSTRAINT [FK_InventoryTransaction_FromLocation] FOREIGN KEY ([FromLocationId]) REFERENCES [Location]([LocationId]),
+	CONSTRAINT [FK_InventoryTransaction_ToLocation] FOREIGN KEY ([ToLocationId]) REFERENCES [Location]([LocationId]),
+	CONSTRAINT [FK_InventoryTransaction_UnitTbl] FOREIGN KEY ([ToPortionId]) REFERENCES [Units]([UnitId]), 
     CONSTRAINT [FK_InventoryTransaction_AspNetUsers] FOREIGN KEY ([RecvdByUserId]) REFERENCES [AspNetUsers]([Id]),
 	CONSTRAINT [FK_InventoryTransaction_AspNetUser] FOREIGN KEY ([ChkByUserId]) REFERENCES [AspNetUsers]([Id])
 )

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="f4230fce-19c5-415b-8650-bbb2e7a1e840" ChangeDateTime="12/22/2017 09:42:59">
+    <Property Name="ElementName" Value="[dbo].[Users].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="10e98fc8-6363-4778-845e-c7cb25624231" ChangeDateTime="12/22/2017 09:43:52">
+    <Property Name="ElementName" Value="[dbo].[Groups].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Groups]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GroupID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f1e7dab1-53cb-4582-8b68-4b7802a98116" ChangeDateTime="12/22/2017 09:44:55">
+    <Property Name="ElementName" Value="[dbo].[UserGroups].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserGroups]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="261e745b-c6b2-4c2d-b4eb-cf8944016708" ChangeDateTime="12/22/2017 09:47:19">
+    <Property Name="ElementName" Value="[dbo].[UserFunctions].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserFunctions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FunctionID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bc945195-4346-4527-a4fb-f31e33e804a3" ChangeDateTime="12/22/2017 09:50:17">
+    <Property Name="ElementName" Value="[dbo].[FuctionGroups].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[FuctionGroups]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FunctionID" />
+  </Operation>
+</Operations>
