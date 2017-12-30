@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PetaPoco;
 //using System.Web.Mvc; for dynamic roles
 //using Microsoft.AspNet.Identity;for dynamic roles
 //using Cavala.Models;for dynamic roles
@@ -42,6 +43,7 @@ namespace Cavala
 
     public enum ItemTypesEnum
     {
+        All,
         RawMaterial,
         ReadyToServe,
         Drinks,
@@ -76,15 +78,15 @@ namespace Cavala
             var CurrUser = httpContext.User.Identity.GetUserId();
 
             int Perms;
-            
-            if(Writable)//We check for writable permissions only if the calling method writes to the DB
-                Perms= rep.ExecuteScalar<int>("Select count(1) from AspNetUsers u, UserGroups ug, UserFunctions uf,FunctionGroups fg " +
-                    " where u.id = ug.UserID and uf.FunctionID = fg.FunctionID and fg.GroupID = ug.GroupID and u.Id = @0 " +
-                    " and uf.FunctionName = @1 and fg.Writable = @2 ",CurrUser, FunctionName, Writable);
-            else
-                Perms = rep.ExecuteScalar<int>("Select count(1) from AspNetUsers u, UserGroups ug, UserFunctions uf,FunctionGroups fg " +
-                    " where u.id = ug.UserID and uf.FunctionID = fg.FunctionID and fg.GroupID = ug.GroupID and u.Id = @0 " +
-                    " and uf.FunctionName = @1", CurrUser, FunctionName);
+
+            Sql sq = new Sql("Select count(1) from AspNetUsers u, UserGroups ug, UserFunctions uf, FunctionGroups fg " +
+                    " where u.id = ug.UserID and uf.FunctionID = fg.FunctionID and fg.GroupID = ug.GroupID and u.Id = @0  " +
+                    "and uf.FunctionName = @1", CurrUser, FunctionName);
+
+            if (Writable)//We check for writable permissions only if the calling method writes to the DB
+                sq.Append(" and fg.Writable = @0", Writable);
+            Perms = rep.ExecuteScalar<int>(sq);
+                        
 
             return (Perms>0) ? true : false;
             

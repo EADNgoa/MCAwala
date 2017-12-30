@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<ItemsVw>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Items";
+    ViewBag.Title = "List of " + ViewBag.IteName ;
 }
 
 <center>
@@ -13,7 +13,7 @@
             <div>
                 <table>
                     <tr style="text-align:center">
-                        <td>&nbsp; Item Name:</td>
+                        <td>&nbsp; @ViewBag.IteName Name:</td>
                         <td> @Html.TextBox("PropName", ViewBag.CurrentFilter as string, new { @class = "form-control" })</td>
 
                         <td class="col-lg-1"></td>
@@ -26,7 +26,7 @@
 </center>
 
 <p>
-    @Html.ActionLink("Create New", "Manage")
+    @Html.ActionLink("Create New", "Manage", new { Ite = ViewBag.ite })
 </p>
 <table class="table">
     <tr>
