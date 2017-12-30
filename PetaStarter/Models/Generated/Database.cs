@@ -136,6 +136,28 @@ namespace Cavala
 
     
 
+	[TableName("dbo.__RefactorLog")]
+
+
+
+	[PrimaryKey("OperationKey", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class __RefactorLog  
+    {
+
+
+
+		[Column] public Guid OperationKey { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.AspNetRoles")]
 
 
@@ -374,6 +396,214 @@ namespace Cavala
 
     
 
+	[TableName("dbo.CardIssue")]
+
+
+
+	[PrimaryKey("CardIssueId", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class CardIssue  
+    {
+
+
+
+		[Column] public int CardIssueId { get; set; }
+
+
+
+
+
+		[Column] public int? CardId { get; set; }
+
+
+
+
+
+		[Column] public DateTime? IssuedOn { get; set; }
+
+
+
+
+
+		[Column] public DateTime? ReturnedOn { get; set; }
+
+
+
+
+
+		[Column] public DateTime? ExpiresOn { get; set; }
+
+
+
+
+
+		[Column] public string ToPerson { get; set; }
+
+
+
+
+
+		[Column] public string ContactDetails { get; set; }
+
+
+
+
+
+		[Column] public decimal? DepositAmt { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.CardTransaction")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class CardTransaction  
+    {
+
+
+
+		[Column] public int CardId { get; set; }
+
+
+
+
+
+		[Column] public int? CardIssueId { get; set; }
+
+
+
+
+
+		[Column] public DateTime? TDateTime { get; set; }
+
+
+
+
+
+		[Column] public decimal? AmountBanked { get; set; }
+
+
+
+
+
+		[Column] public decimal? AmountSpent { get; set; }
+
+
+
+
+
+		[Column] public int? OTID { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.CashCard")]
+
+
+
+	[PrimaryKey("CardId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class CashCard  
+    {
+
+
+
+		[Column] public int CardId { get; set; }
+
+
+
+
+
+		[Column] public string CardName { get; set; }
+
+
+
+
+
+		[Column] public decimal? Amount { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Config")]
+
+
+
+	[PrimaryKey("TableReservationTime", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class Config  
+    {
+
+
+
+		[Column] public DateTime TableReservationTime { get; set; }
+
+
+
+
+
+		[Column] public int? CardExpiryDays { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Course")]
+
+
+
+	[PrimaryKey("CourseId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Course  
+    {
+
+
+
+		[Column] public int CourseId { get; set; }
+
+
+
+
+
+		[Column] public string CourseName { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.Customer")]
 
 
@@ -427,6 +657,798 @@ namespace Cavala
 
 
 		[Column] public string PhotograghID { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Discounts")]
+
+
+
+	[PrimaryKey("DiscountId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Discount  
+    {
+
+
+
+		[Column] public int DiscountId { get; set; }
+
+
+
+
+
+		[Column] public int? ItemId { get; set; }
+
+
+
+
+
+		[Column] public DateTime? Tfrom { get; set; }
+
+
+
+
+
+		[Column] public DateTime? Tto { get; set; }
+
+
+
+
+
+		[Column] public decimal? Percentage { get; set; }
+
+
+
+
+
+		[Column] public decimal? Amount { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.FuctionGroups")]
+
+
+
+	[PrimaryKey("FunctionID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class FuctionGroup  
+    {
+
+
+
+		[Column] public int FunctionID { get; set; }
+
+
+
+
+
+		[Column] public int GroupID { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Groups")]
+
+
+
+	[PrimaryKey("GroupID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Group  
+    {
+
+
+
+		[Column] public int GroupID { get; set; }
+
+
+
+
+
+		[Column] public string GroupName { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.InventoryTransaction")]
+
+
+
+	[PrimaryKey("InventoryTransactionId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class InventoryTransaction  
+    {
+
+
+
+		[Column] public int InventoryTransactionId { get; set; }
+
+
+
+
+
+		[Column] public DateTime? TDate { get; set; }
+
+
+
+
+
+		[Column] public int? ItemId { get; set; }
+
+
+
+
+
+		[Column] public int? QtyAdded { get; set; }
+
+
+
+
+
+		[Column] public int? QtyRemoved { get; set; }
+
+
+
+
+
+		[Column] public int? FromLocationId { get; set; }
+
+
+
+
+
+		[Column] public int? ToLocationId { get; set; }
+
+
+
+
+
+		[Column] public int? ToPortionId { get; set; }
+
+
+
+
+
+		[Column] public string RecvdByUserId { get; set; }
+
+
+
+
+
+		[Column] public string ChkByUserId { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Items")]
+
+
+
+	[PrimaryKey("ItemId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Item  
+    {
+
+
+
+		[Column] public int ItemId { get; set; }
+
+
+
+
+
+		[Column] public string ItemName { get; set; }
+
+
+
+
+
+		[Column] public int? ItemTypeId { get; set; }
+
+
+
+
+
+		[Column] public int? ExpiryDays { get; set; }
+
+
+
+
+
+		[Column] public int? UnitId { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.ItemTypes")]
+
+
+
+	[PrimaryKey("ItemTypeId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class ItemType  
+    {
+
+
+
+		[Column] public int ItemTypeId { get; set; }
+
+
+
+
+
+		[Column] public string ItemTypeName { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Location")]
+
+
+
+	[PrimaryKey("LocationId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Location  
+    {
+
+
+
+		[Column] public int LocationId { get; set; }
+
+
+
+
+
+		[Column] public string LocationName { get; set; }
+
+
+
+
+
+		[Column] public int? LocationTypeId { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.LocationTypes")]
+
+
+
+	[PrimaryKey("LocationTypeId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class LocationType  
+    {
+
+
+
+		[Column] public int LocationTypeId { get; set; }
+
+
+
+
+
+		[Column] public string LocationTypeName { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Menu")]
+
+
+
+	[PrimaryKey("LocationId", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class Menu  
+    {
+
+
+
+		[Column] public int LocationId { get; set; }
+
+
+
+
+
+		[Column] public int ItemId { get; set; }
+
+
+
+
+
+		[Column] public decimal? Price { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.OrderTicketDetails")]
+
+
+
+	[PrimaryKey("OTdetailsId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class OrderTicketDetail  
+    {
+
+
+
+		[Column] public int OTdetailsId { get; set; }
+
+
+
+
+
+		[Column] public int? OTID { get; set; }
+
+
+
+
+
+		[Column] public int? ItemId { get; set; }
+
+
+
+
+
+		[Column] public int? Qty { get; set; }
+
+
+
+
+
+		[Column] public decimal? Price { get; set; }
+
+
+
+
+
+		[Column] public int? CourseId { get; set; }
+
+
+
+
+
+		[Column] public bool? NC { get; set; }
+
+
+
+
+
+		[Column] public string NCtext { get; set; }
+
+
+
+
+
+		[Column] public string NCUserId { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.OrderTickets")]
+
+
+
+	[PrimaryKey("OTID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class OrderTicket  
+    {
+
+
+
+		[Column] public int OTID { get; set; }
+
+
+
+
+
+		[Column] public int? LocationId { get; set; }
+
+
+
+
+
+		[Column] public DateTime? TDateTime { get; set; }
+
+
+
+
+
+		[Column] public int? RoomNo { get; set; }
+
+
+
+
+
+		[Column] public int? TableId { get; set; }
+
+
+
+
+
+		[Column] public int? CardId { get; set; }
+
+
+
+
+
+		[Column] public string WaiterId { get; set; }
+
+
+
+
+
+		[Column] public bool? IsServed { get; set; }
+
+
+
+
+
+		[Column] public bool? IsPaid { get; set; }
+
+
+
+
+
+		[Column] public string EditedBy { get; set; }
+
+
+
+
+
+		[Column] public bool? IsVoid { get; set; }
+
+
+
+
+
+		[Column] public string VoidedBy { get; set; }
+
+
+
+
+
+		[Column] public string VoidedReason { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Stock")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Stock  
+    {
+
+
+
+		[Column] public int ItemId { get; set; }
+
+
+
+
+
+		[Column] public int? Quantity { get; set; }
+
+
+
+
+
+		[Column] public int? UnitId { get; set; }
+
+
+
+
+
+		[Column] public int? LocationId { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.TableReservation")]
+
+
+
+	[PrimaryKey("TableReservationId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class TableReservation  
+    {
+
+
+
+		[Column] public int TableReservationId { get; set; }
+
+
+
+
+
+		[Column] public DateTime? TDateTime { get; set; }
+
+
+
+
+
+		[Column] public int? TableId { get; set; }
+
+
+
+
+
+		[Column] public string PersonName { get; set; }
+
+
+
+
+
+		[Column] public string Contact { get; set; }
+
+
+
+
+
+		[Column] public int? NoOfPax { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Tables")]
+
+
+
+	[PrimaryKey("TableId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Table  
+    {
+
+
+
+		[Column] public int TableId { get; set; }
+
+
+
+
+
+		[Column] public string TableName { get; set; }
+
+
+
+
+
+		[Column] public int? LocationId { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Units")]
+
+
+
+	[PrimaryKey("UnitId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Unit  
+    {
+
+
+
+		[Column] public int UnitId { get; set; }
+
+
+
+
+
+		[Column] public string UnitName { get; set; }
+
+
+
+
+
+		[Column] public decimal? Size { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.UserFunctions")]
+
+
+
+	[PrimaryKey("FunctionID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class UserFunction  
+    {
+
+
+
+		[Column] public int FunctionID { get; set; }
+
+
+
+
+
+		[Column] public string FunctionName { get; set; }
+
+
+
+
+
+		[Column] public string Module { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.UserGroups")]
+
+
+
+	[PrimaryKey("UserID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class UserGroup  
+    {
+
+
+
+		[Column] public string UserID { get; set; }
+
+
+
+
+
+		[Column] public int GroupID { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Users")]
+
+
+
+	[PrimaryKey("UserID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class User  
+    {
+
+
+
+		[Column] public string UserID { get; set; }
+
+
+
+
+
+		[Column] public string Name { get; set; }
 
 
 

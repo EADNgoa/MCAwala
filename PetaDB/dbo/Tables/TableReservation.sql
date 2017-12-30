@@ -6,5 +6,5 @@
     [PersonName] VARCHAR(MAX) NULL, 
     [Contact] VARCHAR(11) NULL, 
     [NoOfPax] INT NULL, 
-    CONSTRAINT [FK_TableReservation_TablesTbl] FOREIGN KEY ([TableId]) REFERENCES [TablesTbl]([TableId])
+    CONSTRAINT [FK_TableReservation_TablesTbl] FOREIGN KEY ([TableId]) REFERENCES [Tables]([TableId])
 )

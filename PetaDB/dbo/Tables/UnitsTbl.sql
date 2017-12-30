@@ -1,6 +1,6 @@
-﻿CREATE TABLE [dbo].[UnitsTbl]
+﻿CREATE TABLE [dbo].[Units]
 (
 	[UnitId] INT NOT NULL IDENTITY PRIMARY KEY, 
     [UnitName] VARCHAR(50) NULL, 
-    [Size] INT NULL
+    [Size] DECIMAL(10, 2) NULL
 )

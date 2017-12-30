@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[ItemsTbl]
+﻿CREATE TABLE [dbo].[Items]
 (
 	[ItemId] INT NOT NULL IDENTITY PRIMARY KEY, 
     [ItemName] VARCHAR(50) NULL, 
@@ -6,5 +6,5 @@
     [ExpiryDays] INT NULL, 
     [UnitId] INT NULL,
 	CONSTRAINT [FK_ItemsTbl_ItemTypes] FOREIGN KEY ([ItemTypeId]) REFERENCES [ItemTypes]([ItemTypeId]), 
-    CONSTRAINT [FK_ItemsTbl_UnitsTbl] FOREIGN KEY ([UnitId]) REFERENCES [UnitsTbl]([UnitId])
+    CONSTRAINT [FK_ItemsTbl_UnitsTbl] FOREIGN KEY ([UnitId]) REFERENCES [Units]([UnitId])
 )

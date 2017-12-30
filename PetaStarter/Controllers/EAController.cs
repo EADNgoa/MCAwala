@@ -11,7 +11,7 @@ namespace Cavala.Controllers
     public class EAController : Controller
     {
         // GET: EA
-            protected Repository db;
+            public Repository db;
             public EAController()
             {
                 this.db = new Repository();
@@ -53,12 +53,23 @@ namespace Cavala.Controllers
                 return default(T);
             }
 
-            protected ActionResult BaseSave<T>(T ObjToSave, bool isExisting)
+        protected ActionResult BaseSave<T>(T ObjToSave, bool isExisting)
+        {
+            if (ModelState.IsValid)
+            {
+                var r = (isExisting) ? db.Update(ObjToSave) : db.Insert(ObjToSave);
+                return RedirectToAction("Index");
+            }
+
+            return View(ObjToSave);
+        }
+
+        protected ActionResult BaseSave<T>(T ObjToSave, bool isExisting, object routeValues)
             {
                 if (ModelState.IsValid)
                 {
                     var r = (isExisting) ? db.Update(ObjToSave) : db.Insert(ObjToSave);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index",routeValues);
                 }
 
                 return View(ObjToSave);
