@@ -196,6 +196,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CashCardController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
@@ -375,6 +376,8 @@
     <Content Include="Views\Course\Manage.cshtml" />
     <Content Include="Views\CashCard\Index.cshtml" />
     <Content Include="Views\CashCard\Manage.cshtml" />
+    <Content Include="Views\Inventory\Receipt.cshtml" />
+    <Content Include="Views\Inventory\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

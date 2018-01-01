@@ -41,6 +41,18 @@ namespace Cavala
         public string LocationName { get; set; }
     }
 
+    public class InvReceiptVw
+    {
+        public int InventoryTransactionId { get; set; }
+        public DateTime TDate { get; set; }        
+        public string ItemName { get; set; }
+        public int QtyAdded { get; set; }              
+        public string RecvdByUserId { get; set; }
+        public string ChkByUserId { get; set; }
+        public string RecvdBy { get; set; }
+        public string ChkBy { get; set; }
+    }
+
     public enum ItemTypesEnum
     {
         All,
@@ -66,30 +78,8 @@ namespace Cavala
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            //TODO: might need to cache this at one point
-            //if(httpContext.Session["UserType"] == null)
-            //{
-            //    httpContext.Session["UserType"] = UserService.GetUserType(httpContext.User.Identity.GetUserId());
-            //}
-            //var userType = (Enums.UserType)httpContext.Session["UserType"];
-
             rep = new Repository();
-
-            var CurrUser = httpContext.User.Identity.GetUserId();
-
-            int Perms;
-
-            Sql sq = new Sql("Select count(1) from AspNetUsers u, UserGroups ug, UserFunctions uf, FunctionGroups fg " +
-                    " where u.id = ug.UserID and uf.FunctionID = fg.FunctionID and fg.GroupID = ug.GroupID and u.Id = @0  " +
-                    "and uf.FunctionName = @1", CurrUser, FunctionName);
-
-            if (Writable)//We check for writable permissions only if the calling method writes to the DB
-                sq.Append(" and fg.Writable = @0", Writable);
-            Perms = rep.ExecuteScalar<int>(sq);
-                        
-
-            return (Perms>0) ? true : false;
-            
+            return MyExtensions.IsPermitted(rep, FunctionName, Writable, httpContext.User.Identity.GetUserId());            
         }
     }
     //[MetadataType(typeof(ConfigMetadata))]
