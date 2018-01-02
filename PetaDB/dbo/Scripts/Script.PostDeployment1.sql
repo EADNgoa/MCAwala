@@ -8,7 +8,7 @@ Post-Deployment Script Template
  Example:      :setvar TableName MyTable							
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
-*/
+
 
 IF NOT EXISTS (SELECT * FROM UserFunctions)
 BEGIN
@@ -40,3 +40,4 @@ BEGIN
 	SET IDENTITY_INSERT [dbo].[ItemTypes] OFF
 END
 
+*/

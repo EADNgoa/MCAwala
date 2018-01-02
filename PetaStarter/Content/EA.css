@@ -18,6 +18,10 @@ a, .navbar-nav, .well-lg {
     filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
 }
 
+input {
+    color: black;
+}
+
 .myatag {
     color: brown;
     background-color: bisque;
@@ -161,8 +165,13 @@ input[type=checkbox] {
         top: 0;
     }
 
-    #section-to-print, #section-to-print * {
+    .section-to-print, .section-to-print * {
         visibility: visible;
+    }
+
+    .section-to-Not-print, .section-to-Not-print * {
+        visibility:hidden;
+        width:10px;
     }
 
     #section-to-print {

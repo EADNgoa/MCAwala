@@ -46,11 +46,28 @@ namespace Cavala
         public int InventoryTransactionId { get; set; }
         public DateTime TDate { get; set; }        
         public string ItemName { get; set; }
-        public int QtyAdded { get; set; }              
+        public int QtyAdded { get; set; }   
+        public string UnitName { get; set; }
         public string RecvdByUserId { get; set; }
         public string ChkByUserId { get; set; }
         public string RecvdBy { get; set; }
         public string ChkBy { get; set; }
+    }
+
+    public class UnitConversionVw
+    {
+        public int UCId { get; set; }
+        public string AUnitOf { get; set; }
+        public decimal IsJust { get; set; }
+        public string OfUnit { get; set; }
+    }
+
+    public class FoodStockVw
+    {
+        public int FoodStockId { get; set; }
+        public DateTime TDate { get; set; }
+        public decimal Qty { get; set; }
+        public string UnitName { get; set; }
     }
 
     public enum ItemTypesEnum

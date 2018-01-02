@@ -202,6 +202,7 @@
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\LocationTypesController.cs" />
+    <Compile Include="Controllers\UnitConversionController.cs" />
     <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -378,6 +379,9 @@
     <Content Include="Views\CashCard\Manage.cshtml" />
     <Content Include="Views\Inventory\Receipt.cshtml" />
     <Content Include="Views\Inventory\Manage.cshtml" />
+    <Content Include="Views\UnitConversion\Index.cshtml" />
+    <Content Include="Views\UnitConversion\Manage.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

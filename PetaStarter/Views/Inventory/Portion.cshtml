@@ -1,10 +1,28 @@
-﻿@model InventoryTransaction
+﻿@model FoodStock
 
 @{
-    ViewBag.Title = $"Manage {ViewBag.IteName} at {ViewBag.LocationName}";
+    ViewBag.Title = $"Portioning Food";
 }
 
 <h2>@ViewBag.Title</h2>
+
+<Div class="MastDet">
+    <table class="table" width="70%">
+        <tr>
+            <td>Arrived On</td>
+            <td>@ViewBag.ITrecd.TDate</td>
+        </tr>
+        <tr>
+            <td>Item Name</td>
+            <td>@ViewBag.ITrecd.ItemName</td>
+        </tr>
+        <tr>
+            <td>Quantity</td>
+            <td>@ViewBag.ITrecd.Qty &nbsp; @ViewBag.ITrecd.UnitName</td>
+        </tr>
+        
+    </table>
+</div>
 
 
 @using (Html.BeginForm()) 

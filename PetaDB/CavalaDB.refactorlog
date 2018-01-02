@@ -35,4 +35,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="FunctionID" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="701580ac-9e48-4e9d-a625-d65879fbf455" ChangeDateTime="01/01/2018 07:03:41">
+    <Property Name="ElementName" Value="[dbo].[InventoryTransaction].[InitId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[InventoryTransaction]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UnitId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5e772197-6042-4283-976d-49a4328a8c5a" ChangeDateTime="01/02/2018 06:45:55">
+    <Property Name="ElementName" Value="[dbo].[UnitConversion].[UnitName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UnitConversion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IsJust" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="817cc416-1856-40fb-80be-7ff0bad638f3" ChangeDateTime="01/02/2018 06:47:52">
+    <Property Name="ElementName" Value="[dbo].[UnitConversion].[OfUnit]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UnitConversion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OfUnitId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="87ae5073-7625-47b5-b5ab-aa4862039eb3" ChangeDateTime="01/02/2018 06:50:22">
+    <Property Name="ElementName" Value="[dbo].[FoodStock].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[FoodStock]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FoodStockId" />
+  </Operation>
 </Operations>

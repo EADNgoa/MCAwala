@@ -30,9 +30,10 @@
 </center>
 
 <p>
-    @Html.ActionLink("Create New", "Manage", new { Ite = ViewBag.ite, LocationId= ViewBag.lid })
+    @Html.ActionLink("Create New", "Manage", new { Ite = ViewBag.ite, LocationId= ViewBag.lid }) |
+    <input type="button" onclick="javascript:window.print();" value="Print" class="eabutton section-to-not-print" />
 </p>
-<table class="table">
+<table class="table section-to-print" width="100%">
     <tr>
         <th>Date</th>
         <th>
@@ -41,7 +42,7 @@
        <th>Qty</th>
         <th>Entry By</th>
         <th>Check By</th>
-        <th></th>
+        <th class="section-to-Not-print"></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -53,7 +54,8 @@
             @Html.DisplayFor(modelItem => item.ItemName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.QtyAdded)
+            @Html.DisplayFor(modelItem => item.QtyAdded) &nbsp;
+            @Html.DisplayFor(modelItem => item.UnitName)            
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RecvdBy)
@@ -61,11 +63,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.ChkBy)
         </td>
-        <td>
+        <td class="section-to-Not-print">
             @if (item.ChkByUserId == null)
             {
-                @Html.ActionLink("Edit", "Manage", new { id = item.InventoryTransactionId }) @:|
+                @Html.ActionLink("Edit", "Manage", new { id = item.InventoryTransactionId, LocationId = ViewBag.lid, Ite = (int)ViewBag.ite, EDate = ViewBag.EDate }) @:|
                 @Html.ActionLink("Checked", "Checked", new { id = item.InventoryTransactionId, LocationId = ViewBag.lid, Ite = (int)ViewBag.ite, EDate= ViewBag.EDate })
+            }
+            else
+            {
+                @Html.ActionLink("Portion", "Portion", new { id = item.InventoryTransactionId, LocationId = ViewBag.lid, Ite = (int)ViewBag.ite, EDate = ViewBag.EDate })
             }
         </td>
     </tr>
