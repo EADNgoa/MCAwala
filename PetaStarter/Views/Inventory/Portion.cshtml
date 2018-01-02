@@ -10,7 +10,7 @@
     <table class="table" width="70%">
         <tr>
             <td>Arrived On</td>
-            <td>@ViewBag.ITrecd.TDate</td>
+            <td>@String.Format("{0:dd-MM-yyyy}",ViewBag.ITrecd.TDate)</td>
         </tr>
         <tr>
             <td>Item Name</td>
@@ -18,50 +18,54 @@
         </tr>
         <tr>
             <td>Quantity</td>
-            <td>@ViewBag.ITrecd.Qty &nbsp; @ViewBag.ITrecd.UnitName</td>
+            <td>@ViewBag.ITrecd.QtyAdded &nbsp; @ViewBag.ITrecd.UnitName</td>
         </tr>
         
     </table>
 </div>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("ManagePortion","Inventory",FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ItemId)
-        @if (Model?.InventoryTransactionId> 0)
+        
+        @if (Model?.FoodStockId > 0)
         {
-            @Html.HiddenFor(model => model.InventoryTransactionId)
-            @Html.HiddenFor(model => model.ToLocationId)
+            @Html.HiddenFor(model => model.FoodStockId)
             @Html.HiddenFor(model => model.TDate)
-            @Html.HiddenFor(model => model.RecvdByUserId)
-            @Html.Hidden("ItemTypeId", (int)ViewBag.ite)
+            @Html.HiddenFor(model => model.InventoryTransactionId)
         }
         else
         {
-            @Html.Hidden("ToLocationId", (int)ViewBag.lid)            
-            @Html.Hidden("ItemTypeId", (int)ViewBag.ite)
+            @Html.Hidden("TDate", (DateTime)ViewBag.ITrecd.TDate)
+            @Html.Hidden("InventoryTransactionId", (int)ViewBag.ITrecd.InventoryTransactionId)
         }
-        <div class="form-group">
-            @Html.Label("Item Name", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">                
-                    <input type="text" id="ItemName" name="ItemName" style="color:black;" data-autocomplete-idholder="#ItemId" value="@ViewBag.ItemName" data-autocombo-url="@Url.Action("AutoCompleteItems", new { ite=(int)ViewBag.ite})" class="form-control" />
-            </div>
-        </div>
+            @Html.Hidden("ItemTypeId", (int)ViewBag.ite)
+            @Html.Hidden("ItemId", (int)ViewBag.ITrecd.ItemId)
+            @Html.Hidden("LocationId", (int)ViewBag.lid)
         
+                
         <div class="form-group">
-            @Html.LabelFor(model => model.QtyAdded, "Quantity Recieved", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Qty, "No. Of Portions", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.QtyAdded, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.QtyAdded, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
             </div>
         </div>
         
+        <div class="form-group">
+            @Html.LabelFor(model => model.Size, "Size Of each Portions", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.UnitId, "Unit", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -71,17 +75,69 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.LocationId, "To Fridge", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.LocationId, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                @if (ViewBag.Lockedrec != null)
+                {
+                    @ViewBag.Lockedrec
+                }
+                else
+                {
+                    <input type="submit" value="Save" class="btn btn-default" />
+                }
             </div>
         </div>
     </div>
 }
 
 <div>    
-        @Html.ActionLink("Back to List", "Receipt", new { Ite = ViewBag.ite, LocationId =ViewBag.lid })        
-    
+    @Html.ActionLink("Back to List", "Receipt", new { Ite = ViewBag.ite, LocationId = ViewBag.lid })        
+    @Html.ActionLink("New Portion", "Portion", new { Ite = ViewBag.ite, LocationId = ViewBag.lid })        
 </div>
+
+<hr />
+<h2>Portions</h2>
+<table class="table section-to-print" width="100%">
+    <tr>
+        <th>Location</th>
+        <th>Qty</th>
+        
+        <th class="section-to-Not-print"></th>
+    </tr>
+
+    @{ 
+        var fsv = (IEnumerable<FoodStockVw>)ViewBag.Portions;
+    }
+    
+
+    @foreach (var item in fsv)
+    {
+        <tr>
+            
+            <td>
+                @item.LocationName
+            </td>
+            <td>
+                @item.Qty &nbsp; portions of @item.Size
+                @item.UnitName &nbsp; each
+            </td>
+            
+            <td class="section-to-Not-print">
+                    @Html.ActionLink("Edit", "ManagePortion", new { id = item.FoodStockId, LocationId = ViewBag.lid, Ite = (int)ViewBag.ite}) 
+                    
+            </td>
+        </tr>
+    }
+
+</table>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -382,6 +382,7 @@
     <Content Include="Views\UnitConversion\Index.cshtml" />
     <Content Include="Views\UnitConversion\Manage.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
+    <Content Include="Views\Inventory\Portion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

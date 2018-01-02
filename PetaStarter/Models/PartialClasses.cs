@@ -44,7 +44,8 @@ namespace Cavala
     public class InvReceiptVw
     {
         public int InventoryTransactionId { get; set; }
-        public DateTime TDate { get; set; }        
+        public DateTime TDate { get; set; }  
+        public int ItemId { get; set; }
         public string ItemName { get; set; }
         public int QtyAdded { get; set; }   
         public string UnitName { get; set; }
@@ -65,8 +66,10 @@ namespace Cavala
     public class FoodStockVw
     {
         public int FoodStockId { get; set; }
+        public string LocationName { get; set; }
         public DateTime TDate { get; set; }
         public decimal Qty { get; set; }
+        public decimal Size { get; set; }
         public string UnitName { get; set; }
     }
 
@@ -85,6 +88,15 @@ namespace Cavala
         Toiletries,
         Menu
     };
+
+    public enum LocationTypesEnum
+    {
+        All,
+        Restaurant,
+        HardwareStore,
+        Fridge,
+        FoodStore
+    }
 
     public class EAAuthorizeAttribute : AuthorizeAttribute
     {

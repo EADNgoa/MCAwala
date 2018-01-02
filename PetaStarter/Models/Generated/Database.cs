@@ -764,6 +764,12 @@ namespace Cavala
 
 
 
+		[Column] public decimal Size { get; set; }
+
+
+
+
+
 		[Column] public int UnitId { get; set; }
 
 

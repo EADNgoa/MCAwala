@@ -5,6 +5,7 @@
     [InventoryTransactionId] INT NULL, 
     [ItemId] INT NOT NULL, 
     [Qty] DECIMAL(18, 3) NOT NULL, 
+	[Size]                    DECIMAL (18, 2) NOT NULL,
     [UnitId] INT NOT NULL, 
     [LocationId] INT NOT NULL ,
 	CONSTRAINT [FK_FoodStock_ToLocation] FOREIGN KEY ([LocationId]) REFERENCES [Location]([LocationId]),
