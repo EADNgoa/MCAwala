@@ -199,6 +199,7 @@
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\LocationTypesController.cs" />
@@ -383,6 +384,8 @@
     <Content Include="Views\UnitConversion\Manage.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
     <Content Include="Views\Inventory\Portion.cshtml" />
+    <Content Include="Views\Reports\ReportRq.cshtml" />
+    <Content Include="Views\Reports\Wastage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,10 +18,10 @@ namespace Cavala.Controllers
             ViewBag.ite = Ite;
             ViewBag.lid = LocationId;
             ViewBag.LocationName = db.ExecuteScalar<string>("Select locationName from Location where LocationId=@0", LocationId);
-            ViewBag.EDate = EDate ?? DateTime.Today;            
+            ViewBag.EDate = String.Format("{0:dd-MMM-yyyy}", EDate ?? DateTime.Today);            
             return View("Receipt", base.BaseIndex<InvReceiptVw>(page, "InventoryTransactionID, TDate,QtyAdded, ItemName, RecvdByUserId,ChkByUserId, au.userName as RecvdBy,auc.UserName as ChkBy, UnitName  ",
                 "Items i, Aspnetusers au, Units u, InventoryTransaction it left outer join Aspnetusers auc  on it.ChkByUserId = auc.id  where it.itemId=i.itemId and it.RecvdByUserId = au.id and it.UnitId=u.UnitId " +
-                "and ItemName like '%" + PropName + "%'" + ((EDate!=null)? " and TDate='" + String.Format("{0:yyyy-MM-dd}", EDate) + "'" :"")));
+                "and ItemName like '%" + PropName + "%'" + ((ViewBag.EDate != null)? " and TDate='" + String.Format("{0:yyyy-MM-dd}", EDate) + "'" :"")));
         }
 
         [EAAuthorize(FunctionName = "Inventory Checking", Writable = true)]
@@ -116,10 +116,14 @@ namespace Cavala.Controllers
                             "Items i, Units u, InventoryTransaction it where it.itemId=i.itemId and it.UnitId=u.UnitId " +
                             "and it.InventoryTransactionId =@0", id);
             ViewBag.Portions = db.Query<FoodStockVw>("Select FoodstockId, LocationName, Qty,Size, UnitName from FoodStock fs, Location l, Units u where fs.UnitId=u.UnitId and l.LocationId=fs.LocationId and InventoryTransactionId=@0 and LocationTypeId=@1", id, (int)LocationTypesEnum.Fridge);
+            ViewBag.Wastage = db.ExecuteScalar<decimal>("Select Qty from FoodStock where InventoryTransactionId=@0 and LocationId=@1", id, LocationId);
             ViewBag.ite = Ite;
             ViewBag.lid = LocationId;
-            ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName");
+            ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName",1004);
             ViewBag.LocationID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Fridge), "LocationID", "LocationName");
+
+            //Since we know the Item, lets try to auto-set the portion unit
+            ViewBag.itmUnit = db.ExecuteScalar<int>("Select AUnitOfId from Items i, UnitConversion uc where i.UnitId=uc.OfUnitId and ItemId=@0", ViewBag.ITrecd.ItemId);
         }
 
         [EAAuthorize(FunctionName = "Inventory Portion", Writable = true)]
@@ -142,24 +146,30 @@ namespace Cavala.Controllers
 
         [HttpPost]
         [EAAuthorize(FunctionName = "Inventory Portion", Writable = true)]
-        public ActionResult ManagePortion([Bind(Include = "FoodStockId, InventoryTransactionId,TDate, ItemId, Qty, Size,UnitId, LocationId")] FoodStock fs, ItemTypesEnum ItemTypeId,int LocationId)
+        public ActionResult ManagePortion([Bind(Include = "FoodStockId, InventoryTransactionId,TDate, ItemId, Qty, Size,UnitId, LocationId")] FoodStock fs, ItemTypesEnum ItemTypeId,int lid)
         {
             using (var transaction = db.GetTransaction())
             {
                 try
                 {
                     //fetch the conversion
-                    var Existstk = db.SingleOrDefault<FoodStock>("select * from FoodStock where ItemId = " + fs.ItemId + " and locationId=" + LocationId + " and InventoryTransactionId=" + fs.InventoryTransactionId + " and TDate='" + String.Format("{0:yyyy-MM-dd}", fs.TDate) + "' ");
-                    var conv = db.FirstOrDefault<UnitConversion>("Select * from UnitConversion Where AUnitOfId = @0 and OfUnitId=@1", fs.UnitId, Existstk.UnitId);
+                    var Existstk = db.SingleOrDefault<FoodStock>("select * from FoodStock where ItemId = " + fs.ItemId + " and locationId=" + lid + " and InventoryTransactionId=" + fs.InventoryTransactionId + " and TDate='" + String.Format("{0:yyyy-MM-dd}", fs.TDate) + "' ");
+                    var conv = db.FirstOrDefault<UnitConversion>("Select * from UnitConversion Where AUnitOfId = @0 and OfUnitId=@1 union select 10000,1,1,1", fs.UnitId, Existstk.UnitId); //default to 1
 
-                    Existstk.Qty = Existstk.Qty - ((fs.Qty * fs.Size) * conv.IsJust);
-                    Existstk.UnitId = fs.UnitId;
+                    //if in edit mode add the old record qty back
+                    if (fs.FoodStockId > 0)
+                    {
+                        var OldVal = db.ExecuteScalar<decimal>("select Qty*Size as val from FoodStock where FoodStockId=@0", fs.FoodStockId);
+                        Existstk.Qty += (OldVal * conv.IsJust);
+                    }
+
+                    Existstk.Qty = Existstk.Qty - ((fs.Qty * fs.Size) * conv.IsJust); 
                     db.Update(Existstk);
 
                     BaseSave<FoodStock>(fs, fs.FoodStockId > 0);
                     
                     transaction.Complete();
-                    return RedirectToAction("Portion", new { id = fs.InventoryTransactionId, LocationId = LocationId, Ite = ItemTypeId });
+                    return RedirectToAction("Portion", new { id = fs.InventoryTransactionId, LocationId = lid, Ite = ItemTypeId });
                 }
                 catch (Exception ex)
                 {

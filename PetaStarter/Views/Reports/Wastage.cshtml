@@ -1,0 +1,41 @@
+﻿@model IEnumerable<InvReceiptVw>
+
+@{
+    ViewBag.Title = $"Wastage Report : From: {ViewBag.FromDate} to {ViewBag.ToDate}" + ViewBag.IteName ;
+}
+<h2 class="section-to-print">@ViewBag.Title</h2>
+<table class="table section-to-print" width="100%">
+    <tr>
+        <th>Date</th>
+        <th>
+            Item Name
+        </th>
+       <th>Qty</th>
+        <th>Entry By</th>
+        <th>Wastage</th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyAdded) &nbsp;
+            @Html.DisplayFor(modelItem => item.UnitName)            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecvdBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wastage) @Html.DisplayFor(modelItem => item.WastageUnitName)
+        </td>
+        
+    </tr>
+}
+
+</table>

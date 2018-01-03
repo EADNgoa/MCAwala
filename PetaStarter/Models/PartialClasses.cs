@@ -47,8 +47,10 @@ namespace Cavala
         public DateTime TDate { get; set; }  
         public int ItemId { get; set; }
         public string ItemName { get; set; }
-        public int QtyAdded { get; set; }   
+        public decimal QtyAdded { get; set; }   
         public string UnitName { get; set; }
+        public decimal Wastage { get; set; }
+        public string WastageUnitName { get; set; }
         public string RecvdByUserId { get; set; }
         public string ChkByUserId { get; set; }
         public string RecvdBy { get; set; }

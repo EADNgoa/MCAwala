@@ -20,7 +20,10 @@
             <td>Quantity</td>
             <td>@ViewBag.ITrecd.QtyAdded &nbsp; @ViewBag.ITrecd.UnitName</td>
         </tr>
-        
+        <tr>
+            <td>Wastage</td>
+            <td>@ViewBag.Wastage &nbsp; @ViewBag.ITrecd.UnitName</td>
+        </tr>
     </table>
 </div>
 
@@ -47,7 +50,7 @@
         }
             @Html.Hidden("ItemTypeId", (int)ViewBag.ite)
             @Html.Hidden("ItemId", (int)ViewBag.ITrecd.ItemId)
-            @Html.Hidden("LocationId", (int)ViewBag.lid)
+            @Html.Hidden("lid", (int)ViewBag.lid)
         
                 
         <div class="form-group">
@@ -69,7 +72,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UnitId, "Unit", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.UnitId, null, new { @class = "form-control" })
+                @if (Model?.FoodStockId > 0)
+                {
+                    @Html.DropDownListFor(model => model.UnitId, null, new { @class = "form-control disabled", @disabled = "disabled" })
+                    @Html.Hidden("UnitId", (int)Model.UnitId);
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.UnitId, null, new { @class = "form-control" })
+                }
                 @Html.ValidationMessageFor(model => model.UnitId, "", new { @class = "text-danger" })
             </div>
         </div>
