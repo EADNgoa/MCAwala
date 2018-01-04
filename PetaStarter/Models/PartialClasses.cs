@@ -69,7 +69,10 @@ namespace Cavala
     {
         public int FoodStockId { get; set; }
         public string LocationName { get; set; }
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
         public DateTime TDate { get; set; }
+        public DateTime Expiry { get; set; }
         public decimal Qty { get; set; }
         public decimal Size { get; set; }
         public string UnitName { get; set; }

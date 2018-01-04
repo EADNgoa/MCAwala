@@ -9,17 +9,20 @@ namespace Cavala.Controllers
     public class ItemsController : EAController
     {
         // GET: Clients
+        [EAAuthorize(FunctionName = "Item", Writable = false)]
         public ActionResult Index(int? page, ItemTypesEnum Ite, string PropName)
         {
             if (PropName?.Length > 0) page = 1;
             ViewBag.iteName = db.ExecuteScalar<string>("Select ItemTypeName from ItemTypes where ItemTypeId=@0", Ite);
             ViewBag.ite = Ite;
-            return View("Index", base.BaseIndex<ItemsVw>(page, "ItemID, ItemName, ItemTypeName as Type, ExpiryDays, UnitName as Unit", "Items i, Units u, ItemTypes t where i.ItemTypeId=t.ItemTypeId and i.UnitID=u.UnitID and ItemName like '%" + PropName + "%'"));
+            int ItemTypeId = (int)Ite;
+            return View("Index", base.BaseIndex<ItemsVw>(page, "ItemID, ItemName, ItemTypeName as Type, ExpiryDays, UnitName as Unit", $"Items i, Units u, ItemTypes t where i.ItemTypeId=t.ItemTypeId and i.itemTypeId = {ItemTypeId} and i.UnitID=u.UnitID and ItemName like '%" + PropName + "%'"));
         }
 
 
 
         // GET: Clients/Create
+        [EAAuthorize(FunctionName = "Item", Writable = true)]
         public ActionResult Manage(int? id, ItemTypesEnum? Ite)
         {
             ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName");
@@ -33,6 +36,7 @@ namespace Cavala.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [EAAuthorize(FunctionName = "Item", Writable = true)]
         public ActionResult Manage([Bind(Include = "ItemID,ItemName,ItemTypeId, ExpiryDays,UnitID")] Item item)
         {
             return base.BaseSave<Item>(item, item.ItemId > 0,new { Ite=item.ItemTypeId});

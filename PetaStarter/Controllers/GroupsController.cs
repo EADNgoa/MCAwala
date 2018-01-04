@@ -30,6 +30,7 @@ namespace Cavala.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [EAAuthorize(FunctionName = "Group", Writable = true)]
         public ActionResult Manage([Bind(Include = "GroupID,GroupName")] Group group)
         {
             return base.BaseSave<Group>(group, group.GroupID > 0);

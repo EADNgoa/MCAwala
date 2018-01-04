@@ -1,0 +1,65 @@
+﻿@model IEnumerable<FoodStockVw>
+
+<style>
+    input[type=text] {
+        width:35px !important;
+    }
+    select {
+        width: 80px !important;
+        
+    }
+</style>
+
+@{
+    ViewBag.Title = $"Transfer or Consume Food at {ViewBag.LocationName}";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<table class="table section-to-print" width="100%">
+    <tr>
+        <th>Date</th>
+        <th>Expiry</th>
+        <th>Item</th>
+        <th>Stock</th>
+        <th class="section-to-Not-print">Enter Qty and/or Transfer Location</th>
+    </tr>
+
+     
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            
+            <td>
+                @String.Format("{0:dd-MMM-yyyy}", item.TDate)
+            </td>
+            <th>@String.Format("{0:dd-MMM-yyyy}", item.Expiry)</th>
+            <td>@item.ItemName</td>
+            <td>
+                @item.Qty portions of @item.Size
+                @item.UnitName each
+            </td>
+            
+            <td class="section-to-Not-print form-inline">
+                @using (Html.BeginForm("MovEat", "Inventory", FormMethod.Post))
+                {
+                    @Html.Hidden("lid", (int)ViewBag.lid)
+                    @Html.Hidden("FoodStockId", (int)item.FoodStockId)
+                    @Html.Hidden("ItemId", (int)item.ItemId)                    
+                    @Html.TextBox("Qty", null, new { @class="form-control" })
+                    @Html.DropDownList("LocationId",null, new { @class = "form-control" })
+                    <input type="submit" name="submit" value="Move" class="btn btn-default" />
+                    <input type="submit" name="submit" value="Use" class="btn btn-default" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -30,6 +30,7 @@ namespace Cavala.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [EAAuthorize(FunctionName = "LocationType", Writable = true)]
         public ActionResult Manage([Bind(Include = "LocationTypeID,LocationTypeName")] LocationType lt)
         {
             return base.BaseSave<LocationType>(lt, lt.LocationTypeId > 0);

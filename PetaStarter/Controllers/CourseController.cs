@@ -30,6 +30,7 @@ namespace Cavala.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [EAAuthorize(FunctionName = "Course", Writable = true)]
         public ActionResult Manage([Bind(Include = "CourseID,CourseName")] Course lt)
         {
             return base.BaseSave<Course>(lt, lt.CourseId > 0);

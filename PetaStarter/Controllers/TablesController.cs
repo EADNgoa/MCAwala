@@ -31,6 +31,7 @@ namespace Cavala.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [EAAuthorize(FunctionName = "Table", Writable = true)]
         public ActionResult Manage([Bind(Include = "TableId,TableName,LocationId")] Table t)
         {
             return base.BaseSave<Table>(t, t.TableId > 0);
