@@ -181,14 +181,23 @@ namespace Cavala.Controllers
         }
 
         [EAAuthorize(FunctionName = "Inventory Move Use", Writable = true)]
-        public ActionResult MovEat(int LocationId)
+        public ActionResult MovEat()
+        {
+            ViewBag.LoID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Fridge, LocationId), "LocationID", "LocationName");
+            
+            return View();
+        }
+
+        [EAAuthorize(FunctionName = "Inventory Move Use", Writable = true)]
+        public ActionResult MovEatPart(int LocationId)
         {
             var VwData = db.Query<FoodStockVw>("Select FoodstockId,TDate, DATEADD(dy,i.ExpiryDays,TDate) as Expiry, Qty,Size, u.UnitId, UnitName, fs.ItemId, ItemName from FoodStock fs, Units u, Items i where fs.ItemId=i.ItemId and" +
                 " fs.UnitId=u.UnitId and LocationId=@0 and Qty>0 order by Expiry", LocationId);
             ViewBag.lid = LocationId;
             ViewBag.LocationID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0 and Locationid<>@1", LocationTypesEnum.Fridge, LocationId), "LocationID", "LocationName");
+            
             ViewBag.LocationName = db.ExecuteScalar<String>("Select LocationName from Location where LocationId=@0", LocationId);
-            return View(VwData);
+            return PartialView(VwData);
         }
 
 

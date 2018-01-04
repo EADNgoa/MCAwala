@@ -387,6 +387,7 @@
     <Content Include="Views\Reports\ReportRq.cshtml" />
     <Content Include="Views\Reports\Wastage.cshtml" />
     <Content Include="Views\Inventory\MovEat.cshtml" />
+    <Content Include="Views\Inventory\MovEatPart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
