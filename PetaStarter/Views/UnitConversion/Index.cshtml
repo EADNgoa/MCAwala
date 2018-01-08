@@ -1,13 +1,13 @@
-﻿@model PagedList.IPagedList<Unit>
+﻿@model PagedList.IPagedList<UnitConversionVw>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Units";
+    ViewBag.Title = "Unit Conversion ";
 }
 
 <center>
     <h2 class="section-to-print"><b>@ViewBag.Title</b></h2>
     
-    @using (Html.BeginForm("Index", "Units", FormMethod.Get))
+    @using (Html.BeginForm("Index", "UnitConversion", FormMethod.Get))
     {        
         <div class="row section-to-Not-print">
             <div>
@@ -31,22 +31,30 @@
 <table class="table">
     <tr>
         <th>
-            Unit Name
+            A unit of
         </th>
-       
-        
+        <th>
+            is just
+        </th>
+        <th>
+            of unit
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.UnitName)
+            @Html.DisplayFor(modelItem => item.AUnitOf)
         </td>
-        
-
         <td>
-            @Html.ActionLink("Edit", "Manage", new { id = item.UnitId})
+            @Html.DisplayFor(modelItem => item.IsJust)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OfUnit)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Manage", new { id = item.UCId})
         </td>
     </tr>
 }

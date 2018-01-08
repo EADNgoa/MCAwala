@@ -31,6 +31,7 @@ namespace Cavala.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [EAAuthorize(FunctionName = "Location", Writable = true)]
         public ActionResult Manage([Bind(Include = "LocationId,LocationTypeId,LocationName")] Location l)
         {
             return base.BaseSave<Location>(l, l.LocationId > 0);

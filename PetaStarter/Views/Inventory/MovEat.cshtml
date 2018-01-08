@@ -1,0 +1,35 @@
+﻿
+
+<style>
+    input[type=text] {
+        width:35px !important;
+    }
+    
+</style>
+
+@{
+    ViewBag.Title = $"Transfer or Consume Food at ";
+}
+
+<h2>
+    @ViewBag.Title
+    @Html.DropDownList("LoID", null, "Please Select a Fridge", new { @class = "form-control" })
+</h2>
+
+
+
+<div id="MovEatPart"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $("#LoID").change({ newVal: $("#LoID").val() }, function (event) {
+
+        $('#MovEatPart').html("");
+        $('#MovEatPart').load('@Url.Action("MovEatPart", "Inventory")', { LocationId : $("#LoID").val()} );
+
+    });
+
+</script>

@@ -30,7 +30,8 @@ namespace Cavala.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Manage([Bind(Include = "UnitID,UnitName,Size")] Unit unit)
+        [EAAuthorize(FunctionName = "Units", Writable = true)]
+        public ActionResult Manage([Bind(Include = "UnitID,UnitName")] Unit unit)
         {
             return base.BaseSave<Unit>(unit, unit.UnitId > 0);
         }

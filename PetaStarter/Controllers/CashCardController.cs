@@ -30,6 +30,7 @@ namespace Cavala.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [EAAuthorize(FunctionName = "CashCard", Writable = true)]
         public ActionResult Manage([Bind(Include = "CardID,CardName,Amount")] CashCard lt)
         {
             return base.BaseSave<CashCard>(lt, lt.CardId > 0);

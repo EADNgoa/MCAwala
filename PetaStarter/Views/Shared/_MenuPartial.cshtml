@@ -19,7 +19,7 @@
                         <li><a href="~/Configs/Edit/1">Configuration</a></li>
                         <li><a href="~/Groups">User Groups</a></li>
                         <li><a href="~/Units">Units</a></li>                        
-                        <li><a href="~/LocationTypes">Location Types</a></li>
+                        <li><a href="~/UnitConversion">Unit Conversion</a></li>                        
                         <li><a href="~/Locations">Inventory Locations</a></li>
                         <li><a href="~/Tables">Tables</a></li>
                         <li><a href="~/Course">Courses</a></li>
@@ -33,14 +33,14 @@
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.LaundryGuest">Guest Laundry</a></li>
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.LaundryStaff">Staff Laundry</a></li>
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.Linen">Linen</a></li>
-                                <li><a href="~/Items?Ite=@ItemTypesEnum.Maintenance">Maintenance</a></li>                                
+                                <li><a href="~/Items?Ite=@ItemTypesEnum.Maintenance">Maintenance</a></li>     
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.RawMaterial">Kitchen Raw Material</a></li>
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.ReadyToServe">Ready To Serve</a></li>
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.Stationary">Stationary</a></li>
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.Toiletries">Toiletries</a></li>                                
                             </ul>
                         </li>
-
+                        
 
 
                         <li><a href="~/Menu">Menu</a></li>
@@ -48,10 +48,11 @@
                 </li>
 
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Finance<span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Inventory<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="~/Receipt">Receipt</a></li>                                                
-                                                                  
+                        <li><a href="~/Inventory/Receipt?LocationId=1&ite=1">Receipt</a></li>                                                
+                        <li><a href="~/Reports/Wastage">Wastage Report</a></li>                                          
+                        <li><a href="~/Inventory/MovEat">Move or Use</a></li>                        
                     </ul>
                 </li>
 

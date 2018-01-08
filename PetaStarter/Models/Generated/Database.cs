@@ -718,7 +718,73 @@ namespace Cavala
 
     
 
-	[TableName("dbo.FuctionGroups")]
+	[TableName("dbo.FoodStock")]
+
+
+
+	[PrimaryKey("FoodStockId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class FoodStock  
+    {
+
+
+
+		[Column] public int FoodStockId { get; set; }
+
+
+
+
+
+		[Column] public DateTime TDate { get; set; }
+
+
+
+
+
+		[Column] public int? InventoryTransactionId { get; set; }
+
+
+
+
+
+		[Column] public int ItemId { get; set; }
+
+
+
+
+
+		[Column] public decimal Qty { get; set; }
+
+
+
+
+
+		[Column] public decimal Size { get; set; }
+
+
+
+
+
+		[Column] public int UnitId { get; set; }
+
+
+
+
+
+		[Column] public int LocationId { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.FunctionGroups")]
 
 
 
@@ -727,7 +793,7 @@ namespace Cavala
 
 	[ExplicitColumns]
 
-    public partial class FuctionGroup  
+    public partial class FunctionGroup  
     {
 
 
@@ -739,6 +805,12 @@ namespace Cavala
 
 
 		[Column] public int GroupID { get; set; }
+
+
+
+
+
+		[Column] public bool Writable { get; set; }
 
 
 
@@ -798,25 +870,25 @@ namespace Cavala
 
 
 
-		[Column] public DateTime? TDate { get; set; }
+		[Column] public DateTime TDate { get; set; }
 
 
 
 
 
-		[Column] public int? ItemId { get; set; }
+		[Column] public int ItemId { get; set; }
 
 
 
 
 
-		[Column] public int? QtyAdded { get; set; }
+		[Column] public decimal? QtyAdded { get; set; }
 
 
 
 
 
-		[Column] public int? QtyRemoved { get; set; }
+		[Column] public decimal? QtyRemoved { get; set; }
 
 
 
@@ -834,12 +906,6 @@ namespace Cavala
 
 
 
-		[Column] public int? ToPortionId { get; set; }
-
-
-
-
-
 		[Column] public string RecvdByUserId { get; set; }
 
 
@@ -847,6 +913,18 @@ namespace Cavala
 
 
 		[Column] public string ChkByUserId { get; set; }
+
+
+
+
+
+		[Column] public int UnitId { get; set; }
+
+
+
+
+
+		[Column] public int? FoodStockId { get; set; }
 
 
 
@@ -1204,6 +1282,8 @@ namespace Cavala
 
 
 
+	[PrimaryKey("ItemId", AutoIncrement=false)]
+
 
 	[ExplicitColumns]
 
@@ -1218,7 +1298,7 @@ namespace Cavala
 
 
 
-		[Column] public int? Quantity { get; set; }
+		[Column] public decimal? Quantity { get; set; }
 
 
 
@@ -1328,6 +1408,48 @@ namespace Cavala
 
     
 
+	[TableName("dbo.UnitConversion")]
+
+
+
+	[PrimaryKey("UCId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class UnitConversion  
+    {
+
+
+
+		[Column] public int UCId { get; set; }
+
+
+
+
+
+		[Column] public int AUnitOfId { get; set; }
+
+
+
+
+
+		[Column] public decimal IsJust { get; set; }
+
+
+
+
+
+		[Column] public int OfUnitId { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.Units")]
 
 
@@ -1351,12 +1473,6 @@ namespace Cavala
 
 
 		[Column] public string UnitName { get; set; }
-
-
-
-
-
-		[Column] public decimal? Size { get; set; }
 
 
 
@@ -1421,34 +1537,6 @@ namespace Cavala
 
 
 		[Column] public int GroupID { get; set; }
-
-
-
-	}
-
-    
-
-	[TableName("dbo.Users")]
-
-
-
-	[PrimaryKey("UserID", AutoIncrement=false)]
-
-
-	[ExplicitColumns]
-
-    public partial class User  
-    {
-
-
-
-		[Column] public string UserID { get; set; }
-
-
-
-
-
-		[Column] public string Name { get; set; }
 
 
 

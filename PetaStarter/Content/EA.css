@@ -18,6 +18,10 @@ a, .navbar-nav, .well-lg {
     filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
 }
 
+input {
+    color: black;
+}
+
 .myatag {
     color: brown;
     background-color: bisque;
@@ -34,7 +38,7 @@ a, .navbar-nav, .well-lg {
 
 /* Nice box for details in a Mast Detail screen */
 .MastDet {
-        background-image: url(../EAwell.jpg);
+        background-image: url(../Custom/EAwell.jpg);
         background-size: 100% 100%;
         background-repeat: no-repeat;
         padding-top: 5px;
@@ -161,8 +165,13 @@ input[type=checkbox] {
         top: 0;
     }
 
-    #section-to-print, #section-to-print * {
+    .section-to-print, .section-to-print * {
         visibility: visible;
+    }
+
+    .section-to-Not-print, .section-to-Not-print * {
+        visibility:hidden;
+        width:10px;
     }
 
     #section-to-print {
