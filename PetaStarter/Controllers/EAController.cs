@@ -55,29 +55,27 @@ namespace Cavala.Controllers
 
         protected ActionResult BaseSave<T>(T ObjToSave, bool isExisting)
         {
+            return BaseSave<T>(ObjToSave, isExisting, "Index", null);
+        }
+
+        protected ActionResult BaseSave<T>(T ObjToSave, bool isExisting, object routeValues)
+        {
+            return BaseSave<T>(ObjToSave, isExisting, "Index", routeValues);            
+        }
+
+        protected ActionResult BaseSave<T>(T ObjToSave, bool isExisting, string RAction, object routeValues)
+        {
             if (ModelState.IsValid)
             {
                 var r = (isExisting) ? db.Update(ObjToSave) : db.Insert(ObjToSave);
-                return RedirectToAction("Index");
+                return RedirectToAction(RAction, routeValues);
             }
 
             return View(ObjToSave);
         }
 
-        protected ActionResult BaseSave<T>(T ObjToSave, bool isExisting, object routeValues)
-            {
-                if (ModelState.IsValid)
-                {
-                    var r = (isExisting) ? db.Update(ObjToSave) : db.Insert(ObjToSave);
-                    return RedirectToAction("Index",routeValues);
-                }
-
-                return View(ObjToSave);
-            }
-
-
-            // GET: EA
-            protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        // GET: EA
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
             {
                 //if (DateTime.Now.Date > DateTime.Parse("15 Aug 2017"))
                 //{                

@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = $"Book a Table at: ";
+}
+
+<h2>
+    @ViewBag.Title
+    @Html.DropDownList("LoID", null, "Please Select a Table", new { @class = "form-control" })
+</h2>
+
+
+@if (ViewBag.Lid != null)
+{
+    <div id="TableList">@Html.Action("TableList", "TableRes",new { LocationId =ViewBag.Lid })</div>
+}
+else
+{
+<div id="TableList"></div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $("#LoID").change({ newVal: $("#LoID").val() }, function (event) {
+
+        $('#TableList').html("");
+        $('#TableList').load('@Url.Action("TableList", "TableRes")', { LocationId : $("#LoID").val()} );
+
+    });
+
+</script>

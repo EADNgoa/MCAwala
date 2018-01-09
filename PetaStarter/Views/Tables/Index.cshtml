@@ -33,6 +33,7 @@
         <th>
             Tables
         </th>
+        <th>Restaurant</th>
        
         <th></th>
     </tr>
@@ -42,7 +43,9 @@
         <td>
             @Html.DisplayFor(modeltable => item.TableName)
         </td>
-       
+        <td>
+            @Html.DisplayFor(modeltable => item.LocationName)
+        </td>
         <td>
             @Html.ActionLink("Edit", "Manage", new { id = item.TableId })
         </td>

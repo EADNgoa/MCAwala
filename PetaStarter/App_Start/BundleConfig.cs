@@ -23,6 +23,11 @@ namespace Cavala
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jquerydtpicker").Include(
+                      "~/Scripts/jquery-ui-timepicker-addon.js"));
+            bundles.Add(new StyleBundle("~/Content/dtpic").Include(
+                        "~/Content/jquery-ui-timepicker-addon.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                       "~/Scripts/jquery-ui-{version}.js"));
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

@@ -78,6 +78,15 @@ namespace Cavala
         public string UnitName { get; set; }
     }
 
+    public class TableResVw
+    {
+        public int TableReservationId { get; set; }
+        public int TableId { get; set; }
+        public string TableName { get; set; }
+        public DateTime? ResTime { get; set; }
+        public string PersonName { get; set; }
+    }
+
     public enum ItemTypesEnum
     {
         All,

@@ -50,12 +50,18 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Inventory<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="~/Inventory/Receipt?LocationId=1&ite=1">Receipt</a></li>                                                
+                        <li><a href="~/Inventory/Receipt?LocationId=1&ite=@ItemTypesEnum.RawMaterial">Receipt</a></li>                                                
                         <li><a href="~/Reports/Wastage">Wastage Report</a></li>                                          
                         <li><a href="~/Inventory/MovEat">Move or Use</a></li>                        
                     </ul>
                 </li>
-
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Restaurant<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="~/TableRes">Reserve Table</a></li>
+                        
+                    </ul>
+                </li>
 
                     </ul>
             @Html.Partial("_LoginPartial")

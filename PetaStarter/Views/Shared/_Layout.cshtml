@@ -8,6 +8,7 @@
     @Styles.Render("~/Content/themes/base/css")
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/dtpic")
     
 
     
@@ -18,7 +19,7 @@
     @Scripts.Render("~/bundles/jquery")
     
     @Scripts.Render("~/bundles/jqueryui")
-
+    @Scripts.Render("~/bundles/jquerydtpicker")
     
     <div id="TopBody" class="container body-content">
         @RenderBody()
@@ -54,6 +55,18 @@
         jQuery.validator.methods["date"] = function (value, element) { return true; }
 
 
+    });
+
+    $(function () {
+        $('input[type=datetime]').datetimepicker({
+            dateFormat: "yy-m-dd",
+            timeFormat: "hh:mm tt",
+            hourGrid: 4,
+            minuteGrid: 10,
+            stepMinute: 5
+        });
+
+        jQuery.validator.methods["date"] = function (value, element) { return true; }
     });
 
    //autocomplete on any view without id
