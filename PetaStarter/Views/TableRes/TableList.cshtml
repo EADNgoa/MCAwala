@@ -1,0 +1,35 @@
+﻿@model IEnumerable<TableResVw>
+
+
+<p>
+    @Html.ActionLink("Create New", "Manage",new { Lid=ViewBag.Lid})
+</p>
+<table class="table section-to-print" width="100%">
+    <tr>
+        <th>Table</th>
+        <th>Time</th>
+        <th>Person</th>        
+        <th class="section-to-Not-print"></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.TableName</td>
+            <td>
+                @( (item.ResTime!=null)? String.Format("{0:dd MMM HH:mm}", item.ResTime) : "")
+            </td>
+            <td>@item.PersonName</td>
+            
+            <td class="section-to-Not-print form-inline">
+                @if (item.ResTime != null)
+                {
+                    @Html.ActionLink("Edit", "Manage", new { id = item.TableReservationId, Lid = ViewBag.Lid })
+                }
+                
+                @Html.ActionLink("Reserve", "Create", new { TableId = item.TableId })                
+            </td>
+        </tr>
+    }
+
+</table>
+

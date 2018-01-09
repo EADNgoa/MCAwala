@@ -183,7 +183,7 @@ namespace Cavala.Controllers
         [EAAuthorize(FunctionName = "Inventory Move Use", Writable = true)]
         public ActionResult MovEat()
         {
-            ViewBag.LoID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Fridge, LocationId), "LocationID", "LocationName");
+            ViewBag.LoID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Fridge), "LocationID", "LocationName");
             
             return View();
         }
