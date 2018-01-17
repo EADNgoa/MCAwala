@@ -205,6 +205,7 @@
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\LocationTypesController.cs" />
     <Compile Include="Controllers\UnitConversionController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -443,6 +444,8 @@
     <Content Include="Views\TableRes\Index.cshtml" />
     <Content Include="Views\TableRes\Manage.cshtml" />
     <Content Include="Views\TableRes\TableList.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Menu\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
