@@ -88,9 +88,8 @@
 //sample controller
 // public ActionResult AutoCompleteCusts(string term)
 //        {
-//            var filteredItems = db.Customers.Where(c => c.Name.Contains(term)).Select(c => new { id = c.CustomerID, value = c.Name });
-
-//           return Json(filteredItems, JsonRequestBehavior.AllowGet);
+    //            var filteredItems = db.Fetch<Item>($"Select * from Items where ItemTypeId={ite} and ItemName like '%{term}%'").Select(c => new { id = c.ItemId, value = c.ItemName });
+        // return Json(filteredItems, JsonRequestBehavior.AllowGet);
 //        }
 
     
