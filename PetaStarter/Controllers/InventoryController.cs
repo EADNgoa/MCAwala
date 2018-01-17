@@ -21,7 +21,7 @@ namespace Cavala.Controllers
             ViewBag.EDate = String.Format("{0:dd-MMM-yyyy}", EDate ?? DateTime.Today);
             return View("Receipt", base.BaseIndex<InvReceiptVw>(page, "InventoryTransactionID, TDate,QtyAdded, ItemName, RecvdByUserId,ChkByUserId, au.userName as RecvdBy,auc.UserName as ChkBy, UnitName  ",
                 "Items i, Aspnetusers au, Units u, InventoryTransaction it left outer join Aspnetusers auc  on it.ChkByUserId = auc.id  where it.itemId=i.itemId and it.RecvdByUserId = au.id and it.UnitId=u.UnitId " +
-                "and COALESCE(QtyAdded,0)>0 and ItemName like '%" + PropName + "%'" + ((ViewBag.EDate != null) ? " and TDate='" + String.Format("{0:yyyy-MM-dd}", EDate) + "'" : "")));
+                "and COALESCE(QtyAdded,0)>0 and ItemName like '%" + PropName + "%'" + ((ViewBag.EDate != null) ? " and TDate='" + (string)ViewBag.EDate + "'" : "")));
         }
 
         [EAAuthorize(FunctionName = "Inventory Checking", Writable = true)]
@@ -119,11 +119,11 @@ namespace Cavala.Controllers
             ViewBag.Wastage = db.ExecuteScalar<decimal>("Select Qty from FoodStock where InventoryTransactionId=@0 and LocationId=@1", id, LocationId);
             ViewBag.ite = Ite;
             ViewBag.lid = LocationId;
-            ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName", 1004);
             ViewBag.LocationID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Fridge), "LocationID", "LocationName");
 
             //Since we know the Item, lets try to auto-set the portion unit
-            ViewBag.itmUnit = db.ExecuteScalar<int>("Select AUnitOfId from Items i, UnitConversion uc where i.UnitId=uc.OfUnitId and ItemId=@0", ViewBag.ITrecd.ItemId);
+            ViewBag.itmUnit = db.ExecuteScalar<int?>("Select AUnitOfId from Items i, UnitConversion uc where i.UnitId=uc.OfUnitId and ItemId=@0", ViewBag.ITrecd.ItemId);
+            ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName", ViewBag.itmUnit?? 1004);//default to grams 1004
         }
 
         [EAAuthorize(FunctionName = "Inventory Portion", Writable = true)]

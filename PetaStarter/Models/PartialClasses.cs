@@ -87,6 +87,15 @@ namespace Cavala
         public string PersonName { get; set; }
     }
 
+    public class MenuVw
+    {
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
+        public int LocationId { get; set; }
+        public string LocationName { get; set; }
+        public decimal Price { get; set; }
+    }
+
     public enum ItemTypesEnum
     {
         All,
