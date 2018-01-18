@@ -1,26 +1,25 @@
-﻿IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Admin')
-	INSERT INTO [dbo].AspNetRoles (Id, Name) VALUES (N'52504e77-f626-4a41-82ac-21f7b33f12ad', N'Admin')
-GO
+﻿
+IF NOT EXISTS (SELECT * FROM UserFunctions)
+BEGIN
+	SET IDENTITY_INSERT [dbo].[UserFunctions] ON
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (1, N'Units', N'Masters')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (2, N'CashCard', N'Bar')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (3, N'Course', N'Dining')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (4, N'Location', N'Masters')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (6, N'Table', N'Dining')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (7, N'Group', N'Users')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (8, N'Inventory Receipts', N'Kitchen')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (9, N'Inventory Checking', N'Kitchen')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (10, N'Unit Conversion', N'Masters')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (11, N'Inventory Portion', N'Kitchen')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (12, N'Wastage Report', N'Kitchen')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (13, N'Inventory Move Use', N'Kitchen')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (14, N'Item', N'Master')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (15, N'Table Res', N'Dining')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (16, N'Menu', N'Dining')
+	SET IDENTITY_INSERT [dbo].[UserFunctions] OFF
+END
 
-SET IDENTITY_INSERT [dbo].[UserFunctions] ON
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (1, N'Units', N'Masters')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (2, N'CashCard', N'Bar')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (3, N'Course', N'Dining')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (4, N'Location', N'Masters')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (6, N'Table', N'Dining')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (7, N'Group', N'Users')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (8, N'Inventory Receipts', N'Kitchen')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (9, N'Inventory Checking', N'Kitchen')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (10, N'Unit Conversion', N'Masters')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (11, N'Inventory Portion', N'Kitchen')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (12, N'Wastage Report', N'Kitchen')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (13, N'Inventory Move Use', N'Kitchen')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (14, N'Item', N'Master')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (15, N'Table Res', N'Dining')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (16, N'Menu', N'Dining')
-SET IDENTITY_INSERT [dbo].[UserFunctions] OFF
-
-GO
 
 IF NOT EXISTS (SELECT * FROM ItemTypes)
 BEGIN
@@ -38,7 +37,17 @@ BEGIN
 	SET IDENTITY_INSERT [dbo].[ItemTypes] OFF
 END
 
-GO
---Do for Location Types
---Add location: Kitchen Load point
+IF NOT EXISTS (SELECT * FROM Location WHERE Name = 'Kitchen Load point')
+	INSERT INTO [dbo].Location (LocationName, LocationTypeId) VALUES ('Kitchen Load point', 4)
+
+IF NOT EXISTS (SELECT * FROM LocationTypes)
+BEGIN
+	SET IDENTITY_INSERT [dbo].[LocationTypes] ON
+	INSERT INTO [dbo].[LocationTypes] ([LocationTypeId], [LocationTypeName]) VALUES (1, N'Restaurant')
+	INSERT INTO [dbo].[LocationTypes] ([LocationTypeId], [LocationTypeName]) VALUES (2, N'Hardware Store')
+	INSERT INTO [dbo].[LocationTypes] ([LocationTypeId], [LocationTypeName]) VALUES (3, N'Fridge')
+	INSERT INTO [dbo].[LocationTypes] ([LocationTypeId], [LocationTypeName]) VALUES (4, N'Food Store')
+	SET IDENTITY_INSERT [dbo].[LocationTypes] OFF
+END
+
 
