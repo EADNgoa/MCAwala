@@ -1,0 +1,180 @@
+﻿@model OrderTicketDetail
+
+@{
+    ViewBag.Title = $"Order Details of order {ViewBag.Order.OTID}";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<Div class="MastDet">
+    <table class="table" width="70%">
+        <tr>
+            <td>Ordered at</td>
+            <td>@String.Format("{0:dd-MMM-yyyy HH: mm}", ViewBag.Order.TDateTime)</td>
+        </tr>
+        <tr>
+            <td>Table</td>
+            <td>@ViewBag.Order.TableId</td>
+        </tr>
+    </table>
+</Div>
+
+
+@using (Html.BeginForm("DetailsSave", "Restaurant", FormMethod.Post, new { id="OrderDetsFm"}))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.Hidden("OTID", (int)ViewBag.Order.OTID)
+    @Html.HiddenFor(model => model.ItemId)
+    @if (Model?.OTdetailsId > 0)
+    {
+        @Html.HiddenFor(model => model.OTdetailsId)
+    }
+
+    <div class="form-group">
+        @Html.Label("Item Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="text" id="ItemName" name="ItemName" style="color:black;" data-autocomplete-idholder="#ItemId" value="@ViewBag.ItemName" data-autocombo-url="@Url.Action("AutoCompleteItems",new { LocationId = ViewBag.Order.LocationId})" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Qty, "Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NC, "Is Free?", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NC, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NC, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NCtext, "No Charge reason", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NCtext, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NCtext, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @if (ViewBag.Order.IsPaid ?? false)
+            {
+                @:This order is paid for. Please make a new order if more items are purchased
+            }
+            else
+            {
+                <input type="submit" value="Save" class="btn btn-default" />
+            }
+        </div>
+    </div>
+</div>
+}
+
+    <p>
+        <a id="OrderList">Back to list</a>        
+    </p>
+
+    <script>
+    $("#OrderList").click(function (event) {
+
+        $('#OrderPart').html("");
+        $('#OrderPart').load('@Url.Action("OrderPart")', { LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() } );
+
+    });
+
+    $(document).ready(function () {
+        $('*[data-autocombo-url]')
+            .each(function () {
+                $(this).autocomplete({
+                    source: $(this).data("autocombo-url"),
+                    minLenght: 3,
+                    delay: 500,
+                    select: function (event, ui) {
+                        $($(this).data("autocomplete-idholder")).val(ui.item.id);
+                    }
+                });
+            });
+    });
+
+        $(document).ready(function () {
+            $("#OrderDetsFm").on("submit", function (e) {
+                // prevent default submission
+                e.preventDefault();
+
+                // do AJAX post instead
+                var form = $(this);
+                $.ajax({
+                    url: form.attr("action"),
+                    method: form.attr("method"),
+                    data: form.serialize(),
+                    success: function (result) {
+                        // replace content
+                        $('#OrderPart').html("");
+                        $('#OrderPart').load('@Url.Action("Details")', { id: @ViewBag.Order.OTID } );
+                    }
+                })
+            });
+        });
+    </script>
+
+<hr />
+<h2>Order Details</h2>
+<table class="table section-to-print" width="100%">
+    <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Free?</th>
+        <th>N.C. reason</th>
+        <th class="section-to-Not-print"></th>
+    </tr>
+
+    @{
+        var odv = (IEnumerable<OrderDetailsVw>)ViewBag.OrderDetails;
+    }
+
+
+    @foreach (var item in odv)
+    {
+        <tr>
+
+            <td>
+                @item.Item
+            </td>
+            <td>
+                @item.Price
+            </td>
+            <td>@item.Qty</td>
+            <td>@((item.NC)?"Free":"")</td>
+            <td>@item.NCtext</td>
+            <td class="section-to-Not-print">
+                <a class="EditOrder" data-val="@item.OTdetailsId">Edit</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+  $(".EditOrder").click(function (event) {
+
+            $('#OrderPart').html("");
+            $('#OrderPart').load('@Url.Action("Details")', { DetId: $(this).data('val'), LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() });
+
+        });
+</script>

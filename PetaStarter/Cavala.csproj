@@ -450,7 +450,7 @@
     <Content Include="Views\Restaurant\Manage.cshtml" />
     <Content Include="Views\Restaurant\Order.cshtml" />
     <Content Include="Views\Restaurant\OrderPart.cshtml" />
-    <Content Include="Views\Restaurant\Portion.cshtml" />
+    <Content Include="Views\Restaurant\Details.cshtml" />
     <Content Include="Views\Restaurant\Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>

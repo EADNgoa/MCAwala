@@ -3,7 +3,7 @@
 	[OTdetailsId] INT NOT NULL IDENTITY PRIMARY KEY, 
     [OTID] INT NULL, 
     [ItemId] INT NULL, 
-    [Qty] INT NULL, 
+    [Qty] decimal(10,2) NULL, 
     [Price] DECIMAL(18, 2) NULL, 
     [CourseId] INT NULL, 
     [NC] BIT NULL, 

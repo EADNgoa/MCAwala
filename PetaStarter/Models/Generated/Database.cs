@@ -1312,7 +1312,7 @@ namespace Cavala
 
 
 
-		[Column] public int? Qty { get; set; }
+		[Column] public decimal? Qty { get; set; }
 
 
 

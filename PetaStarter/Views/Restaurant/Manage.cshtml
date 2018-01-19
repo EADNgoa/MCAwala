@@ -74,11 +74,22 @@
 <script>
     $("#OrderList").click(function (event) {
 
-        $('#OrderList').html("");
-        $('#OrderList').load('@Url.Action("OrderPart")', { LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() } );
+        $('#OrderPart').html("");
+        $('#OrderPart').load('@Url.Action("OrderPart")', { LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() } );
 
     });
 
+    $(function () {
+        $('input[type=datetime]').datetimepicker({
+            dateFormat: "yy-m-dd",
+            timeFormat: "hh:mm tt",
+            hourGrid: 4,
+            minuteGrid: 10,
+            stepMinute: 5
+        });
+
+        jQuery.validator.methods["date"] = function (value, element) { return true; }
+    });
     
 </script>
 

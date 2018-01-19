@@ -23,8 +23,8 @@ namespace Cavala.Controllers
         public ActionResult OrderPart(int LocationId, DateTime? OrderDate, string UID)
         {   
                 ViewBag.EDate = String.Format("{0:dd-MMM-yyyy}", OrderDate ?? DateTime.Today);
-                var VwData = db.Query<OrderTicket>("Select OTID,TDateTime,RoomNo,TableID from OrderTickets where LocationId=@0 " +
-                    "and WaiterId=@1 and CONVERT(date,TDateTime)='" + (string)ViewBag.EDate + "'", LocationId, (UID=="")?User.Identity.GetUserId(): UID);
+                var VwData = db.Query<OrderTicket>("Select OTID,TDateTime,RoomNo,TableID,IsVoid from OrderTickets where LocationId=@0 " +
+                    "and WaiterId=@1 and CONVERT(date,TDateTime)='" + (string)ViewBag.EDate + "' order by TDateTime desc", LocationId, (UID=="")?User.Identity.GetUserId(): UID);
                 ViewBag.lid = LocationId;
                 ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
                 ViewBag.UID = MyExtensions.GetUsersInGroup("Waiter", db);
@@ -43,10 +43,7 @@ namespace Cavala.Controllers
 
             return PartialView(vwData);
         }
-
-        // POST: Customer/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+                
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
@@ -56,10 +53,56 @@ namespace Cavala.Controllers
             return BaseSave<OrderTicket>(ot, ot.OTID > 0,"Order",new { LocationId=ot.LocationId,UID=ot.WaiterId,TDate=ot.TDateTime});           
 
         }
+
         
-        public ActionResult AutoCompleteItems(string term, int ite)
+        [HttpGet]
+        [EAAuthorize(FunctionName = "Order", Writable = true)]
+        public ActionResult Details(int? id)
         {
-            var filteredItems = db.Fetch<Item>($"Select * from Items where ItemTypeId={ite} and ItemName like '%{term}%'").Select(c => new { id = c.ItemId, value = c.ItemName });
+            return ShowDetails(ref id, null);
+        }
+
+        [HttpPost]
+        [EAAuthorize(FunctionName = "Order", Writable = true)]
+        public ActionResult Details(int? id, int? DetId)
+        {
+            return ShowDetails(ref id, DetId);
+        }
+
+        private ActionResult ShowDetails(ref int? id, int? DetId)
+        {
+            var vwData = base.BaseCreateEdit<OrderTicketDetail>(DetId, "OTdetailsID") ?? new OrderTicketDetail();
+            if (DetId.HasValue)//edit mode
+                id = vwData.OTID;
+
+            ViewBag.Order = db.Single<OrderTicket>(id);
+            ViewBag.orderDetails = db.Query<OrderDetailsVw>("Select od.*, ItemName as Item from orderTicketDetails od, Items i where od.itemId=i.ItemId and OTID=@0", id);
+            ViewBag.ItemName = MyExtensions.GetItemName(vwData?.ItemId, db);
+            return PartialView(vwData);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [EAAuthorize(FunctionName = "Order", Writable = true)]
+        public ActionResult DetailsSave([Bind(Include = "OTDetailsId, OTID,ItemId, Qty,NC,NCtext")] OrderTicketDetail otd)
+        {
+            //first lets fetch the item price
+            otd.Price = db.ExecuteScalar<decimal>("Select Price from Menu where Itemid=@0", otd.ItemId);
+            
+            if (otd.NC ?? false) otd.NCUserId= User.Identity.GetUserId();
+
+            if (ModelState.IsValid)
+            {
+                var r = (otd.OTdetailsId > 0) ? db.Update(otd) : db.Insert(otd);
+                return RedirectToAction("Details", new { id = otd.OTID });
+            }
+
+            return RedirectToAction("Details", new { id = otd.OTID });
+        }
+
+        public ActionResult AutoCompleteItems(string term, int LocationId)
+        {
+            var filteredItems = db.Fetch<Item>($"Select i.* from Menu m,Items i where m.ItemId=i.ItemId and ItemName like '%{term}%' and m.LocationId=@0", LocationId).Select(c => new { id = c.ItemId, value = c.ItemName });
             return Json(filteredItems, JsonRequestBehavior.AllowGet);
         }
 

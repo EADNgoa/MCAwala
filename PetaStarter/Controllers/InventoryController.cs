@@ -41,7 +41,7 @@ namespace Cavala.Controllers
             ViewBag.iteName = db.ExecuteScalar<string>("Select ItemTypeName from ItemTypes where ItemTypeId=@0", Ite);
             ViewBag.LocationName = db.ExecuteScalar<string>("Select locationName from Location where LocationId=@0", LocationId);
             var vwData = base.BaseCreateEdit<InventoryTransaction>(id, "InventoryTransactionID");
-            ViewBag.ItemName = db.ExecuteScalar<string>("Select ItemName from Items where ItemId=@0", vwData?.ItemId ?? 0) ?? "";
+            ViewBag.ItemName = MyExtensions.GetItemName(vwData?.ItemId, db);
             ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName");
 
             return View(vwData);

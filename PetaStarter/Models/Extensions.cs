@@ -39,7 +39,9 @@ namespace Cavala
         );
 
 
-
+        public static string GetItemName(int? id, Repository db) => (
+            db.ExecuteScalar<string>("Select ItemName from Items where ItemId=@0", id ?? 0) ?? ""
+        );
 
         /// <summary>
         /// Populate the ViewBag with a selectlist for a Year Dropdown

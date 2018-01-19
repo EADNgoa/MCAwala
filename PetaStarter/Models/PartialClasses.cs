@@ -96,12 +96,21 @@ namespace Cavala
         public decimal Price { get; set; }
     }
 
-    //[MetadataType(typeof(OrderMetadata))]
-    //public partial class OrderTicket
-    //{
-    //}
+    public class OrderDetailsVw
+    {
+        public int OTdetailsId { get; set; }
+        public string Item { get; set; }
+        public decimal Qty { get; set; }
+        public decimal Price { get; set; }
+        public bool NC { get; set; }
+        public string NCtext { get; set; }
+    }
+        //[MetadataType(typeof(OrderMetadata))]
+        //public partial class OrderTicket
+        //{
+        //}
 
-    public enum ItemTypesEnum
+        public enum ItemTypesEnum
     {
         All,
         RawMaterial,
