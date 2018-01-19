@@ -1,0 +1,86 @@
+﻿@model PagedList.IPagedList<InvReceiptVw>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = ViewBag.LocationName + ": Receipt of " + ViewBag.IteName ;
+}
+
+<center>
+    <h2 class="section-to-print"><b>@ViewBag.Title</b></h2>
+    
+    @using (Html.BeginForm("Receipt", "Inventory", FormMethod.Get))
+    {        
+        <div class="row section-to-Not-print">
+            <div>
+                <table>
+                    <tr style="text-align:center">
+                        <td>&nbsp; @ViewBag.IteName Name:</td>
+                        <td> @Html.TextBox("PropName", ViewBag.CurrentFilter as string, new { @class = "form-control" })</td>
+                        <td>&nbsp; Date:</td>
+                        <td> <input type="date" id="EDate" name="EDate" value="@ViewBag.EDate" />
+                        @*@Html.TextBox("EDate", DateTime.Parse(ViewBag.EDate), new { @class = "form-control", type="date" })*@</td>
+                        <td class="col-lg-1">
+                            @Html.Hidden("LocationId", (int) ViewBag.lid)
+                            @Html.Hidden("Ite", (int)ViewBag.ite)
+                        </td>
+                        <td><input type="submit" value="Search" class="btn btn-default" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    }
+</center>
+
+<p>
+    @Html.ActionLink("Create New", "Manage", new { Ite = ViewBag.ite, LocationId= ViewBag.lid }) |
+    <input type="button" onclick="javascript:window.print();" value="Print" class="eabutton section-to-not-print" />
+</p>
+<table class="table section-to-print" width="100%">
+    <tr>
+        <th>Date</th>
+        <th>
+            Item Name
+        </th>
+       <th>Qty</th>
+        <th>Entry By</th>
+        <th>Check By</th>
+        <th class="section-to-Not-print"></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyAdded) &nbsp;
+            @Html.DisplayFor(modelItem => item.UnitName)            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecvdBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChkBy)
+        </td>
+        <td class="section-to-Not-print">
+            @if (item.ChkByUserId == null)
+            {
+                @Html.ActionLink("Edit", "Manage", new { id = item.InventoryTransactionId, LocationId = ViewBag.lid, Ite = (int)ViewBag.ite, EDate = String.Format("{0:dd-MMM-yyyy}", ViewBag.EDate) }) @:|
+                @Html.ActionLink("Checked", "Checked", new { id = item.InventoryTransactionId, LocationId = ViewBag.lid, Ite = (int)ViewBag.ite, EDate= String.Format("{0:dd-MMM-yyyy}", ViewBag.EDate) })
+            }
+                else
+                {
+                    @Html.ActionLink("Portion", "Portion", new { id = item.InventoryTransactionId, LocationId = ViewBag.lid, Ite = (int)ViewBag.ite, EDate = String.Format("{0:dd-MMM-yyyy}", ViewBag.EDate) })
+                }
+        </td>
+    </tr>
+}
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, EDate = ViewBag.EDate }))
+

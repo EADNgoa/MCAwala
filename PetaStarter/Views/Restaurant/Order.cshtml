@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = $"Orders at ";
+}
+
+<h2>
+    @ViewBag.Title
+    <div class="form-inline">
+        @Html.DropDownList("LoID", null, "Please Select a Restaurant", new { @class = "form-control" })
+        @Html.TextBox("OrderDate", $"{ ViewBag.TDate ?? DateTime.Today:dd-MMM-yyyy}", new { @class = "form-control", type = "date" })
+        @Html.DropDownList("UID", null, "Please Select a Waiter", new { @class = "form-control" })
+    </div>
+</h2>
+
+
+
+<div id="OrderPart"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(function () {
+        if ($("#LoID").val() != '') {
+
+            $('#OrderPart').html("");
+            $('#OrderPart').load('@Url.Action("OrderPart", "Restaurant")', { LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() });
+
+        }
+    });
+
+    $("#LoID").change({ newVal: $("#LoID").val() }, function (event) {
+        if ($("#LoID").val() != '') {
+        $('#OrderPart').html("");
+        $('#OrderPart').load('@Url.Action("OrderPart", "Restaurant")', { LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() });
+        }
+    });
+
+    $("#OrderDate").change({ newVal: $("#OrderDate").val() }, function (event) {
+        if ($("#LoID").val() != '') {
+            $('#OrderPart').html("");
+            $('#OrderPart').load('@Url.Action("OrderPart", "Restaurant")', { LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() });
+        }
+    });
+
+    $("#UID").change({ newVal: $("#UID").val() }, function (event) {
+        if ($("#LoID").val() != '') {
+            $('#OrderPart').html("");
+            $('#OrderPart').load('@Url.Action("OrderPart", "Restaurant")', { LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() });
+        }
+    });
+</script>

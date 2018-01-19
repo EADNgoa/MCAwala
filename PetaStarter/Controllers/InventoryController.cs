@@ -119,7 +119,7 @@ namespace Cavala.Controllers
             ViewBag.Wastage = db.ExecuteScalar<decimal>("Select Qty from FoodStock where InventoryTransactionId=@0 and LocationId=@1", id, LocationId);
             ViewBag.ite = Ite;
             ViewBag.lid = LocationId;
-            ViewBag.LocationID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Fridge), "LocationID", "LocationName");
+            ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Fridge, db);
 
             //Since we know the Item, lets try to auto-set the portion unit
             ViewBag.itmUnit = db.ExecuteScalar<int?>("Select AUnitOfId from Items i, UnitConversion uc where i.UnitId=uc.OfUnitId and ItemId=@0", ViewBag.ITrecd.ItemId);
@@ -183,8 +183,8 @@ namespace Cavala.Controllers
         [EAAuthorize(FunctionName = "Inventory Move Use", Writable = true)]
         public ActionResult MovEat()
         {
-            ViewBag.LoID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Fridge), "LocationID", "LocationName");
-            
+            ViewBag.LoID = MyExtensions.GetLocations(LocationTypesEnum.Fridge, db);
+
             return View();
         }
 
@@ -194,8 +194,8 @@ namespace Cavala.Controllers
             var VwData = db.Query<FoodStockVw>("Select FoodstockId,TDate, DATEADD(dy,i.ExpiryDays,TDate) as Expiry, Qty,Size, u.UnitId, UnitName, fs.ItemId, ItemName from FoodStock fs, Units u, Items i where fs.ItemId=i.ItemId and" +
                 " fs.UnitId=u.UnitId and LocationId=@0 and Qty>0 order by Expiry", LocationId);
             ViewBag.lid = LocationId;
-            ViewBag.LocationID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0 and Locationid<>@1", LocationTypesEnum.Fridge, LocationId), "LocationID", "LocationName");
-            
+            ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Fridge, db);
+
             ViewBag.LocationName = db.ExecuteScalar<String>("Select LocationName from Location where LocationId=@0", LocationId);
             return PartialView(VwData);
         }

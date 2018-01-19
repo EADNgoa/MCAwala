@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Cavala
 {
@@ -14,6 +15,32 @@ namespace Cavala
 
     public static class MyExtensions
     {
+
+        /// <summary>
+        /// Get locations of a particular type
+        /// </summary>
+        /// <param name="lte">LocationTypesEnum value</param>
+        /// <param name="db">instance of the petapoco repository</param>
+        /// <returns></returns>
+        public static SelectList GetLocations(LocationTypesEnum lte, Repository db, int? selectedValue=null) =>
+        (
+            new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", lte), "LocationID", "LocationName",selectedValue)
+        );
+
+        /// <summary>
+        /// Get locations of a particular type
+        /// </summary>
+        /// <param name="UserGroup">Group name to which the user belongs</param>
+        /// <param name="db">instance of the petapoco repository</param>
+        /// <returns></returns>
+        public static SelectList GetUsersInGroup(string GroupName, Repository db, string selectedValue="") =>
+        (
+            new SelectList(db.Fetch<AspNetUser>("Select Id, email as UserName from AspNetUsers a, Groups g, UserGroups ug where a.id=ug.UserId and ug.GroupId=g.GroupId and g.GroupName=@0", GroupName), "Id", "UserName", selectedValue)            
+        );
+
+
+
+
         /// <summary>
         /// Populate the ViewBag with a selectlist for a Year Dropdown
         /// </summary>

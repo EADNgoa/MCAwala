@@ -17,6 +17,7 @@ BEGIN
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (14, N'Item', N'Master')
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (15, N'Table Res', N'Dining')
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (16, N'Menu', N'Dining')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (17, N'Order', N'Dining')
 	SET IDENTITY_INSERT [dbo].[UserFunctions] OFF
 END
 
@@ -37,6 +38,7 @@ BEGIN
 	SET IDENTITY_INSERT [dbo].[ItemTypes] OFF
 END
 
+--used in Kitchen inventory receipt
 IF NOT EXISTS (SELECT * FROM Location WHERE Name = 'Kitchen Load point')
 	INSERT INTO [dbo].Location (LocationName, LocationTypeId) VALUES ('Kitchen Load point', 4)
 
@@ -50,4 +52,6 @@ BEGIN
 	SET IDENTITY_INSERT [dbo].[LocationTypes] OFF
 END
 
-
+--used in Restaurant Order screen
+IF NOT EXISTS (SELECT * FROM Groups WHERE Name = 'Waiter')
+	INSERT INTO [dbo].Groups (GroupName) VALUES ('Waiter')
