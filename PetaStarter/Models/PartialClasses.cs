@@ -96,6 +96,11 @@ namespace Cavala
         public decimal Price { get; set; }
     }
 
+    //[MetadataType(typeof(OrderMetadata))]
+    //public partial class OrderTicket
+    //{
+    //}
+
     public enum ItemTypesEnum
     {
         All,

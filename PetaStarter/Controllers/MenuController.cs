@@ -27,7 +27,7 @@ namespace Cavala.Controllers
         [EAAuthorize(FunctionName = "Menu", Writable = true)]
         public ActionResult Manage(int? Itemid,int? LocationId)
         {
-            ViewBag.LocationID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Restaurant), "LocationID", "LocationName");
+            ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
             if (Itemid.HasValue && LocationId.HasValue) //is edit            
             {
                 ViewBag.ItemName = db.ExecuteScalar<string>("Select ItemName from Item where ItemId=@0", Itemid);

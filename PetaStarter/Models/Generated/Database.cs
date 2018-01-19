@@ -392,6 +392,64 @@ namespace Cavala
 
 
 
+
+
+		[Column] public DateTime? BirthDate { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.CabReservation")]
+
+
+
+	[PrimaryKey("CabReservationID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class CabReservation  
+    {
+
+
+
+		[Column] public int CabReservationID { get; set; }
+
+
+
+
+
+		[Column] public DateTime? Tdate { get; set; }
+
+
+
+
+
+		[Column] public int? GuestID { get; set; }
+
+
+
+
+
+		[Column] public string TFrom { get; set; }
+
+
+
+
+
+		[Column] public string TTo { get; set; }
+
+
+
+
+
+		[Column] public int? ReminderMinutes { get; set; }
+
+
+
 	}
 
     
@@ -718,6 +776,46 @@ namespace Cavala
 
     
 
+	[TableName("dbo.Drivers")]
+
+
+
+	[PrimaryKey("DriverID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class Driver  
+    {
+
+
+
+		[Column] public int DriverID { get; set; }
+
+
+
+
+
+		[Column] public string DriverName { get; set; }
+
+
+
+
+
+		[Column] public string Mobile { get; set; }
+
+
+
+
+
+		[Column] public string IdPicture { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.FoodStock")]
 
 
@@ -841,6 +939,76 @@ namespace Cavala
 
 
 		[Column] public string GroupName { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Guests")]
+
+
+
+	[PrimaryKey("GuestID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class Guest  
+    {
+
+
+
+		[Column] public int GuestID { get; set; }
+
+
+
+
+
+		[Column] public string GuestName { get; set; }
+
+
+
+
+
+		[Column] public string GuestAddress { get; set; }
+
+
+
+
+
+		[Column] public byte[] GuestCountry { get; set; }
+
+
+
+
+
+		[Column] public string Email { get; set; }
+
+
+
+
+
+		[Column] public string Phone { get; set; }
+
+
+
+
+
+		[Column] public int? PhotoID { get; set; }
+
+
+
+
+
+		[Column] public string Likes { get; set; }
+
+
+
+
+
+		[Column] public string Dislikes { get; set; }
 
 
 
@@ -1216,13 +1384,13 @@ namespace Cavala
 
 
 
-		[Column] public int? RoomNo { get; set; }
+		[Column] public string RoomNo { get; set; }
 
 
 
 
 
-		[Column] public int? TableId { get; set; }
+		[Column] public string TableId { get; set; }
 
 
 
@@ -1271,6 +1439,260 @@ namespace Cavala
 
 
 		[Column] public string VoidedReason { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Reciept")]
+
+
+
+	[PrimaryKey("RecieptID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class Reciept  
+    {
+
+
+
+		[Column] public int RecieptID { get; set; }
+
+
+
+
+
+		[Column] public DateTime? Rdate { get; set; }
+
+
+
+
+
+		[Column] public int? ChargeID { get; set; }
+
+
+
+
+
+		[Column] public int? ChargeType { get; set; }
+
+
+
+
+
+		[Column] public decimal? Amount { get; set; }
+
+
+
+
+
+		[Column] public int? PayMode { get; set; }
+
+
+
+
+
+		[Column] public string PayDetails { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Reservation")]
+
+
+
+	[PrimaryKey("ReservationID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class Reservation  
+    {
+
+
+
+		[Column] public int ReservationID { get; set; }
+
+
+
+
+
+		[Column] public DateTime? RDate { get; set; }
+
+
+
+
+
+		[Column] public int? ReservationSourceID { get; set; }
+
+
+
+
+
+		[Column] public DateTime? Rstart { get; set; }
+
+
+
+
+
+		[Column] public int? NoOfDays { get; set; }
+
+
+
+
+
+		[Column] public DateTime? CheckIn { get; set; }
+
+
+
+
+
+		[Column] public DateTime? CheckOut { get; set; }
+
+
+
+
+
+		[Column] public int? RoomNo { get; set; }
+
+
+
+
+
+		[Column] public string GuestComment { get; set; }
+
+
+
+
+
+		[Column] public string CavalaReply { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.Reservation_Guest")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class Reservation_Guest  
+    {
+
+
+
+		[Column] public int ReservationID { get; set; }
+
+
+
+
+
+		[Column] public int GuestID { get; set; }
+
+
+
+
+
+		[Column] public bool? IsLead { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.ReservationDetails")]
+
+
+
+	[PrimaryKey("ReservationDetailID", AutoIncrement=false)]
+
+
+	[ExplicitColumns]
+
+    public partial class ReservationDetail  
+    {
+
+
+
+		[Column] public int ReservationDetailID { get; set; }
+
+
+
+
+
+		[Column] public DateTime? RDdate { get; set; }
+
+
+
+
+
+		[Column] public byte[] Description { get; set; }
+
+
+
+
+
+		[Column] public decimal? Amount { get; set; }
+
+
+
+
+
+		[Column] public int? ChargeID { get; set; }
+
+
+
+
+
+		[Column] public int? ChargeType { get; set; }
+
+
+
+
+
+		[Column] public int? ReservationID { get; set; }
+
+
+
+	}
+
+    
+
+	[TableName("dbo.ReservationSource")]
+
+
+
+	[PrimaryKey("ReservationSourceID")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class ReservationSource  
+    {
+
+
+
+		[Column] public int ReservationSourceID { get; set; }
+
+
+
+
+
+		[Column] public string ReservationSouceName { get; set; }
 
 
 
