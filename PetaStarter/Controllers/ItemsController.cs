@@ -13,7 +13,7 @@ namespace Cavala.Controllers
         public ActionResult Index(int? page, ItemTypesEnum Ite, string PropName)
         {
             if (PropName?.Length > 0) page = 1;
-            ViewBag.iteName = db.ExecuteScalar<string>("Select ItemTypeName from ItemTypes where ItemTypeId=@0", Ite);
+            ViewBag.iteName = db.ExecuteScalar<string>("Select ItemTypeName from ItemTypes where ItemTypeId=@0", (int)Ite);
             ViewBag.ite = Ite;
             int ItemTypeId = (int)Ite;
             return View("Index", base.BaseIndex<ItemsVw>(page, "ItemID, ItemName, ItemTypeName as Type, ExpiryDays, UnitName as Unit", $"Items i, Units u, ItemTypes t where i.ItemTypeId=t.ItemTypeId and i.itemTypeId = {ItemTypeId} and i.UnitID=u.UnitID and ItemName like '%" + PropName + "%'"));

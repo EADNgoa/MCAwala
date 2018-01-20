@@ -16,6 +16,7 @@
 
 <table class="table section-to-print" width="100%">
     <tr>
+        <th>Order No.</th>
         <th>Order Time</th>
         <th>Table</th>
         <th>Room</th>
@@ -28,7 +29,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            
+            <td>@item.OTID</td>
             <td>
                 @String.Format("{0:HH:mm}", item.TDateTime)
             </td>
@@ -38,8 +39,13 @@
                 @item.RoomNo
             </td>
             
-            <td class="section-to-Not-print form-inline">               
-                <a id="EditOrder" data-val="@item.OTID">Edit</a>
+            <td class="section-to-Not-print form-inline">
+                <a id="EditOrder" data-val="@item.OTID">Edit</a> |
+                @if (!(item.IsVoid??false))
+                {
+                    <a class="OrderDets" data-val="@item.OTID">Details</a> @:
+                    <a class="OrderRecpts" data-val="@item.OTID">Receipts</a>
+                }
             </td>
         </tr>
     }
@@ -51,6 +57,20 @@
 
         $('#OrderPart').html("");
         $('#OrderPart').load('@Url.Action("Manage")', { id: $(this).data('val'), LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() } );
+
+    });
+
+    $(".OrderDets").click(function (event) {
+
+        $('#OrderPart').html("");
+        $('#OrderPart').load('@Url.Action("Details")', { id: $(this).data('val')} );
+
+    });
+
+    $(".OrderRecpts").click(function (event) {
+
+        $('#OrderPart').html("");
+        $('#OrderPart').load('@Url.Action("Receipt")', { id: $(this).data('val')} );
 
     });
 </script>

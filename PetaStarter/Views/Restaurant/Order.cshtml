@@ -1,13 +1,13 @@
 ﻿
 @{
-    ViewBag.Title = $"Orders at ";
+    ViewBag.Title = $"Order List For: ";
 }
 
 <h2>
     @ViewBag.Title
     <div class="form-inline">
         @Html.DropDownList("LoID", null, "Please Select a Restaurant", new { @class = "form-control" })
-        @Html.TextBox("OrderDate", $"{ ViewBag.TDate ?? DateTime.Today:dd-MMM-yyyy}", new { @class = "form-control", type = "date" })
+        @Html.TextBox("OrderDate", $"{ ViewBag.TDate ?? DateTime.Today:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
         @Html.DropDownList("UID", null, "Please Select a Waiter", new { @class = "form-control" })
     </div>
 </h2>

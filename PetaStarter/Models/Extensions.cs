@@ -39,7 +39,49 @@ namespace Cavala
         );
 
 
+        public static string GetItemName(int? id, Repository db) => (
+            db.ExecuteScalar<string>("Select ItemName from Items where ItemId=@0", id ?? 0) ?? ""
+        );
 
+        public static string GetItemTypeName(int? id, Repository db) => (
+            db.ExecuteScalar<string>("Select ItemTypeName from ItemTypes where ItemTypeId=@0", id ?? 0) ?? ""
+        );
+
+        //public static IEnumerable<SelectListItem> ConvertEnumToSelectList<T>() where T: struct
+        //{
+        //    return Enum.GetValues(typeof(T)).Cast<T>().Select(v => new SelectListItem
+        //    {
+        //        Text = v.ToString(),
+        //        Value = ((int)v).ToString()
+        //    }).ToList();
+
+
+        //}
+
+    public static decimal ApplyDiscounts(int ItemId, decimal Price, out string descript, Repository db)
+        {
+            var dis = db.Query<Discount>("Select * from Discounts where ItemId = @0 and TFrom<=@1 and Tto>=@1", ItemId, DateTime.Now);
+            var disa = db.Query<Discount>("Select * from Discounts d inner join ItemTypes it on d.ItemTypeId = it.itemTypeId inner join Items i on it.ItemTypeId=i.ItemTypeId where i.ItemId = @0 and TFrom<=@1 and Tto>=@1", ItemId, DateTime.Now);
+
+            decimal Discamt = 0;
+            decimal DiscPerc = 0;
+            descript = "";
+
+            var AllDiscounts = dis.Concat(disa);
+
+            foreach (Discount d in AllDiscounts)
+            {
+                Discamt += d.Amount ?? 0;
+                DiscPerc += d.Percentage ?? 0;
+                descript += (d.Amount.HasValue)?  d.Amount + ", ":"";
+                descript += (d.Percentage.HasValue) ? d.Percentage+ "%, " : "";
+            }
+            if (descript.Length > 0)//remove the trailing comma
+                descript= descript.Substring(0, descript.Length - 2);
+
+            Price -= Discamt -= ((DiscPerc * 100) / Price);
+            return Price;
+        }
 
         /// <summary>
         /// Populate the ViewBag with a selectlist for a Year Dropdown
@@ -224,6 +266,7 @@ namespace Cavala
         }
         
     }
+    
 
     public class ChangeNumbersToWords
     {

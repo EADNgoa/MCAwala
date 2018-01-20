@@ -196,6 +196,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CashCardController.cs" />
+    <Compile Include="Controllers\DiscountsController.cs" />
     <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
@@ -450,8 +451,13 @@
     <Content Include="Views\Restaurant\Manage.cshtml" />
     <Content Include="Views\Restaurant\Order.cshtml" />
     <Content Include="Views\Restaurant\OrderPart.cshtml" />
-    <Content Include="Views\Restaurant\Portion.cshtml" />
+    <Content Include="Views\Restaurant\Details.cshtml" />
+    <Content Include="Views\Restaurant\Bill.cshtml" />
+    <Content Include="Views\Shared\_LetterHead.cshtml" />
+    <Content Include="Views\Discounts\Index.cshtml" />
+    <Content Include="Views\Discounts\Manage.cshtml" />
     <Content Include="Views\Restaurant\Receipt.cshtml" />
+    <Content Include="Views\Restaurant\RecptPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,7 +18,7 @@ namespace Cavala.Controllers
 
         public ActionResult AutoCompleteItems(string term)
         {
-            var filteredItems = db.Fetch<Item>($"Select * from Items where ItemTypeId in ({(int)ItemTypesEnum.Menu}, {(int)ItemTypesEnum.RawMaterial}, {(int)ItemTypesEnum.Drinks},{(int)ItemTypesEnum.ReadyToServe}) and ItemName like '%{term}%'").Select(c => new { id = c.ItemId, value = c.ItemName });
+            var filteredItems = db.Fetch<Item>($"Select * from Items where ItemTypeId in ({(int)ItemTypesEnum.Menu}, {(int)ItemTypesEnum.RawMaterial}, {(int)ItemTypesEnum.DrinksNAlc},{(int)ItemTypesEnum.DrinksAlc},{(int)ItemTypesEnum.ReadyToServe}) and ItemName like '%{term}%'").Select(c => new { id = c.ItemId, value = c.ItemName });
             return Json(filteredItems, JsonRequestBehavior.AllowGet);
         }
 
@@ -28,10 +28,10 @@ namespace Cavala.Controllers
         public ActionResult Manage(int? Itemid,int? LocationId)
         {
             ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
-            if (Itemid.HasValue && LocationId.HasValue) //is edit            
+            if (Itemid.HasValue && Itemid>0 && LocationId.HasValue) //is edit            
             {
-                ViewBag.ItemName = db.ExecuteScalar<string>("Select ItemName from Item where ItemId=@0", Itemid);
-                return View(db.SingleOrDefault<Menu>($"where where itemId=@0 and LocationId=@1", Itemid, LocationId));
+                ViewBag.ItemName = MyExtensions.GetItemName(Itemid, db);
+                return View(db.SingleOrDefault<Menu>($"where itemId=@0 and LocationId=@1", Itemid, LocationId));
             }
             else
                 return View(default(Menu));
@@ -45,10 +45,10 @@ namespace Cavala.Controllers
         [EAAuthorize(FunctionName = "Menu", Writable = true)]
         public ActionResult Manage([Bind(Include = "LocationID,itemId, Price")] Menu menu)
         {
-            if (menu.ItemId != null && menu.LocationId != null)
+            if ((menu.ItemId != null && menu.ItemId>0) && menu.LocationId != null)
                 return base.BaseSave<Menu>(menu, db.Exists<Menu>("where itemId=@0 and LocationId=@1", menu.ItemId, menu.LocationId));
             else
-                return RedirectToAction("Manage", new { ItemId = menu.ItemId, LocationId = menu.LocationId });
+                return RedirectToAction("Manage", new {  menu.ItemId,  menu.LocationId });
 
         }
 

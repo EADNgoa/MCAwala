@@ -96,17 +96,40 @@ namespace Cavala
         public decimal Price { get; set; }
     }
 
-    //[MetadataType(typeof(OrderMetadata))]
-    //public partial class OrderTicket
-    //{
-    //}
+    public class DiscountVw
+    {
+        public int DiscountId { get; set; }
+        public string DiscountName { get; set; }
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
+        public int ItemTypeId { get; set; }
+        public string ItemTypeName { get; set; }
+        public DateTime Tfrom { get; set; }
+        public DateTime Tto { get; set; }
+        public decimal Percentage { get; set; }
+        public decimal Amount { get; set; }
+    }
+
+    public class OrderDetailsVw
+    {
+        public int OTdetailsId { get; set; }
+        public string Item { get; set; }
+        public decimal Qty { get; set; }
+        public decimal Price { get; set; }
+        public string Discount { get; set; }
+        public bool NC { get; set; }
+        public string NCtext { get; set; }
+    }
+
+    
+
 
     public enum ItemTypesEnum
     {
         All,
         RawMaterial,
         ReadyToServe,
-        Drinks,
+        DrinksNAlc,
         Stationary,
         Keys,
         Maintenance,
@@ -114,7 +137,8 @@ namespace Cavala
         LaundryStaff,
         Linen,
         Toiletries,
-        Menu
+        Menu,
+        DrinksAlc
     };
 
     public enum LocationTypesEnum
@@ -124,6 +148,22 @@ namespace Cavala
         HardwareStore,
         Fridge,
         FoodStore
+    }
+
+    public enum ChargeTypesEnum
+    {
+        All,
+        Restaurant
+    }
+
+    public enum PayModesEnum
+    {
+        All,
+        Cash,
+        CreditCard,
+        DebitCard,
+        Cheque,
+        Internet
     }
 
     public class EAAuthorizeAttribute : AuthorizeAttribute
