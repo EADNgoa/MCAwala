@@ -744,6 +744,18 @@ namespace Cavala
 
 
 
+		[Column] public string DiscountName { get; set; }
+
+
+
+
+
+		[Column] public int? ItemTypeId { get; set; }
+
+
+
+
+
 		[Column] public int? ItemId { get; set; }
 
 
@@ -1313,6 +1325,12 @@ namespace Cavala
 
 
 		[Column] public decimal? Qty { get; set; }
+
+
+
+
+
+		[Column] public string Discount { get; set; }
 
 
 

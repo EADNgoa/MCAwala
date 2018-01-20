@@ -30,7 +30,7 @@ namespace Cavala.Controllers
             var it = db.Single<InventoryTransaction>("Select * from InventoryTransaction where InventoryTransactionId=@0", id);
             it.ChkByUserId = User.Identity.GetUserId();
             db.Update(it);
-            return RedirectToAction("Receipt", new { LocationId = LocationId, Ite = Ite, EDate = EDate });
+            return RedirectToAction("Receipt", new {  LocationId,  Ite,  EDate });
         }
 
         [EAAuthorize(FunctionName = "Inventory Receipts", Writable = true)]

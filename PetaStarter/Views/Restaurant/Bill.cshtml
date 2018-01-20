@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = $"Bill no. {ViewBag.Order.OTID} on {(DateTime)ViewBag.Order.TDateTime: dd-MMM-yyyy HH: mm} for Table(s): {ViewBag.Order.TableId}";
+    Layout = "";
+}
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    #grid table, #grid th, #grid td {
+        border: 1px solid;
+        text-align: right;
+    }
+</style>
+
+@Html.Partial("_LetterHead")
+
+<hr />
+<h2>@ViewBag.Title</h2>
+<table class="table section-to-print" width="100%">
+    <tr>
+        <th style="text-align:left">Item</th>
+        <th style="text-align:right" >Price</th>
+        <th style="text-align:center">Appld. Dis.</th>
+        <th style="text-align:right">Quantity</th>
+        <th>&nbsp;</th>
+        <th style="text-align:right">Total</th>
+    </tr>
+
+    @{
+        var odv = (IEnumerable<OrderDetailsVw>)ViewBag.OrderDetails;
+        decimal gTot = 0;
+    }
+
+
+    @foreach (var item in odv)
+    {
+
+        gTot += (item.NC) ? 0: (item.Price * item.Qty);
+        <tr>
+
+            <td style="text-align:left">
+                @item.Item
+            </td>
+            <td style="text-align:right">
+                @item.Price
+            </td>
+            <td style="text-align:center">@item.Discount</td>
+            <td style="text-align:right">@item.Qty</td>
+            <td>@((item.NC) ? "Complimentary" : "")</td>
+            <td style="text-align:right">@($"{(item.Price * item.Qty):#,###.00}")</td>
+        </tr>
+    }
+
+</table>
+
+@{
+    var ctw = new ChangeNumbersToWords();
+}
+<hr />
+<h3>Total: @($"{gTot:#,###.00}")</h3>
+Rupees @ctw.changeToWords(gTot.ToString()) only

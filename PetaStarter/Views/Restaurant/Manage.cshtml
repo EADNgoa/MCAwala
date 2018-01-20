@@ -1,6 +1,6 @@
 ﻿@model OrderTicket
 
-@using (Html.BeginForm("ManageSave", "Restaurant", FormMethod.Post))
+@using (Html.BeginForm("ManageSave", "Restaurant", FormMethod.Post, new { id = "OrderFm" }))
 {
     @Html.AntiForgeryToken()
 
@@ -69,6 +69,10 @@
 
 <p>
     <a id="OrderList">Back to list</a>
+    @if(Model?.OTID>0)
+    {
+        <a id="OrderDets">Details</a>
+    }
 </p>
 
 <script>
@@ -76,6 +80,13 @@
 
         $('#OrderPart').html("");
         $('#OrderPart').load('@Url.Action("OrderPart")', { LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() } );
+
+    });
+
+     $("#OrderDets").click(function (event) {
+
+        $('#OrderPart').html("");
+        $('#OrderPart').load('@Url.Action("Details")', { id: @Model.OTID} );
 
     });
 
@@ -90,7 +101,7 @@
 
         jQuery.validator.methods["date"] = function (value, element) { return true; }
     });
-    
+
 </script>
 
 @section Scripts {

@@ -18,7 +18,7 @@ namespace Cavala.Controllers
 
         public ActionResult AutoCompleteItems(string term)
         {
-            var filteredItems = db.Fetch<Item>($"Select * from Items where ItemTypeId in ({(int)ItemTypesEnum.Menu}, {(int)ItemTypesEnum.RawMaterial}, {(int)ItemTypesEnum.Drinks},{(int)ItemTypesEnum.ReadyToServe}) and ItemName like '%{term}%'").Select(c => new { id = c.ItemId, value = c.ItemName });
+            var filteredItems = db.Fetch<Item>($"Select * from Items where ItemTypeId in ({(int)ItemTypesEnum.Menu}, {(int)ItemTypesEnum.RawMaterial}, {(int)ItemTypesEnum.DrinksNAlc},{(int)ItemTypesEnum.DrinksAlc},{(int)ItemTypesEnum.ReadyToServe}) and ItemName like '%{term}%'").Select(c => new { id = c.ItemId, value = c.ItemName });
             return Json(filteredItems, JsonRequestBehavior.AllowGet);
         }
 
@@ -48,7 +48,7 @@ namespace Cavala.Controllers
             if ((menu.ItemId != null && menu.ItemId>0) && menu.LocationId != null)
                 return base.BaseSave<Menu>(menu, db.Exists<Menu>("where itemId=@0 and LocationId=@1", menu.ItemId, menu.LocationId));
             else
-                return RedirectToAction("Manage", new { ItemId = menu.ItemId, LocationId = menu.LocationId });
+                return RedirectToAction("Manage", new {  menu.ItemId,  menu.LocationId });
 
         }
 

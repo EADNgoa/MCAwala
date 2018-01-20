@@ -18,17 +18,19 @@
                     <ul class="dropdown-menu">
                         <li><a href="~/Configs/Edit/1">Configuration</a></li>
                         <li><a href="~/Groups">User Groups</a></li>
-                        <li><a href="~/Units">Units</a></li>                        
-                        <li><a href="~/UnitConversion">Unit Conversion</a></li>                        
+                        <li><a href="~/Units">Units</a></li>
+                        <li><a href="~/UnitConversion">Unit Conversion</a></li>
                         <li><a href="~/Locations">Inventory Locations</a></li>
                         <li><a href="~/Tables">Tables</a></li>
+                        <li><a href="~/Discounts">Discounts</a></li>
                         <li><a href="~/Course">Courses</a></li>
                         <li><a href="~/CashCard">Cash cards</a></li>
 
                         <li class="dropdown dropdown-submenu">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assets<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="~/Items?Ite=@ItemTypesEnum.Drinks">Drinks</a></li>
+                                <li><a href="~/Items?Ite=@ItemTypesEnum.DrinksAlc">Alc. Drinks</a></li>
+                                <li><a href="~/Items?Ite=@ItemTypesEnum.DrinksNAlc">Non Alc. Drinks</a></li>
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.Menu">Menu dishes</a></li>
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.Keys">Keys</a></li>
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.LaundryGuest">Guest Laundry</a></li>
@@ -41,7 +43,7 @@
                                 <li><a href="~/Items?Ite=@ItemTypesEnum.Toiletries">Toiletries</a></li>
                             </ul>
                         </li>
-                        
+
 
 
                         <li><a href="~/Menu">Menu</a></li>

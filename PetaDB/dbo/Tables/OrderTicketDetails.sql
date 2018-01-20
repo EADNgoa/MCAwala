@@ -5,6 +5,7 @@
     [ItemId] INT NULL, 
     [Qty] decimal(10,2) NULL, 
     [Price] DECIMAL(18, 2) NULL, 
+	[Discount] Varchar(50) null,
     [CourseId] INT NULL, 
     [NC] BIT NULL, 
     [NCtext] VARCHAR(50) NULL, 

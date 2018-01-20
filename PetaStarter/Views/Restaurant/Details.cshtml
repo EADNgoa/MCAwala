@@ -81,9 +81,12 @@
 </div>
 }
 
-    <p>
-        <a id="OrderList">Back to list</a>        
-    </p>
+<p>
+    <a id="OrderList">Back to list</a>
+    <a id="OrderList" target="_blank" href="~/Restaurant/Bill/@ViewBag.Order.OTID?ite=@ItemTypesEnum.All">Full Bill</a>
+    <a id="OrderList" target="_blank" href="~/Restaurant/Bill/@ViewBag.Order.OTID?ite=@ItemTypesEnum.DrinksAlc">Split (Alc) Bill</a>
+    <a id="OrderList" target="_blank" href="~/Restaurant/Bill/@ViewBag.Order.OTID?ite=@ItemTypesEnum.DrinksNAlc">Split (Non-Alc) Bill</a>
+</p>
 
     <script>
     $("#OrderList").click(function (event) {
@@ -134,6 +137,7 @@
     <tr>
         <th>Item</th>
         <th>Price</th>
+        <th>Disc. Appld.</th>
         <th>Quantity</th>
         <th>Free?</th>
         <th>N.C. reason</th>
@@ -155,6 +159,7 @@
             <td>
                 @item.Price
             </td>
+            <td>@item.Discount</td>
             <td>@item.Qty</td>
             <td>@((item.NC)?"Free":"")</td>
             <td>@item.NCtext</td>

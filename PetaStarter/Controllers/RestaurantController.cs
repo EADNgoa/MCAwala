@@ -50,7 +50,7 @@ namespace Cavala.Controllers
         public ActionResult ManageSave([Bind(Include = "OTID,LocationId, TDateTime, WaiterId,TableId,RoomNo,IsVoid,VoidedReason ")] OrderTicket ot)
         {            
             if (ot.IsVoid??false) ot.VoidedBy = User.Identity.GetUserId();
-            return BaseSave<OrderTicket>(ot, ot.OTID > 0,"Order",new { LocationId=ot.LocationId,UID=ot.WaiterId,TDate=ot.TDateTime});           
+            return BaseSave<OrderTicket>(ot, ot.OTID > 0,"Order",new { ot.LocationId,UID=ot.WaiterId,TDate=ot.TDateTime});           
 
         }
 
@@ -81,6 +81,33 @@ namespace Cavala.Controllers
             return PartialView(vwData);
         }
 
+        [EAAuthorize(FunctionName = "Order", Writable = true)]
+        public ActionResult Bill(int id, ItemTypesEnum ite)
+        {            
+            ViewBag.Order = db.Single<OrderTicket>(id);
+            PetaPoco.Sql sq = new PetaPoco.Sql("Select od.*, ItemName as Item from orderTicketDetails od, Items i where od.itemId=i.ItemId and OTID=@0", id);
+
+            switch (ite)
+            {
+                case ItemTypesEnum.DrinksNAlc:
+                    {
+                        sq.Append(" and i.itemTypeId <>@0", ItemTypesEnum.DrinksAlc);
+                        break;
+                    }
+                case ItemTypesEnum.DrinksAlc:
+                    {
+                        sq.Append(" and i.itemTypeId =@0", ItemTypesEnum.DrinksAlc);
+                        break;
+                    }
+                default:
+                    break;
+            }
+            
+            ViewBag.orderDetails = db.Query<OrderDetailsVw>(sq);
+            return View();
+        }
+
+    
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
@@ -88,8 +115,13 @@ namespace Cavala.Controllers
         {
             //first lets fetch the item price
             otd.Price = db.ExecuteScalar<decimal>("Select Price from Menu where Itemid=@0", otd.ItemId);
-            
-            if (otd.NC ?? false) otd.NCUserId= User.Identity.GetUserId();
+
+            //Get Discounts
+            string disct = "";
+            otd.Price= MyExtensions.ApplyDiscounts(otd.ItemId.Value,otd.Price.Value, out disct , db);
+            otd.Discount = disct;
+
+            if (otd.NC ?? false) otd.NCUserId = User.Identity.GetUserId();
 
             if (ModelState.IsValid)
             {
@@ -99,6 +131,8 @@ namespace Cavala.Controllers
 
             return RedirectToAction("Details", new { id = otd.OTID });
         }
+
+        
 
         public ActionResult AutoCompleteItems(string term, int LocationId)
         {
