@@ -1468,7 +1468,9 @@ namespace Cavala
 
 
 
-	[PrimaryKey("RecieptID", AutoIncrement=false)]
+	[PrimaryKey("RecieptID")]
+
+
 
 
 	[ExplicitColumns]

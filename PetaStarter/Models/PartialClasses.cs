@@ -120,12 +120,11 @@ namespace Cavala
         public bool NC { get; set; }
         public string NCtext { get; set; }
     }
-        //[MetadataType(typeof(OrderMetadata))]
-        //public partial class OrderTicket
-        //{
-        //}
 
-        public enum ItemTypesEnum
+    
+
+
+    public enum ItemTypesEnum
     {
         All,
         RawMaterial,
@@ -149,6 +148,22 @@ namespace Cavala
         HardwareStore,
         Fridge,
         FoodStore
+    }
+
+    public enum ChargeTypesEnum
+    {
+        All,
+        Restaurant
+    }
+
+    public enum PayModesEnum
+    {
+        All,
+        Cash,
+        CreditCard,
+        DebitCard,
+        Cheque,
+        Internet
     }
 
     public class EAAuthorizeAttribute : AuthorizeAttribute

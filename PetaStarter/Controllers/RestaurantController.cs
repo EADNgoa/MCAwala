@@ -47,14 +47,21 @@ namespace Cavala.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
-        public ActionResult ManageSave([Bind(Include = "OTID,LocationId, TDateTime, WaiterId,TableId,RoomNo,IsVoid,VoidedReason ")] OrderTicket ot)
+        public void ManageSave([Bind(Include = "OTID,LocationId, TDateTime, WaiterId,TableId,RoomNo,IsVoid,VoidedReason ")] OrderTicket ot)
         {            
             if (ot.IsVoid??false) ot.VoidedBy = User.Identity.GetUserId();
-            return BaseSave<OrderTicket>(ot, ot.OTID > 0,"Order",new { ot.LocationId,UID=ot.WaiterId,TDate=ot.TDateTime});           
+
+            if (ModelState.IsValid)
+            {
+                var r = (ot.OTID > 0) ? db.Update(ot) : db.Insert(ot);                
+            }
+
+
+            //return BaseSave<OrderTicket>(ot, ot.OTID > 0,"Order",new { ot.LocationId,UID=ot.WaiterId,TDate=ot.TDateTime});           
 
         }
 
-        
+
         [HttpGet]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
         public ActionResult Details(int? id)
@@ -81,31 +88,7 @@ namespace Cavala.Controllers
             return PartialView(vwData);
         }
 
-        [EAAuthorize(FunctionName = "Order", Writable = true)]
-        public ActionResult Bill(int id, ItemTypesEnum ite)
-        {            
-            ViewBag.Order = db.Single<OrderTicket>(id);
-            PetaPoco.Sql sq = new PetaPoco.Sql("Select od.*, ItemName as Item from orderTicketDetails od, Items i where od.itemId=i.ItemId and OTID=@0", id);
-
-            switch (ite)
-            {
-                case ItemTypesEnum.DrinksNAlc:
-                    {
-                        sq.Append(" and i.itemTypeId <>@0", ItemTypesEnum.DrinksAlc);
-                        break;
-                    }
-                case ItemTypesEnum.DrinksAlc:
-                    {
-                        sq.Append(" and i.itemTypeId =@0", ItemTypesEnum.DrinksAlc);
-                        break;
-                    }
-                default:
-                    break;
-            }
-            
-            ViewBag.orderDetails = db.Query<OrderDetailsVw>(sq);
-            return View();
-        }
+       
 
     
         [HttpPost]
@@ -139,6 +122,94 @@ namespace Cavala.Controllers
             var filteredItems = db.Fetch<Item>($"Select i.* from Menu m,Items i where m.ItemId=i.ItemId and ItemName like '%{term}%' and m.LocationId=@0", LocationId).Select(c => new { id = c.ItemId, value = c.ItemName });
             return Json(filteredItems, JsonRequestBehavior.AllowGet);
         }
+
+        [EAAuthorize(FunctionName = "Order", Writable = true)]
+        public ActionResult Bill(int id, ItemTypesEnum ite)
+        {
+            ViewBag.Order = db.Single<OrderTicket>(id);
+            PetaPoco.Sql sq = new PetaPoco.Sql("Select od.*, ItemName as Item from orderTicketDetails od, Items i where od.itemId=i.ItemId and OTID=@0", id);
+
+            switch (ite)
+            {
+                case ItemTypesEnum.DrinksNAlc:
+                    {
+                        sq.Append(" and i.itemTypeId <>@0", ItemTypesEnum.DrinksAlc);
+                        break;
+                    }
+                case ItemTypesEnum.DrinksAlc:
+                    {
+                        sq.Append(" and i.itemTypeId =@0", ItemTypesEnum.DrinksAlc);
+                        break;
+                    }
+                default:
+                    break;
+            }
+
+            ViewBag.orderDetails = db.Query<OrderDetailsVw>(sq);
+            return View();
+        }
+
+
+        [HttpGet]
+        [EAAuthorize(FunctionName = "OrderReceipt", Writable = true)]
+        public ActionResult Receipt(int? id)
+        {
+            return ShowReceipts(ref id, null);
+        }
+
+        [HttpPost]
+        [EAAuthorize(FunctionName = "OrderReceipt", Writable = true)]
+        public ActionResult Receipt(int? id, int? DetId)
+        {
+            return ShowReceipts(ref id, DetId);
+        }
+
+        private ActionResult ShowReceipts(ref int? id, int? RecId)
+        {
+            var vwData = base.BaseCreateEdit<Reciept>(RecId, "RecieptId") ?? new Reciept();
+            vwData.Rdate = DateTime.Now;
+            if (RecId.HasValue)//edit mode
+               id = vwData.ChargeID;
+                        
+            ViewBag.PayMode = Enum.GetValues(typeof(PayModesEnum)).Cast<PayModesEnum>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+            ViewBag.Order = db.Single<OrderTicket>(id);
+
+            ViewBag.RecptDetails = db.Query<Reciept>("Select * from Reciept where ChargeType = @0 and ChargeId=@1",ChargeTypesEnum.Restaurant, id);
+            
+            return PartialView(vwData);
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [EAAuthorize(FunctionName = "OrderReceipt", Writable = true)]
+        public ActionResult ReceiptSave([Bind(Include = "RecieptId, RDate,Amount,PayMode,PayDetails,ChargeId")] Reciept reciept)
+        {
+            if (ModelState.IsValid)
+            {
+                reciept.ChargeType = (int)ChargeTypesEnum.Restaurant;
+                var r = (reciept.RecieptID> 0) ? db.Update(reciept) : db.Insert(reciept);
+                return RedirectToAction("Receipt", new { id = reciept.ChargeID});
+            }
+
+            return RedirectToAction("Receipt", new { id = reciept.ChargeID});
+        }
+
+        [EAAuthorize(FunctionName = "Order", Writable = true)]
+        public ActionResult RecptPrint(int id)
+        {            
+            ViewBag.Receipt = db.Single<Reciept>(id);
+            ViewBag.Order = db.Single<OrderTicket>(ViewBag.Receipt.ChargeID);
+            
+            return View();
+        }
+
 
         protected override void Dispose(bool disposing)
         {

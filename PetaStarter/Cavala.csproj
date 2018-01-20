@@ -452,11 +452,12 @@
     <Content Include="Views\Restaurant\Order.cshtml" />
     <Content Include="Views\Restaurant\OrderPart.cshtml" />
     <Content Include="Views\Restaurant\Details.cshtml" />
-    <Content Include="Views\Restaurant\Receipt.cshtml" />
     <Content Include="Views\Restaurant\Bill.cshtml" />
     <Content Include="Views\Shared\_LetterHead.cshtml" />
     <Content Include="Views\Discounts\Index.cshtml" />
     <Content Include="Views\Discounts\Manage.cshtml" />
+    <Content Include="Views\Restaurant\Receipt.cshtml" />
+    <Content Include="Views\Restaurant\RecptPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -47,8 +47,18 @@ namespace Cavala
             db.ExecuteScalar<string>("Select ItemTypeName from ItemTypes where ItemTypeId=@0", id ?? 0) ?? ""
         );
 
+        //public static IEnumerable<SelectListItem> ConvertEnumToSelectList<T>() where T: struct
+        //{
+        //    return Enum.GetValues(typeof(T)).Cast<T>().Select(v => new SelectListItem
+        //    {
+        //        Text = v.ToString(),
+        //        Value = ((int)v).ToString()
+        //    }).ToList();
 
-        public static decimal ApplyDiscounts(int ItemId, decimal Price, out string descript, Repository db)
+
+        //}
+
+    public static decimal ApplyDiscounts(int ItemId, decimal Price, out string descript, Repository db)
         {
             var dis = db.Query<Discount>("Select * from Discounts where ItemId = @0 and TFrom<=@1 and Tto>=@1", ItemId, DateTime.Now);
             var disa = db.Query<Discount>("Select * from Discounts d inner join ItemTypes it on d.ItemTypeId = it.itemTypeId inner join Items i on it.ItemTypeId=i.ItemTypeId where i.ItemId = @0 and TFrom<=@1 and Tto>=@1", ItemId, DateTime.Now);
@@ -256,6 +266,7 @@ namespace Cavala
         }
         
     }
+    
 
     public class ChangeNumbersToWords
     {

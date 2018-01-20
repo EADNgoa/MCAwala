@@ -43,7 +43,8 @@
                 <a id="EditOrder" data-val="@item.OTID">Edit</a> |
                 @if (!(item.IsVoid??false))
                 {
-                    <a id="OrderDets" data-val="@item.OTID">Details</a> @:
+                    <a class="OrderDets" data-val="@item.OTID">Details</a> @:
+                    <a class="OrderRecpts" data-val="@item.OTID">Receipts</a>
                 }
             </td>
         </tr>
@@ -59,10 +60,17 @@
 
     });
 
-    $("#OrderDets").click(function (event) {
+    $(".OrderDets").click(function (event) {
 
         $('#OrderPart').html("");
         $('#OrderPart').load('@Url.Action("Details")', { id: $(this).data('val')} );
+
+    });
+
+    $(".OrderRecpts").click(function (event) {
+
+        $('#OrderPart').html("");
+        $('#OrderPart').load('@Url.Action("Receipt")', { id: $(this).data('val')} );
 
     });
 </script>

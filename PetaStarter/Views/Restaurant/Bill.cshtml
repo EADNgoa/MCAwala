@@ -49,7 +49,7 @@
             <td style="text-align:center">@item.Discount</td>
             <td style="text-align:right">@item.Qty</td>
             <td>@((item.NC) ? "Complimentary" : "")</td>
-            <td style="text-align:right">@($"{(item.Price * item.Qty):#,###.00}")</td>
+            <td style="text-align:right">@((item.NC) ?"0.00": $"{(item.Price * item.Qty):#,###.00}")</td>
         </tr>
     }
 
