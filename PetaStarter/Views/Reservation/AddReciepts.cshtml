@@ -1,0 +1,138 @@
+﻿@model Reciept
+
+@{
+    ViewBag.Title = $"Add Reciepts";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<Div class="MastDet">
+    <table class="table" width="70%">
+        <tr>
+            <td>Reservation Date</td>
+            <td>@String.Format("{0:dd-MM-yyyy}",ViewBag.ResDet.RDate)</td>
+        </tr>
+    
+        <tr>
+            <td>Check In</td>
+            <td>@ViewBag.ResDet.CheckIn</td>
+        </tr>
+        <tr>
+            <td>Check Out</td>
+            <td>@ViewBag.ResDet.CheckOut</td>
+        </tr>
+        <tr>
+            <td>Room No</td>
+            <td>@ViewBag.ResDet.RoomNo</td>
+        </tr>
+    </table>
+</div>
+
+
+@using (Html.BeginForm("AddReciepts","Reservation",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        @if (Model?.RecieptID > 0)
+        {
+            @Html.HiddenFor(model => model.RecieptID)
+            @Html.HiddenFor(model => model.ChargeID)
+            @Html.HiddenFor(model => model.ChargeType)
+
+
+        }
+        else
+        {
+            @Html.Hidden("ChargeID",(int)ViewBag.ResDet.ReservationID)
+            @Html.Hidden("ChargeType", (int)ViewBag.Ite)
+
+
+        }
+  
+        <div class="form-group">
+            @Html.LabelFor(model => model.Amount, "Amount", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PayMode, "Pay Mode", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                 @Html.DropDownList("PayMode", ViewBag.EnumList as IEnumerable<SelectListItem>,new { @class = "form-control" })
+                 @Html.ValidationMessageFor(model => model.PayMode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PayDetails, "Pay Details", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PayDetails, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PayDetails, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">          
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>    
+    @Html.ActionLink("Back to List", "Index")        
+</div>
+
+<hr />
+<h2>Details</h2>
+<table class="table section-to-print" width="100%">
+    <tr>
+        <th>Rdate</th>
+        <th>Amount</th>
+        <th>Pay Mode</th>
+        <th colspan="3">Pay Details</th>
+      
+        
+        <th class="section-to-Not-print"></th>
+    </tr>
+
+    @{ 
+        var fsv = (IEnumerable<Reciept>)ViewBag.Dets;
+    }
+    
+
+    @foreach (var item in fsv)
+    {
+        <tr>
+            
+            <td>
+                @item.Rdate
+            </td>
+            <td>
+                @item.Amount             
+            </td>
+            <td>
+               @((PayTypeEnum)item.PayMode)            
+           </td>
+            <td>
+                @item.PayDetails
+            </td>
+            
+            <td class="section-to-Not-print" colspan="3">
+                    @Html.ActionLink("Edit", "AddReciepts", new { Eid = item.RecieptID,Ite = (int)ViewBag.ite}) 
+                    
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
