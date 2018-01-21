@@ -30,7 +30,7 @@ namespace Cavala.Controllers
             var it = db.Single<InventoryTransaction>("Select * from InventoryTransaction where InventoryTransactionId=@0", id);
             it.ChkByUserId = User.Identity.GetUserId();
             db.Update(it);
-            return RedirectToAction("Receipt", new { LocationId = LocationId, Ite = Ite, EDate = EDate });
+            return RedirectToAction("Receipt", new {  LocationId,  Ite,  EDate });
         }
 
         [EAAuthorize(FunctionName = "Inventory Receipts", Writable = true)]
@@ -41,7 +41,7 @@ namespace Cavala.Controllers
             ViewBag.iteName = db.ExecuteScalar<string>("Select ItemTypeName from ItemTypes where ItemTypeId=@0", Ite);
             ViewBag.LocationName = db.ExecuteScalar<string>("Select locationName from Location where LocationId=@0", LocationId);
             var vwData = base.BaseCreateEdit<InventoryTransaction>(id, "InventoryTransactionID");
-            ViewBag.ItemName = db.ExecuteScalar<string>("Select ItemName from Items where ItemId=@0", vwData?.ItemId ?? 0) ?? "";
+            ViewBag.ItemName = MyExtensions.GetItemName(vwData?.ItemId, db);
             ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName");
 
             return View(vwData);
@@ -119,7 +119,7 @@ namespace Cavala.Controllers
             ViewBag.Wastage = db.ExecuteScalar<decimal>("Select Qty from FoodStock where InventoryTransactionId=@0 and LocationId=@1", id, LocationId);
             ViewBag.ite = Ite;
             ViewBag.lid = LocationId;
-            ViewBag.LocationID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Fridge), "LocationID", "LocationName");
+            ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Fridge, db);
 
             //Since we know the Item, lets try to auto-set the portion unit
             ViewBag.itmUnit = db.ExecuteScalar<int?>("Select AUnitOfId from Items i, UnitConversion uc where i.UnitId=uc.OfUnitId and ItemId=@0", ViewBag.ITrecd.ItemId);
@@ -183,8 +183,8 @@ namespace Cavala.Controllers
         [EAAuthorize(FunctionName = "Inventory Move Use", Writable = true)]
         public ActionResult MovEat()
         {
-            ViewBag.LoID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Fridge), "LocationID", "LocationName");
-            
+            ViewBag.LoID = MyExtensions.GetLocations(LocationTypesEnum.Fridge, db);
+
             return View();
         }
 
@@ -194,8 +194,8 @@ namespace Cavala.Controllers
             var VwData = db.Query<FoodStockVw>("Select FoodstockId,TDate, DATEADD(dy,i.ExpiryDays,TDate) as Expiry, Qty,Size, u.UnitId, UnitName, fs.ItemId, ItemName from FoodStock fs, Units u, Items i where fs.ItemId=i.ItemId and" +
                 " fs.UnitId=u.UnitId and LocationId=@0 and Qty>0 order by Expiry", LocationId);
             ViewBag.lid = LocationId;
-            ViewBag.LocationID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0 and Locationid<>@1", LocationTypesEnum.Fridge, LocationId), "LocationID", "LocationName");
-            
+            ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Fridge, db);
+
             ViewBag.LocationName = db.ExecuteScalar<String>("Select LocationName from Location where LocationId=@0", LocationId);
             return PartialView(VwData);
         }

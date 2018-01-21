@@ -1,0 +1,91 @@
+﻿@model Discount
+
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>Manage Discounts</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Discounts</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.ItemId)
+    @Html.HiddenFor(model => model.ItemTypeId)
+    @if (Model?.DiscountId> 0)
+    {
+        @Html.HiddenFor(model => model.DiscountId)
+    }
+        <div class="form-group">
+            @Html.LabelFor(model => model.DiscountName, "Discount description", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DiscountName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiscountName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemId, "Item Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="Item" name="Item" style="color:black;" data-autocomplete-idholder="#ItemId" data-autocombo-url="@Url.Action("AutoCompleteItems")" value="@ViewBag.ItemName" class="form-control" />
+                You can either choose an item OR an item type.
+                @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemId, "Item Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="ItemType" name="ItemType" style="color:black;" data-autocomplete-idholder="#ItemTypeId" data-autocombo-url="@Url.Action("AutoCompleteItemTypes")" value="@ViewBag.ItemTypeName" class="form-control" />
+                You can either choose an item OR an item type.
+                @Html.ValidationMessageFor(model => model.ItemTypeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tfrom, "Discount From", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tfrom, new { htmlAttributes = new { @class = "form-control", type = "datetime" } })
+                @Html.ValidationMessageFor(model => model.Tfrom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tto, "Discount To", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tto, new { htmlAttributes = new { @class = "form-control", type = "datetime" } })
+                @Html.ValidationMessageFor(model => model.Tto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Percentage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

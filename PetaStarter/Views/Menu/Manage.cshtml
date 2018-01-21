@@ -22,6 +22,7 @@
         @Html.LabelFor(model => model.ItemId, "Item Name", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <input type="text" id="Item" name="Item" style="color:black;" data-autocomplete-idholder="#ItemId" data-autocombo-url="@Url.Action("AutoCompleteItems")" value="@ViewBag.ItemName" class="form-control" />
+            Please ensure you have first created the menu item in the Item Master screen!
             @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "text-danger" })
         </div>
     </div>

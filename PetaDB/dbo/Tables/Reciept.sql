@@ -1,5 +1,6 @@
-﻿CREATE TABLE [dbo].[Reciept]
+CREATE TABLE [dbo].[Reciept]
 (
+
 	[RecieptID] INT NOT NULL PRIMARY KEY IDENTITY,     
     [Rdate] DATETIME NULL, 
     [ChargeID] INT NULL, 

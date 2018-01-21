@@ -22,7 +22,7 @@ namespace Cavala.Controllers
         [EAAuthorize(FunctionName = "Table", Writable = true)]
         public ActionResult Manage(int? id)
         {
-            ViewBag.LocationId = new SelectList(db.Fetch<Location>("Select LocationId,LocationName from Location where LocationTypeId=@0",LocationTypesEnum.Restaurant), "LocationId", "LocationName");
+            ViewBag.LocationId = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
             return View(base.BaseCreateEdit<Table>(id, "TableId"));
         }
 

@@ -12,7 +12,7 @@ namespace Cavala.Controllers
         public ActionResult Index(int? Lid)
         {
             ViewBag.Lid=Lid;
-            ViewBag.LoID = new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", LocationTypesEnum.Restaurant), "LocationID", "LocationName");
+            ViewBag.LoID = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
             return View();
         }
 
