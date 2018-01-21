@@ -1,11 +1,10 @@
 ﻿CREATE TABLE [dbo].[ReservationDetails]
 (
-	[ReservationDetailID] INT NOT NULL PRIMARY KEY, 
+	[ReservationDetailID] INT NOT NULL PRIMARY KEY IDENTITY, 
     [RDdate] DATE NULL, 
-    [Description] VARBINARY(250) NULL, 
+    [Description] VARCHAR(250) NULL, 
     [Amount] DECIMAL(18, 2) NULL, 
     [ChargeID] INT NULL, 
     [ChargeType] INT NULL, 
-    [ReservationID] INT NULL, 
-    CONSTRAINT [FK_ReservationDetails_Reservation] FOREIGN KEY ([ReservationID]) REFERENCES [Reservation]([ReservationID])
+ 
 )

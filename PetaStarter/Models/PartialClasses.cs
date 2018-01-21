@@ -18,6 +18,26 @@ namespace Cavala
     {
     }
 
+    [MetadataType(typeof(ReservationMetadata))]
+    public partial class Reservation
+    {
+    }
+
+    [MetadataType(typeof(ReservationDetailMetadata))]
+    public partial class ReservationDetail
+    {
+    }
+
+    [MetadataType(typeof(RecieptMetadata))]
+    public partial class Reciept
+    {
+    }
+
+    [MetadataType(typeof(GuestMetadata))]
+    public partial class Guest
+    {
+    }
+
     public class ItemsVw
     {
         public int ItemId { get; set; }
@@ -96,6 +116,21 @@ namespace Cavala
         public decimal Price { get; set; }
     }
 
+    public class GuestsDets
+    {
+        public int GuestID { get; set; }
+        public string GuestName { get; set; }
+        public string GuestAddress { get; set; }
+        public string GuestCountry { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Likes { get; set; }
+        public string Dislikes { get; set; }
+        public string PhotoID { get; set; }
+
+        public HttpPostedFileBase UploadedFile { get; set; }
+    }
+
     public enum ItemTypesEnum
     {
         All,
@@ -119,6 +154,18 @@ namespace Cavala
         HardwareStore,
         Fridge,
         FoodStore
+    }
+
+    public enum ChargeTypeEnum
+    {
+       Reservation,
+       Reciept
+    }
+    public enum PayTypeEnum
+    {
+        Credit,
+        Debit,
+        Cash
     }
 
     public class EAAuthorizeAttribute : AuthorizeAttribute

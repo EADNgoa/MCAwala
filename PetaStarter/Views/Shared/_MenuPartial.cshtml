@@ -18,7 +18,9 @@
                     <ul class="dropdown-menu">
                         <li><a href="~/Configs/Edit/1">Configuration</a></li>
                         <li><a href="~/Groups">User Groups</a></li>
-                        <li><a href="~/Units">Units</a></li>                        
+                        <li><a href="~/Units">Units</a></li>    
+                        <li><a href="~/Reservation/ResIndex">Reservation Source</a></li>
+
                         <li><a href="~/UnitConversion">Unit Conversion</a></li>                        
                         <li><a href="~/Locations">Inventory Locations</a></li>
                         <li><a href="~/Tables">Tables</a></li>
@@ -60,6 +62,12 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Restaurant<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="~/TableRes">Reserve Table</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reservation<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="~/Reservation?ite=@ChargeTypeEnum.Reservation">Reserve</a></li>
                     </ul>
                 </li>
 

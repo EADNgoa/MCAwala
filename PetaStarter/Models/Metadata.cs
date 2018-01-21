@@ -34,6 +34,98 @@ namespace Cavala
         public DateTime DateExpiry;
     }
 
+    public class ReservationMetadata
+    {
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime RDate;
+
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime Rstart;
+
+        [Required]
+        public int ReservationSourceID;
+
+        [Required]
+        public int NoOfDays;
+
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd-mmm-yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        public DateTime CheckIn;
+
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd-mmm-yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        public DateTime CheckOut;
+
+        [Required]
+        [StringLength(50, MinimumLength = 1)]
+        public string RoomNo;
+
+    }
+
+    public class ReservationDetailMetadata
+    {
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime RDdate;
+
+        [Required]
+        [StringLength(250, MinimumLength = 3)]
+        public string Description;
+
+        [Required]
+        [Range(0.0, Double.MaxValue)]
+         public decimal Amount;
+    }
+    public class RecieptMetadata
+    {
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        public DateTime Rdate;
+
+        [Required]
+        [StringLength(150, MinimumLength = 3)]
+        public string PayDetails;
+
+       
+        public int PayMode;
+
+        [Required]
+        [Range(0.0, Double.MaxValue)]
+        public decimal Amount;
+    }
+
+    public class GuestMetadata
+    {
+        [Required]
+        [StringLength(100, MinimumLength = 3)]
+        public string GuestName;
+        [Required]
+        [StringLength(250, MinimumLength = 3)]
+        public string GuestAddress;
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
+        public string GuestCoutry;
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
+        public string Email;
+        [Required]
+        [StringLength(15, MinimumLength = 10)]
+        public string Phone;
+        [Required]
+        [StringLength(100)]
+        public string PhotoID;
+    
+        public string Likes;
+       
+        public string Dislikes;
+
+    }
+
+
     //public class EmpTypeMetadata
     //{
     //    [Display(Name = "Employee Type")]

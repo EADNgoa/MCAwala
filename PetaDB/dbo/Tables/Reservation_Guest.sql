@@ -4,5 +4,7 @@
     [GuestID] INT NOT NULL, 
     [IsLead] BIT NULL, 
     CONSTRAINT [FK_Reservation_Guest_Reservation] FOREIGN KEY ([ReservationID]) REFERENCES [Reservation]([ReservationID]), 
-    CONSTRAINT [FK_Reservation_Guest_Guest] FOREIGN KEY ([GuestID]) REFERENCES [Guests]([GuestID])
+    CONSTRAINT [FK_Reservation_Guest_Guest] FOREIGN KEY ([GuestID]) REFERENCES [Guests]([GuestID]), 
+
+    CONSTRAINT [PK_dbo.ReservationGuest] PRIMARY KEY CLUSTERED ([ReservationID] ASC, [GuestID] ASC),
 )

@@ -22,6 +22,10 @@ input {
     color: black;
 }
 
+input[type=textarea] {
+    color: black !important;
+}
+
 .myatag {
     color: brown;
     background-color: bisque;

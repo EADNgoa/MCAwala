@@ -196,6 +196,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CashCardController.cs" />
+    <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
@@ -446,6 +447,13 @@
     <Content Include="Views\TableRes\TableList.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
     <Content Include="Views\Menu\Manage.cshtml" />
+    <Content Include="Views\Reservation\Index.cshtml" />
+    <Content Include="Views\Reservation\Manage.cshtml" />
+    <Content Include="Views\Reservation\ReserveDetails.cshtml" />
+    <Content Include="Views\Reservation\AddGuests.cshtml" />
+    <Content Include="Views\Reservation\AddReciepts.cshtml" />
+    <Content Include="Views\Reservation\ResIndex.cshtml" />
+    <Content Include="Views\Reservation\ResManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

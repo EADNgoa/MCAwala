@@ -1,0 +1,41 @@
+﻿@model PagedList.IPagedList<ReservationSource>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Reservations";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Manage")
+</p>
+<table class="table">
+    <tr>   
+        <th>
+            Sr No
+        </th>
+        <th>
+            Reservation Source
+        </th>       
+        <th></th>
+    </tr>
+    @{ int i = 1;}
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @i
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.ReservationSouceName)
+        </td>
+  
+       
+        <td>
+            @Html.ActionLink("Edit", "ResManage", new { id = item.ReservationSourceID })|          
+        </td>
+    </tr>
+    i++;
+}
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+ new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
