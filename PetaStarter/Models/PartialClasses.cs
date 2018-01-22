@@ -209,7 +209,8 @@ namespace Cavala
         All,
         Restaurant,
         Reservation,
-        CashCard
+        CashCard,
+        Reciept
     }
 
     public enum PayTypeEnum

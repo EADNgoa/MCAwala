@@ -128,6 +128,25 @@ namespace Cavala.Controllers
             }
         }
 
+        [EAAuthorize(FunctionName = "CashCard", Writable = true)]
+        public ActionResult RecptIndex(int id)//CardIssueId
+        {
+            
+            var issu = db.Single<CardIssue>(id);
+            ViewBag.Title = $"Receipts for card issued to {issu.ToPerson} on {issu.IssuedOn:dd-MMM-yy}. Card expires on {issu.ExpiresOn:dd-MMM-yy}";
+            return View("RecptIndex", base.BaseIndex<Reciept>(1, "r.*", $"Reciept r, CardTransaction ct where ChargeId={(int)ChargeTypeEnum.CashCard} and r.chargeId=CardTransactionId and cardIssueId={id}"));
+            
+        }
+
+        [EAAuthorize(FunctionName = "CashCard", Writable = true)]
+        public ActionResult RecptPrint(int id)
+        {
+            ViewBag.Receipt = db.Single<Reciept>(id);
+            var issu = db.Single<CardIssue>(id);
+            ViewBag.Title = $"Recharge of card issued to {issu.ToPerson} on {issu.IssuedOn:dd-MMM-yy}. Card expires on {issu.ExpiresOn:dd-MMM-yy}";
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -974,7 +974,9 @@ namespace Cavala
 
 
 
-	[PrimaryKey("GuestID", AutoIncrement=false)]
+	[PrimaryKey("GuestID")]
+
+
 
 
 	[ExplicitColumns]
@@ -1002,7 +1004,7 @@ namespace Cavala
 
 
 
-		[Column] public byte[] GuestCountry { get; set; }
+		[Column] public string GuestCountry { get; set; }
 
 
 
@@ -1020,7 +1022,7 @@ namespace Cavala
 
 
 
-		[Column] public int? PhotoID { get; set; }
+		[Column] public string PhotoID { get; set; }
 
 
 
@@ -1540,7 +1542,9 @@ namespace Cavala
 
 
 
-	[PrimaryKey("ReservationID", AutoIncrement=false)]
+	[PrimaryKey("ReservationID")]
+
+
 
 
 	[ExplicitColumns]
@@ -1592,7 +1596,7 @@ namespace Cavala
 
 
 
-		[Column] public int? RoomNo { get; set; }
+		[Column] public string RoomNo { get; set; }
 
 
 
@@ -1615,6 +1619,8 @@ namespace Cavala
 	[TableName("dbo.Reservation_Guest")]
 
 
+
+	[PrimaryKey("ReservationID", AutoIncrement=false)]
 
 
 	[ExplicitColumns]
@@ -1648,7 +1654,9 @@ namespace Cavala
 
 
 
-	[PrimaryKey("ReservationDetailID", AutoIncrement=false)]
+	[PrimaryKey("ReservationDetailID")]
+
+
 
 
 	[ExplicitColumns]
@@ -1670,7 +1678,7 @@ namespace Cavala
 
 
 
-		[Column] public byte[] Description { get; set; }
+		[Column] public string Description { get; set; }
 
 
 
@@ -1689,12 +1697,6 @@ namespace Cavala
 
 
 		[Column] public int? ChargeType { get; set; }
-
-
-
-
-
-		[Column] public int? ReservationID { get; set; }
 
 
 

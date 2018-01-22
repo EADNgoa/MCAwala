@@ -53,7 +53,7 @@ namespace Cavala.Controllers
         {
             if (PropName?.Length > 0) page = 1;
 
-            return View("Index", base.BaseIndex<ReservationSource>(page, "ReservationSource where ReservationSouceName like '%" + PropName + "%'"));
+            return View("ResIndex", base.BaseIndex<ReservationSource>(page, "ReservationSource where ReservationSouceName like '%" + PropName + "%'"));
         }
 
 
