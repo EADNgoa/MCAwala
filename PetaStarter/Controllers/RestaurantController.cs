@@ -100,8 +100,7 @@ namespace Cavala.Controllers
             otd.Price = db.ExecuteScalar<decimal>("Select Price from Menu where Itemid=@0", otd.ItemId);
 
             //Get Discounts
-            string disct = "";
-            otd.Price= MyExtensions.ApplyDiscounts(otd.ItemId.Value,otd.Price.Value, out disct , db);
+            otd.Price = MyExtensions.ApplyDiscounts(otd.ItemId.Value, otd.Price.Value, out string disct, db);
             otd.Discount = disct;
 
             if (otd.NC ?? false) otd.NCUserId = User.Identity.GetUserId();
@@ -171,14 +170,10 @@ namespace Cavala.Controllers
             if (RecId.HasValue)//edit mode
                id = vwData.ChargeID;
                         
-            ViewBag.PayMode = Enum.GetValues(typeof(PayModesEnum)).Cast<PayModesEnum>().Select(v => new SelectListItem
-            {
-                Text = v.ToString(),
-                Value = ((int)v).ToString()
-            }).ToList();
+            ViewBag.PayMode = Enum.GetValues(typeof(PayTypeEnum)).Cast<PayTypeEnum>().Select(v => new SelectListItem{Text = v.ToString(),Value = ((int)v).ToString()}).ToList();
             ViewBag.Order = db.Single<OrderTicket>(id);
 
-            ViewBag.RecptDetails = db.Query<Reciept>("Select * from Reciept where ChargeType = @0 and ChargeId=@1",ChargeTypesEnum.Restaurant, id);
+            ViewBag.RecptDetails = db.Query<Reciept>("Select * from Reciept where ChargeType = @0 and ChargeId=@1",ChargeTypeEnum.Restaurant, id);
             
             return PartialView(vwData);
         }
@@ -193,7 +188,7 @@ namespace Cavala.Controllers
         {
             if (ModelState.IsValid)
             {
-                reciept.ChargeType = (int)ChargeTypesEnum.Restaurant;
+                reciept.ChargeType = (int)ChargeTypeEnum.Restaurant;
                 var r = (reciept.RecieptID> 0) ? db.Update(reciept) : db.Insert(reciept);
                 return RedirectToAction("Receipt", new { id = reciept.ChargeID});
             }
@@ -205,8 +200,8 @@ namespace Cavala.Controllers
         public ActionResult RecptPrint(int id)
         {            
             ViewBag.Receipt = db.Single<Reciept>(id);
-            ViewBag.Order = db.Single<OrderTicket>(ViewBag.Receipt.ChargeID);
-            
+            var ord = db.Single<OrderTicket>(ViewBag.Receipt.ChargeID);
+            ViewBag.Title = $"Bill no. {ord.OTID} on {(DateTime)ord.TDateTime: dd-MMM-yyyy} for Table(s): {ord.TableId}";
             return View();
         }
 

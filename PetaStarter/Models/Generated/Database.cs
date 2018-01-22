@@ -212,7 +212,7 @@ namespace Cavala
 	}
     
 	[TableName("dbo.CardIssue")]
-	[PrimaryKey("CardIssueId", AutoIncrement=false)]
+	[PrimaryKey("CardIssueId")]
 	[ExplicitColumns]
     public partial class CardIssue  
     {
@@ -227,13 +227,14 @@ namespace Cavala
 	}
     
 	[TableName("dbo.CardTransaction")]
+	[PrimaryKey("CardTransactionId")]
 	[ExplicitColumns]
     public partial class CardTransaction  
     {
-		[Column] public int CardId { get; set; }
+		[Column] public int CardTransactionId { get; set; }
 		[Column] public int? CardIssueId { get; set; }
 		[Column] public DateTime? TDateTime { get; set; }
-		[Column] public decimal? AmountBanked { get; set; }
+		[Column] public decimal? RechargeAmt { get; set; }
 		[Column] public decimal? AmountSpent { get; set; }
 		[Column] public int? OTID { get; set; }
 	}
@@ -246,6 +247,7 @@ namespace Cavala
 		[Column] public int CardId { get; set; }
 		[Column] public string CardName { get; set; }
 		[Column] public decimal? Amount { get; set; }
+		[Column] public bool Discarded { get; set; }
 	}
     
 	[TableName("dbo.Config")]
@@ -530,62 +532,7 @@ namespace Cavala
 		[Column] public decimal? Price { get; set; }
 	}
     
-	[TableName("dbo.OrderTicketDetails")]
-	[PrimaryKey("OTdetailsId")]
-	[ExplicitColumns]
-    public partial class OrderTicketDetail  
-    {
-		[Column] public int OTdetailsId { get; set; }
-		[Column] public int? OTID { get; set; }
-		[Column] public int? ItemId { get; set; }
-
-
-
-
-
-		[Column] public decimal? Qty { get; set; }
-
-
-
-
-
-		[Column] public string Discount { get; set; }
-
-
-
-
-
-
-		[Column] public decimal? Price { get; set; }
-		[Column] public int? CourseId { get; set; }
-		[Column] public bool? NC { get; set; }
-		[Column] public string NCtext { get; set; }
-		[Column] public string NCUserId { get; set; }
-	}
-    
-	[TableName("dbo.OrderTickets")]
-	[PrimaryKey("OTID")]
-	[ExplicitColumns]
-    public partial class OrderTicket  
-    {
-		[Column] public int OTID { get; set; }
-		[Column] public int? LocationId { get; set; }
-		[Column] public DateTime? TDateTime { get; set; }
-
-		[Column] public string RoomNo { get; set; }
-		[Column] public string TableId { get; set; }
-
-		[Column] public int? CardId { get; set; }
-		[Column] public string WaiterId { get; set; }
-		[Column] public bool? IsServed { get; set; }
-		[Column] public bool? IsPaid { get; set; }
-		[Column] public string EditedBy { get; set; }
-		[Column] public bool? IsVoid { get; set; }
-		[Column] public string VoidedBy { get; set; }
-		[Column] public string VoidedReason { get; set; }
-	}
-    
-
+	
 	[TableName("dbo.Reciept")]
 
 

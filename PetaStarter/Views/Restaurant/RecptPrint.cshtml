@@ -1,6 +1,5 @@
 ﻿
-@{
-    ViewBag.Title = $"Bill no. {ViewBag.Order.OTID} on {(DateTime)ViewBag.Order.TDateTime: dd-MMM-yyyy} for Table(s): {ViewBag.Order.TableId}";
+@{    
     Layout = "";
 }
 <style>
@@ -18,11 +17,11 @@
 
 <hr />
 <h2>Receipt Number: @ViewBag.Receipt.RecieptID</h2>
-<h2>@ViewBag.Title</h2>
+<h2>For: @ViewBag.Title</h2>
 <table class="table section-to-print" width="100%">
     <tr><td>Date</td><td>@ViewBag.Receipt.Rdate</td></tr>
     <tr><td>Amount</td><td>@ViewBag.Receipt.Amount</td></tr>
-    <tr><td>Paid By</td><td>@((PayModesEnum)ViewBag.Receipt.PayMode)</td></tr>
+    <tr><td>Paid By</td><td>@((PayTypeEnum)ViewBag.Receipt.PayMode)</td></tr>
     <tr><td>Pay Details</td><td>@ViewBag.Receipt.PayDetails</td></tr>
 </table>
 

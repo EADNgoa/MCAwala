@@ -53,10 +53,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.PayDetails, "Payment Details", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.PayMode, "Payment Mode", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.PayMode, null, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.PayDetails, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.PayMode, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -156,7 +156,7 @@
                 @item.Rdate
             </td>
             <td>@item.Amount</td>
-            <td>@((PayModesEnum)item.PayMode)</td>            
+            <td>@((PayTypeEnum)item.PayMode)</td>            
             <td>@item.PayDetails</td>
             <td class="section-to-Not-print">
                 <a class="EditOrder" data-val="@item.RecieptID">Edit</a>
