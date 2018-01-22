@@ -27,6 +27,8 @@ namespace Cavala
             new SelectList(db.Fetch<Location>("Select LocationID,LocationName from Location where LocationTypeId=@0", lte), "LocationID", "LocationName",selectedValue)
         );
 
+
+
         /// <summary>
         /// Get locations of a particular type
         /// </summary>
@@ -42,6 +44,11 @@ namespace Cavala
         public static string GetItemName(int? id, Repository db) => (
             db.ExecuteScalar<string>("Select ItemName from Items where ItemId=@0", id ?? 0) ?? ""
         );
+
+        public static string GetGuestName(Repository db) => (
+          db.ExecuteScalar<string>("Select GuestName from Guests") ?? ""
+      );
+
 
         public static string GetItemTypeName(int? id, Repository db) => (
             db.ExecuteScalar<string>("Select ItemTypeName from ItemTypes where ItemTypeId=@0", id ?? 0) ?? ""

@@ -171,14 +171,14 @@ namespace Cavala.Controllers
             if (RecId.HasValue)//edit mode
                id = vwData.ChargeID;
                         
-            ViewBag.PayMode = Enum.GetValues(typeof(PayModesEnum)).Cast<PayModesEnum>().Select(v => new SelectListItem
+            ViewBag.PayMode = Enum.GetValues(typeof(PayTypeEnum)).Cast<PayTypeEnum>().Select(v => new SelectListItem
             {
                 Text = v.ToString(),
                 Value = ((int)v).ToString()
             }).ToList();
             ViewBag.Order = db.Single<OrderTicket>(id);
 
-            ViewBag.RecptDetails = db.Query<Reciept>("Select * from Reciept where ChargeType = @0 and ChargeId=@1",ChargeTypesEnum.Restaurant, id);
+            ViewBag.RecptDetails = db.Query<Reciept>("Select * from Reciept where ChargeType = @0 and ChargeId=@1",ChargeTypeEnum.Restaurant, id);
             
             return PartialView(vwData);
         }
@@ -193,7 +193,7 @@ namespace Cavala.Controllers
         {
             if (ModelState.IsValid)
             {
-                reciept.ChargeType = (int)ChargeTypesEnum.Restaurant;
+                reciept.ChargeType = (int)ChargeTypeEnum.Restaurant;
                 var r = (reciept.RecieptID> 0) ? db.Update(reciept) : db.Insert(reciept);
                 return RedirectToAction("Receipt", new { id = reciept.ChargeID});
             }

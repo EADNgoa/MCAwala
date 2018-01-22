@@ -1,0 +1,50 @@
+﻿@model PagedList.IPagedList<Driver>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Reservations";
+}
+<center><h2>Drivers</h2></center>
+
+<p>
+    @Html.ActionLink("Create New", "Manage")
+</p>
+
+<table class="table">
+    <tr>   
+        <th>
+            Sr No
+        </th>
+        <th>
+            
+            Driver Name
+        </th> 
+       <th>
+           Mobile
+       </th>
+        <th></th>
+    </tr>
+    @{ int i = 1;}
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @i
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.DriverName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.Mobile)
+        </td>
+  
+       
+        <td>
+            @Html.ActionLink("Edit", "Manage", new { id = item.DriverID })|          
+        </td>
+    </tr>
+    i++;
+}
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+ new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
