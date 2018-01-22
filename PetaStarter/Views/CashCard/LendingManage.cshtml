@@ -1,0 +1,94 @@
+﻿@model CardIssue
+
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>Manage Cards Issues</h2>
+
+@if (ViewBag.preissu!=null)
+{
+    <div class="MastDet">
+        <h2>This card is already issued:</h2>
+        @($"Previous issue details: Issued on {ViewBag.preissu.IssuedOn:dd-MMM-yyyy} to {ViewBag.preissu.ToPerson}")
+    </div>
+}
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Card Issues</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @if (Model?.CardIssueId > 0)
+    {
+        @Html.HiddenFor(model => model.CardIssueId)
+    }
+    <div class="form-group">
+        @Html.LabelFor(model => model.CardId, "Cash Card Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CardId, null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CardId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IssuedOn, "Issued On", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IssuedOn, new { htmlAttributes = new { @class = "form-control", type = "DateTime" } })
+            @Html.ValidationMessageFor(model => model.IssuedOn, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReturnedOn, "Returned On", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ReturnedOn, new { htmlAttributes = new { @class = "form-control", type = "DateTime" } })
+            @Html.ValidationMessageFor(model => model.ReturnedOn, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ExpiresOn, "Expires On", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ExpiresOn, new { htmlAttributes = new { @class = "form-control", type = "Date" } })
+            @Html.ValidationMessageFor(model => model.ExpiresOn, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ToPerson, "Issued To", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ToPerson, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ToPerson, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ContactDetails, "Contact Details", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ContactDetails, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ContactDetails, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DepositAmt, "Deposit Amt.", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DepositAmt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DepositAmt, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "LendingIndex")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

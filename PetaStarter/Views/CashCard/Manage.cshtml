@@ -21,7 +21,7 @@
             @Html.HiddenFor(model => model.Amount)
         }
         <div class="form-group">
-            @Html.LabelFor(model => model.Amount, "Cash Card Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CardName, "Cash Card Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CardName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CardName, "", new { @class = "text-danger" })

@@ -458,6 +458,8 @@
     <Content Include="Views\Discounts\Manage.cshtml" />
     <Content Include="Views\Restaurant\Receipt.cshtml" />
     <Content Include="Views\Restaurant\RecptPrint.cshtml" />
+    <Content Include="Views\CashCard\LendingIndex.cshtml" />
+    <Content Include="Views\CashCard\LendingManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

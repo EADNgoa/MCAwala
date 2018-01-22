@@ -458,7 +458,9 @@ namespace Cavala
 
 
 
-	[PrimaryKey("CardIssueId", AutoIncrement=false)]
+	[PrimaryKey("CardIssueId")]
+
+
 
 
 	[ExplicitColumns]
@@ -522,11 +524,21 @@ namespace Cavala
 
 
 
+	[PrimaryKey("CardTransactionId")]
+
+
+
 
 	[ExplicitColumns]
 
     public partial class CardTransaction  
     {
+
+
+
+		[Column] public int CardTransactionId { get; set; }
+
+
 
 
 
@@ -548,7 +560,7 @@ namespace Cavala
 
 
 
-		[Column] public decimal? AmountBanked { get; set; }
+		[Column] public decimal? RechargeAmt { get; set; }
 
 
 
@@ -1330,13 +1342,13 @@ namespace Cavala
 
 
 
-		[Column] public string Discount { get; set; }
-
-
-
-
-
 		[Column] public decimal? Price { get; set; }
+
+
+
+
+
+		[Column] public string Discount { get; set; }
 
 
 
