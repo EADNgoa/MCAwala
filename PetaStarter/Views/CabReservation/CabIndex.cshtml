@@ -1,0 +1,95 @@
+﻿@model PagedList.IPagedList<CabReservationDets>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Cab Reservations";
+}
+
+<center>
+    <h2 class="section-to-print"><b>@ViewBag.Title</b></h2>
+    
+    @using (Html.BeginForm("CabIndex", "CabReservation", FormMethod.Get))
+    {        
+        <div class="row section-to-Not-print">
+            <div>
+                <table>
+                    <tr style="text-align:center">
+                        <td>&nbsp; Registration Date: </td>
+                        <td> @Html.TextBox("rd",null, new  {@type="date", @class = "form-control" })</td>
+
+                        <td class="col-lg-1"></td>
+                        <td><input type="submit" value="Search" class="btn btn-default" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    }
+</center>
+
+<p>
+    @Html.ActionLink("Create New", "CabManage")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Sr No
+        </th>
+        <th>
+            Reservation Date
+        </th>
+        <th>
+           Guest Name
+        </th>
+        <th>
+           From
+        </th>
+        <th>
+           To
+        </th>
+        <th>
+            Reminder Minutes
+        </th>
+        <th>
+            Driver Name
+        </th>
+        
+        <th></th>
+    </tr>
+    @{ int i = 1;}
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @i
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.Tdate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.GuestName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.TFrom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.TTo)
+        </td>
+        <td>
+            @item.ReminderMinutes
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelLocation => item.DriverName)
+        </td>
+       
+        <td>
+            @Html.ActionLink("Edit", "CabManage", new { id = item.CabReservationID })|
+         
+
+        </td>
+    </tr>
+    i++;
+}
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+ new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

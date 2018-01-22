@@ -9,12 +9,13 @@ namespace Cavala.Controllers
 {
     public class ReservationController : EAController
     {
+        
         // GET: Clients
         [EAAuthorize(FunctionName = "Reservation", Writable = false)]
-        public ActionResult Index(int? page,ChargeTypeEnum? ite ,string PropName,DateTime? rd)
+        public ActionResult Index(int? page,string PropName,DateTime? rd)
         {
      
-            ViewBag.ite = ite;
+         
            page = 1;
             var res = db.Fetch<Reservation>("Select * from Reservation r inner join ReservationSource rs on r.ReservationSourceID = rs.ReservationSourceID where ReservationID > 0 Order By ReservationID Desc");
             if (rd != null) res = res.Where(a => a.Rstart == rd).ToList();
@@ -53,7 +54,9 @@ namespace Cavala.Controllers
         {
             if (PropName?.Length > 0) page = 1;
 
-            return View("ResIndex", base.BaseIndex<ReservationSource>(page, "ReservationSource where ReservationSouceName like '%" + PropName + "%'"));
+
+            return View("ResIndex", db.Fetch<ReservationSource>("Select * From ReservationSource where ReservationSouceName like '%" + PropName + "%'"));
+
         }
 
 
@@ -74,15 +77,15 @@ namespace Cavala.Controllers
         [EAAuthorize(FunctionName = "Reservation", Writable = true)]
         public ActionResult ResManage([Bind(Include = "ReservationSourceID,ReservationSouceName")] ReservationSource reservation)
         {
-            return base.BaseSave<ReservationSource>(reservation, reservation.ReservationSourceID > 0);
+           base.BaseSave<ReservationSource>(reservation, reservation.ReservationSourceID > 0);
+            return RedirectToAction("ResIndex");
         }
         [EAAuthorize(FunctionName = "Reservation", Writable = true)]
-        public ActionResult ReserveDetails(int? Eid,int? id,ChargeTypeEnum? ite)
+        public ActionResult ReserveDetails(int? Eid,int? id)
         {
-            ViewBag.ite = ite;
-        
+            ViewBag.ite = ChargeTypeEnum.Reservation;
             ViewBag.ResDet = db.FirstOrDefault<Reservation>("Select * From Reservation Where ReservationID = @0",id);
-            ViewBag.Dets = db.Fetch<ReservationDetail>("Select * from ReservationDetails where ChargeID = @0 and ChargeType = @1",id,(int) ite);
+            ViewBag.Dets = db.Fetch<ReservationDetail>("Select * from ReservationDetails where ChargeID = @0 and ChargeType = @1",id,(int) ChargeTypeEnum.Reservation);
             return View(base.BaseCreateEdit<ReservationDetail>(Eid, "ReservationDetailID"));
         }
 
@@ -206,13 +209,13 @@ namespace Cavala.Controllers
         }
 
         [EAAuthorize(FunctionName = "Reservation", Writable = true)]
-        public ActionResult AddReciepts(int? Eid, int? id, ChargeTypeEnum? ite)
+        public ActionResult AddReciepts(int? Eid, int? id)
         {
             var EnumValues= from PayTypeEnum c in Enum.GetValues(typeof(PayTypeEnum)) select new { ID = c, Name = c.ToString() };
             ViewBag.PayMode = new SelectList(EnumValues, "ID", "Name");
-            ViewBag.ite = ite;
+            ViewBag.ite = ChargeTypeEnum.Reservation;
             ViewBag.ResDet = db.FirstOrDefault<Reservation>("Select * From Reservation Where ReservationID = @0", id);
-            ViewBag.Dets = db.Fetch<Reciept>("Select * from Reciept where ChargeID = @0 and ChargeType = @1", id, (int)ite);
+            ViewBag.Dets = db.Fetch<Reciept>("Select * from Reciept where ChargeID = @0 and ChargeType = @1", id, (int)ChargeTypeEnum.Reservation);
             return View(base.BaseCreateEdit<Reciept>(Eid, "RecieptID"));
         }
 

@@ -1,9 +1,11 @@
-﻿@model PagedList.IPagedList<ReservationSource>
-@using PagedList.Mvc;
+﻿@model IEnumerable<ReservationSource>
 @{
     ViewBag.Title = "Reservation Sources";
 }
-<h2 class="section-to-print"><b>@ViewBag.Title</b></h2>
+<center>
+    <h2>Reservation Source</h2>
+</center>
+
 <p>
     @Html.ActionLink("Create New", "Manage")
 </p>
@@ -36,6 +38,3 @@
 }
 
 </table>
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index",
- new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

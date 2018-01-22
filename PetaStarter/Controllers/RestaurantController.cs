@@ -170,8 +170,10 @@ namespace Cavala.Controllers
             if (RecId.HasValue)//edit mode
                id = vwData.ChargeID;
                         
+
             var slvals = Enum.GetValues(typeof(PayTypeEnum)).Cast<PayTypeEnum>().Select(v => new SelectListItem{Text = v.ToString(),Value = ((int)v).ToString()}).ToList();
             ViewBag.PayMode = slvals.Where(s => s.Value != "0");
+
             ViewBag.Order = db.Single<OrderTicket>(id);
             //ViewBag.PayDetails = new SelectList(db.Fetch<CashCard>("Select c.CardName,ci.CardIssueId as [CardId] from CashCard c, cardissue ci where c.discarded=0 and c.CardId=ci.CardId and GetDate() " +
             //    "between ci.IssuedOn and coalesce(ci.ReturnedOn,GetDate()) and ci.ExpiresOn>GETDATE()"), "CardId", "CardName");

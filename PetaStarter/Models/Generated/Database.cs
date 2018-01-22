@@ -389,64 +389,22 @@ namespace Cavala
 
 
 		[Column] public DateTime? LastLogin { get; set; }
-
-
-
-
-
 		[Column] public DateTime? BirthDate { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.CabReservation")]
-
-
-
-	[PrimaryKey("CabReservationID", AutoIncrement=false)]
-
-
+	[PrimaryKey("CabReservationID")]
 	[ExplicitColumns]
-
     public partial class CabReservation  
     {
-
-
-
 		[Column] public int CabReservationID { get; set; }
-
-
-
-
-
 		[Column] public DateTime? Tdate { get; set; }
-
-
-
-
-
 		[Column] public int? GuestID { get; set; }
-
-
-
-
-
 		[Column] public string TFrom { get; set; }
-
-
-
-
-
 		[Column] public string TTo { get; set; }
-
-
-
-
-
 		[Column] public int? ReminderMinutes { get; set; }
+		[Column] public int? DriverID { get; set; }
+
 
 
 
@@ -645,456 +603,128 @@ namespace Cavala
     
 
 	[TableName("dbo.Course")]
-
-
-
 	[PrimaryKey("CourseId")]
-
-
-
-
 	[ExplicitColumns]
-
     public partial class Course  
     {
-
-
-
 		[Column] public int CourseId { get; set; }
-
-
-
-
-
 		[Column] public string CourseName { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.Customer")]
-
-
-
 	[PrimaryKey("CustomerID")]
-
-
-
-
 	[ExplicitColumns]
-
     public partial class Customer  
     {
-
-
-
 		[Column] public int CustomerID { get; set; }
-
-
-
-
-
 		[Column] public string Name { get; set; }
-
-
-
-
-
 		[Column] public string Address { get; set; }
-
-
-
-
-
 		[Column] public string PassportNo { get; set; }
-
-
-
-
-
 		[Column] public DateTime? DateIssue { get; set; }
-
-
-
-
-
 		[Column] public DateTime? DateExpiry { get; set; }
-
-
-
-
-
 		[Column] public string PhotograghID { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.Discounts")]
-
-
-
 	[PrimaryKey("DiscountId")]
-
-
-
-
 	[ExplicitColumns]
-
     public partial class Discount  
     {
-
-
-
 		[Column] public int DiscountId { get; set; }
-
-
-
-
-
 		[Column] public string DiscountName { get; set; }
-
-
-
-
-
 		[Column] public int? ItemTypeId { get; set; }
-
-
-
-
-
 		[Column] public int? ItemId { get; set; }
-
-
-
-
-
 		[Column] public DateTime? Tfrom { get; set; }
-
-
-
-
-
 		[Column] public DateTime? Tto { get; set; }
-
-
-
-
-
 		[Column] public decimal? Percentage { get; set; }
-
-
-
-
-
 		[Column] public decimal? Amount { get; set; }
 
 
 
+
 	}
 
     
-
 	[TableName("dbo.Drivers")]
-
-
-
-	[PrimaryKey("DriverID", AutoIncrement=false)]
-
-
+	[PrimaryKey("DriverID")]
 	[ExplicitColumns]
-
     public partial class Driver  
     {
-
-
-
 		[Column] public int DriverID { get; set; }
-
-
-
-
-
 		[Column] public string DriverName { get; set; }
-
-
-
-
-
 		[Column] public string Mobile { get; set; }
-
-
-
-
-
 		[Column] public string IdPicture { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.FoodStock")]
-
-
-
 	[PrimaryKey("FoodStockId")]
-
-
-
-
 	[ExplicitColumns]
-
     public partial class FoodStock  
     {
-
-
-
 		[Column] public int FoodStockId { get; set; }
-
-
-
-
-
 		[Column] public DateTime TDate { get; set; }
-
-
-
-
-
 		[Column] public int? InventoryTransactionId { get; set; }
-
-
-
-
-
 		[Column] public int ItemId { get; set; }
-
-
-
-
-
 		[Column] public decimal Qty { get; set; }
-
-
-
-
-
 		[Column] public decimal Size { get; set; }
-
-
-
-
-
 		[Column] public int UnitId { get; set; }
-
-
-
-
-
 		[Column] public int LocationId { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.FunctionGroups")]
-
-
-
 	[PrimaryKey("FunctionID", AutoIncrement=false)]
-
-
 	[ExplicitColumns]
-
     public partial class FunctionGroup  
     {
-
-
-
 		[Column] public int FunctionID { get; set; }
-
-
-
-
-
 		[Column] public int GroupID { get; set; }
-
-
-
-
-
 		[Column] public bool Writable { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.Groups")]
-
-
-
 	[PrimaryKey("GroupID")]
-
-
-
-
 	[ExplicitColumns]
-
     public partial class Group  
     {
-
-
-
 		[Column] public int GroupID { get; set; }
-
-
-
-
-
 		[Column] public string GroupName { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.Guests")]
-
-
 
 	[PrimaryKey("GuestID")]
 
-
-
-
 	[ExplicitColumns]
-
     public partial class Guest  
     {
-
-
-
 		[Column] public int GuestID { get; set; }
-
-
-
-
-
 		[Column] public string GuestName { get; set; }
-
-
-
-
-
 		[Column] public string GuestAddress { get; set; }
-
-
-
-
 
 		[Column] public string GuestCountry { get; set; }
 
-
-
-
-
 		[Column] public string Email { get; set; }
-
-
-
-
-
 		[Column] public string Phone { get; set; }
-
-
-
-
-
 		[Column] public string PhotoID { get; set; }
-
-
-
-
-
 		[Column] public string Likes { get; set; }
-
-
-
-
-
 		[Column] public string Dislikes { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.InventoryTransaction")]
-
-
-
 	[PrimaryKey("InventoryTransactionId")]
-
-
-
-
 	[ExplicitColumns]
-
     public partial class InventoryTransaction  
     {
-
-
-
 		[Column] public int InventoryTransactionId { get; set; }
-
-
-
-
-
 		[Column] public DateTime TDate { get; set; }
-
-
-
-
-
 		[Column] public int ItemId { get; set; }
-
-
-
-
-
 		[Column] public decimal? QtyAdded { get; set; }
-
-
-
-
-
 		[Column] public decimal? QtyRemoved { get; set; }
-
-
-
-
-
 		[Column] public int? FromLocationId { get; set; }
-
-
-
-
-
 		[Column] public int? ToLocationId { get; set; }
+
+
+
 
 
 
@@ -1333,6 +963,26 @@ namespace Cavala
 
 
 		[Column] public int? ItemId { get; set; }
+		[Column] public decimal? Qty { get; set; }
+		[Column] public decimal? Price { get; set; }
+		[Column] public string Discount { get; set; }
+		[Column] public int? CourseId { get; set; }
+		[Column] public bool? NC { get; set; }
+		[Column] public string NCtext { get; set; }
+		[Column] public string NCUserId { get; set; }
+	}
+    
+	[TableName("dbo.OrderTickets")]
+	[PrimaryKey("OTID")]
+	[ExplicitColumns]
+    public partial class OrderTicket  
+    {
+		[Column] public int OTID { get; set; }
+		[Column] public int? LocationId { get; set; }
+		[Column] public DateTime? TDateTime { get; set; }
+		[Column] public string RoomNo { get; set; }
+		[Column] public string TableId { get; set; }
+=======
 
 
 
@@ -1477,263 +1127,80 @@ namespace Cavala
 	}
 
     
-
 	[TableName("dbo.Reciept")]
-
-
-
 	[PrimaryKey("RecieptID")]
-
-
-
-
 	[ExplicitColumns]
-
     public partial class Reciept  
     {
-
-
-
 		[Column] public int RecieptID { get; set; }
-
-
-
-
-
 		[Column] public DateTime? Rdate { get; set; }
-
-
-
-
-
 		[Column] public int? ChargeID { get; set; }
-
-
-
-
-
 		[Column] public int? ChargeType { get; set; }
-
-
-
-
-
 		[Column] public decimal? Amount { get; set; }
-
-
-
-
-
 		[Column] public int? PayMode { get; set; }
-
-
-
-
-
 		[Column] public string PayDetails { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.Reservation")]
-
-
 
 	[PrimaryKey("ReservationID")]
 
-
-
-
 	[ExplicitColumns]
-
     public partial class Reservation  
     {
-
-
-
 		[Column] public int ReservationID { get; set; }
-
-
-
-
-
 		[Column] public DateTime? RDate { get; set; }
-
-
-
-
-
 		[Column] public int? ReservationSourceID { get; set; }
-
-
-
-
-
 		[Column] public DateTime? Rstart { get; set; }
-
-
-
-
-
 		[Column] public int? NoOfDays { get; set; }
-
-
-
-
-
 		[Column] public DateTime? CheckIn { get; set; }
-
-
-
-
-
 		[Column] public DateTime? CheckOut { get; set; }
-
-
-
-
 
 		[Column] public string RoomNo { get; set; }
 
-
-
-
-
 		[Column] public string GuestComment { get; set; }
-
-
-
-
-
 		[Column] public string CavalaReply { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.Reservation_Guest")]
-
 
 
 	[PrimaryKey("ReservationID", AutoIncrement=false)]
 
 
 	[ExplicitColumns]
-
     public partial class Reservation_Guest  
     {
-
-
-
 		[Column] public int ReservationID { get; set; }
-
-
-
-
-
 		[Column] public int GuestID { get; set; }
-
-
-
-
-
 		[Column] public bool? IsLead { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.ReservationDetails")]
-
-
-
 	[PrimaryKey("ReservationDetailID")]
 
-
-
-
 	[ExplicitColumns]
-
     public partial class ReservationDetail  
     {
-
-
-
 		[Column] public int ReservationDetailID { get; set; }
-
-
-
-
-
 		[Column] public DateTime? RDdate { get; set; }
-
-
-
-
 
 		[Column] public string Description { get; set; }
 
-
-
-
-
 		[Column] public decimal? Amount { get; set; }
-
-
-
-
-
 		[Column] public int? ChargeID { get; set; }
-
-
-
-
-
 		[Column] public int? ChargeType { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.ReservationSource")]
-
-
-
 	[PrimaryKey("ReservationSourceID")]
-
-
-
-
 	[ExplicitColumns]
-
     public partial class ReservationSource  
     {
-
-
-
 		[Column] public int ReservationSourceID { get; set; }
-
-
-
-
-
 		[Column] public string ReservationSouceName { get; set; }
-
-
-
 	}
-
     
-
 	[TableName("dbo.Stock")]
 
 
