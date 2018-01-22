@@ -170,7 +170,12 @@ namespace Cavala.Controllers
             if (RecId.HasValue)//edit mode
                id = vwData.ChargeID;
                         
-            ViewBag.PayMode = Enum.GetValues(typeof(PayTypeEnum)).Cast<PayTypeEnum>().Select(v => new SelectListItem{Text = v.ToString(),Value = ((int)v).ToString()}).ToList();
+            ViewBag.PayMode = Enum.GetValues(typeof(PayTypeEnum)).Cast<PayTypeEnum>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
             ViewBag.Order = db.Single<OrderTicket>(id);
 
             ViewBag.RecptDetails = db.Query<Reciept>("Select * from Reciept where ChargeType = @0 and ChargeId=@1",ChargeTypeEnum.Restaurant, id);

@@ -104,9 +104,9 @@
        
         <td>
             @Html.ActionLink("Edit", "Manage", new { id = item.ReservationID })|
-            @Html.ActionLink("Bill", "ReserveDetails", new { id = item.ReservationID,ite=ChargeTypeEnum.Reservation })|
-            @Html.ActionLink("Guests", "AddGuests", new { id = item.ReservationID })
-            @Html.ActionLink("Reciepts", "AddReciepts", new { id = item.ReservationID,ite=ChargeTypeEnum.Reciept })
+            @Html.ActionLink("Bill", "ReserveDetails", new { id = item.ReservationID })|
+            @Html.ActionLink("Guests", "AddGuests", new { id = item.ReservationID })|
+            @Html.ActionLink("Reciepts", "AddReciepts", new { id = item.ReservationID })
 
         </td>
     </tr>

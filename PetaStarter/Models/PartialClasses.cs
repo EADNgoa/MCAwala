@@ -38,6 +38,15 @@ namespace Cavala
     {
     }
 
+    [MetadataType(typeof(DriverMetadata))]
+    public partial class Driver
+    {
+    }
+
+    [MetadataType(typeof(CabReservationMetadata))]
+    public partial class CabReservation
+    {
+    }
     public class ItemsVw
     {
         public int ItemId { get; set; }
@@ -132,6 +141,29 @@ namespace Cavala
         public HttpPostedFileBase UploadedFile { get; set; }
     }
 
+    public class CabReservationDets
+    {
+        public int CabReservationID { get; set; }
+        public DateTime Tdate { get; set; }
+        public int GuestID { get; set; }
+        public string GuestName { get; set; }
+        public string TFrom { get; set; }
+        public string TTo { get; set; }
+        public int ReminderMinutes { get; set; }
+        public string DriverName { get; set; }
+
+    }
+
+
+    public class DriverDets
+    {
+        public int DriverID { get; set; }
+        public string DriverName { get; set; }
+        public string Mobile { get; set; }
+        public string IdPicture { get; set; }
+        public HttpPostedFileBase UploadedFile { get; set; }
+    }
+
 
     public class DiscountVw
     {
@@ -209,6 +241,9 @@ namespace Cavala
         All,
         Restaurant,
         Reservation,
+        Food,
+        drink,
+        taxi,
         CashCard
     }
 
