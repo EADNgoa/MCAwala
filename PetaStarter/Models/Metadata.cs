@@ -19,13 +19,13 @@ namespace Cavala
         [StringLength(350, MinimumLength = 3)]
         public string Address;
 
-        [Display(Name = "Passport No.")]        
+        [Display(Name = "Passport No.")]
         [StringLength(20, MinimumLength = 3)]
         public string PassportNo;
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Passport Issued ON")]        
+        [Display(Name = "Passport Issued ON")]
         public DateTime DateIssue;
 
         [DataType(DataType.Date)]
@@ -38,7 +38,7 @@ namespace Cavala
     public class CardIssueMetadata
     {
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]        
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
         [Required]
         public DateTime ExpiresOn;
     }
@@ -87,7 +87,7 @@ namespace Cavala
 
         [Required]
         [Range(0.0, Double.MaxValue)]
-         public decimal Amount;
+        public decimal Amount;
     }
     public class RecieptMetadata
     {
@@ -99,7 +99,7 @@ namespace Cavala
         [StringLength(150, MinimumLength = 1)]
         public string PayDetails;
 
-       
+
         public int PayMode;
 
         [Required]
@@ -127,9 +127,9 @@ namespace Cavala
         [Required]
         [StringLength(100)]
         public string PhotoID;
-    
+
         public string Likes;
-       
+
         public string Dislikes;
 
     }
@@ -172,6 +172,7 @@ namespace Cavala
 
     }
 
+}
 
     //public class EmpTypeMetadata
 
@@ -452,7 +453,6 @@ namespace Cavala
     //    [Range(0.0, Double.MaxValue)]
     //    public decimal LoanAmt;
 
-=======
     //    [Display(Name = "HDFC Bank A/c")]
     //    [StringLength(50, MinimumLength = 3)]
     //    public string RegBankAc;
@@ -648,5 +648,3 @@ namespace Cavala
     //    public String AdjRemark;
     //}
 
-
-}
