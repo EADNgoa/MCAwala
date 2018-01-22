@@ -170,9 +170,11 @@ namespace Cavala.Controllers
             if (RecId.HasValue)//edit mode
                id = vwData.ChargeID;
                         
-            ViewBag.PayMode = Enum.GetValues(typeof(PayTypeEnum)).Cast<PayTypeEnum>().Select(v => new SelectListItem{Text = v.ToString(),Value = ((int)v).ToString()}).ToList();
+            var slvals = Enum.GetValues(typeof(PayTypeEnum)).Cast<PayTypeEnum>().Select(v => new SelectListItem{Text = v.ToString(),Value = ((int)v).ToString()}).ToList();
+            ViewBag.PayMode = slvals.Where(s => s.Value != "0");
             ViewBag.Order = db.Single<OrderTicket>(id);
-
+            //ViewBag.PayDetails = new SelectList(db.Fetch<CashCard>("Select c.CardName,ci.CardIssueId as [CardId] from CashCard c, cardissue ci where c.discarded=0 and c.CardId=ci.CardId and GetDate() " +
+            //    "between ci.IssuedOn and coalesce(ci.ReturnedOn,GetDate()) and ci.ExpiresOn>GETDATE()"), "CardId", "CardName");
             ViewBag.RecptDetails = db.Query<Reciept>("Select * from Reciept where ChargeType = @0 and ChargeId=@1",ChargeTypeEnum.Restaurant, id);
             
             return PartialView(vwData);
@@ -186,8 +188,54 @@ namespace Cavala.Controllers
         [EAAuthorize(FunctionName = "OrderReceipt", Writable = true)]
         public ActionResult ReceiptSave([Bind(Include = "RecieptId, RDate,Amount,PayMode,PayDetails,ChargeId")] Reciept reciept)
         {
+
             if (ModelState.IsValid)
             {
+                if (reciept.PayMode == (int)PayTypeEnum.CashCard)
+                {
+                    using (var transaction = db.GetTransaction())
+                    {
+                        try //make Card transaction, update card balance and save this
+                        {
+                            var card = db.Single<CashCard>("select * from CashCard where CardName=@0", reciept.PayDetails.Trim());
+                            var cardIssu = db.Single<CardIssue>("Select ci.* from CashCard c, cardissue ci where c.CardId=ci.CardId and c.discarded=0 and c.CardName=@0 " +
+                                "and GetDate() between ci.IssuedOn and coalesce(ci.ReturnedOn,GetDate()) and ci.ExpiresOn>GETDATE()",card.CardName);
+                            reciept.ChargeType = (int)ChargeTypeEnum.Restaurant;
+
+                            if (reciept.RecieptID > 0)//Edit mode
+                            {
+                                var re = db.Single<Reciept>(reciept.RecieptID);
+                                card.Amount += re.Amount;
+                                if (card.Amount < reciept.Amount)
+                                {
+                                    db.AbortTransaction();
+                                    return RedirectToAction("ErrorCust", "Home", new { err = "Insufficient Balance" });
+                                }
+                                card.Amount -= reciept.Amount;
+                                db.Insert(new CardTransaction { RechargeAmt=re.Amount, AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });
+                                db.Update(reciept);
+                            } else
+                            {
+                                if (card.Amount < reciept.Amount)
+                                {
+                                    db.AbortTransaction();
+                                    return RedirectToAction("ErrorCust", "Home", new { err = "Insufficient Balance" });
+                                }
+                                card.Amount -= reciept.Amount;
+                                db.Insert(new CardTransaction { AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });                                
+                                db.Insert(reciept);
+                            }
+                            db.Update(card);
+                            transaction.Complete();
+                        }
+                        catch (Exception ex)
+                        {
+                            db.AbortTransaction();
+                            throw ex;
+                        }
+                    }
+                }
+            
                 reciept.ChargeType = (int)ChargeTypeEnum.Restaurant;
                 var r = (reciept.RecieptID> 0) ? db.Update(reciept) : db.Insert(reciept);
                 return RedirectToAction("Receipt", new { id = reciept.ChargeID});

@@ -60,8 +60,16 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PayDetails, "Payment Details", htmlAttributes: new { @class = "control-label col-md-2" })
+    @*<div id="Cashcarddiv"  class="form-group">        
+        @Html.LabelFor(model => model.PayDetails, "Cash Card Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.PayDetails, null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PayDetails, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div id="Paydetsdiv" class="form-group">
+        @Html.LabelFor(model => model.PayDetails, "Pay Details/ Cash Card", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.PayDetails, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.PayDetails, "", new { @class = "text-danger" })
@@ -126,7 +134,26 @@
 
             jQuery.validator.methods["date"] = function (value, element) { return true; }
         });
+
+        //tried it out for cash card but failed
+        //$(document).ready(function () {
+
+        //    $("#Cashcarddiv").hide();
+        //    $("#Paydetsdiv").show();
+
+        //    $('#PayMode').change(function () {
+        //        if (this.value == 4) {
+        //            $("#Cashcarddiv").show();
+        //            $("#Paydetsdiv").hide();
+        //        } else {
+        //            $("#Cashcarddiv").hide();
+        //            $("#Paydetsdiv").show();
+        //        }
+                
+        //    });
+        //});
     </script>
+
 
 <hr />
 <h2>Receipts</h2>

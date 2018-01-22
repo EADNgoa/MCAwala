@@ -219,6 +219,7 @@ namespace Cavala
         Cash,
         CreditCard,
         DebitCard,
+        CashCard,
         Cheque,
         Internet
     }

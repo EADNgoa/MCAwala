@@ -96,7 +96,7 @@ namespace Cavala
         public DateTime Rdate;
 
         [Required]
-        [StringLength(150, MinimumLength = 3)]
+        [StringLength(150, MinimumLength = 1)]
         public string PayDetails;
 
        

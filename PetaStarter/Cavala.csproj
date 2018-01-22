@@ -470,6 +470,7 @@
     <Content Include="Views\CashCard\LendingManage.cshtml" />
     <Content Include="Views\CashCard\RechargeManage.cshtml" />
     <Content Include="Views\CashCard\RecptIndex.cshtml" />
+    <Content Include="Views\Home\ErrorCust.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

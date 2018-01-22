@@ -115,7 +115,7 @@ namespace Cavala.Controllers
                     db.Insert(new Reciept { Amount = cardTransaction.RechargeAmt, ChargeID = cardTransaction.CardTransactionId, ChargeType = (int)ChargeTypeEnum.CashCard, PayMode = (int)PayMode,PayDetails=PayDetails, Rdate = DateTime.Now });
 
                     var crd = db.Single<CashCard>(ViewBag.IssuData.CardId);
-                    crd.Amount = (crd.Amount??0)+ cardTransaction.RechargeAmt;
+                    crd.Amount +=  cardTransaction.RechargeAmt;
                     db.Update(crd);
                     transaction.Complete();
                     return RedirectToAction("LendingIndex");
