@@ -467,10 +467,16 @@
     <Content Include="Views\Discounts\Manage.cshtml" />
     <Content Include="Views\Restaurant\Receipt.cshtml" />
     <Content Include="Views\Restaurant\RecptPrint.cshtml" />
+
     <Content Include="Views\CabReservation\Index.cshtml" />
     <Content Include="Views\CabReservation\Manage.cshtml" />
     <Content Include="Views\CabReservation\CabIndex.cshtml" />
     <Content Include="Views\CabReservation\CabManage.cshtml" />
+    <Content Include="Views\CashCard\LendingIndex.cshtml" />
+    <Content Include="Views\CashCard\LendingManage.cshtml" />
+    <Content Include="Views\CashCard\RechargeManage.cshtml" />
+
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

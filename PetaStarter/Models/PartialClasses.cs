@@ -190,8 +190,23 @@ namespace Cavala
         public string NCtext { get; set; }
     }
 
-    
+    public partial class CardIssueVw
+    {
+        public int CardIssueId { get; set; }
+        public int CardId { get; set; }
+        public string CardName { get; set; }        
+        public DateTime IssuedOn { get; set; }
+        public DateTime? ReturnedOn { get; set; }
+        public DateTime? ExpiresOn { get; set; }
+        public string ToPerson { get; set; }
+        public string ContactDetails { get; set; }
+        public decimal DepositAmt { get; set; }
+    }
 
+    [MetadataType(typeof(CardIssueMetadata))]
+    public partial class CardIssue
+    {
+    }
 
 
     public enum ItemTypesEnum
@@ -220,7 +235,8 @@ namespace Cavala
         FoodStore
     }
 
-public enum ChargeTypeEnum
+
+    public enum ChargeTypeEnum
     {
         All,
         Restaurant,
@@ -228,7 +244,7 @@ public enum ChargeTypeEnum
         Food,
         drink,
         taxi,
-        Reciept
+        CashCard
     }
 
     public enum PayTypeEnum

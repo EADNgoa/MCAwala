@@ -1,0 +1,83 @@
+﻿@model PagedList.IPagedList<CardIssueVw>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Cash Card Lending";
+}
+
+<center>
+    <h2 class="section-to-print"><b>@ViewBag.Title</b></h2>
+
+    @using (Html.BeginForm("LendingIndex", "CashCard", FormMethod.Get))
+    {
+        <div class="row section-to-Not-print">
+            <div>
+                <table>
+                    <tr style="text-align:center">
+                        <td>&nbsp; Card Name: </td>
+                        <td> @Html.TextBox("PropName", ViewBag.CurrentFilter as string, new { @class = "form-control" })</td>
+
+                        <td class="col-lg-1"></td>
+                        <td><input type="submit" value="Search" class="btn btn-default" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    }
+</center>
+
+<p>
+    @Html.ActionLink("Create New", "LendingManage")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Cash Card
+        </th>
+        <th>
+            Issued On
+        </th>
+        <th>Returned On</th>
+        <th>Expires</th>
+        <th>Lent to</th>
+        <th>Deposit</th>
+        
+        <th></th>
+    </tr>
+
+    @foreach (var location in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelLocation => location.CardName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => location.IssuedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => location.ReturnedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => location.ExpiresOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => location.ToPerson)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => location.DepositAmt)
+        </td>
+       
+        <td>
+            @Html.ActionLink("Edit", "LendingManage", new { id = location.CardIssueId }) |
+            @if (location.ReturnedOn == null && location.ExpiresOn>DateTime.Now)
+            {
+                @Html.ActionLink("Recharge", "RechargeManage", new { id = location.CardIssueId })
+            }
+        </td>
+    </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("LendingIndex",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
