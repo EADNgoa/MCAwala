@@ -1,0 +1,207 @@
+﻿@model GuestsDets
+
+@{
+    ViewBag.Title = $" Guests";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<Div class="MastDet">
+    <table class="table" width="50%">
+        <tr>
+            <td>Reservation Date</td>
+            <td>@String.Format("{0:dd-MM-yyyy}", ViewBag.ResDet.RDate)</td>
+        </tr>     
+        <tr>
+            <td>Check In</td>
+            <td>@ViewBag.ResDet.CheckIn</td>
+        </tr>
+        <tr>
+            <td>Check Out</td>
+            <td>@ViewBag.ResDet.CheckOut</td>
+        </tr>
+        <tr>
+            <td>Room No</td>
+            <td>@ViewBag.ResDet.RoomNo</td>
+        </tr>
+        @if (ViewBag.IsLead == null)
+        {
+            using (Html.BeginForm("AddGuests", "Reservation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("RID", (int)ViewBag.ResDet.ReservationID)
+
+                    <tr>
+                        <td>
+                            @Html.Label("GuestIDD", "Choose Lead Guest", htmlAttributes: new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.DropDownList("GuestID", (IEnumerable<SelectListItem>)ViewBag.GuestID,"-Choose Lead-", new { @class = "form-control" })
+                        </td>
+              
+                    </tr>
+                    <tr>
+                        <td>
+                        <td>
+                            <input type="submit" value="Assign" class="btn btn-default" />
+
+                        </td>
+                    </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td>Lead Guest</td>
+                <td>@ViewBag.IsLead</td>
+            </tr>
+        }
+   </table>
+</div>
+
+@using (Html.BeginForm("AddGuests","Reservation",FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        @if (Model?.GuestID > 0)
+        {
+            @Html.HiddenFor(model => model.PhotoID)
+
+            @Html.HiddenFor(model => model.GuestID)
+
+
+        }
+      @Html.Hidden("RID",(int)ViewBag.ResDet.ReservationID)
+        <div class="form-group">
+            @Html.LabelFor(model => model.GuestName, "Guest Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GuestName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GuestName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.GuestAddress, "Guest Address", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GuestAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GuestAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GuestCountry, "Guest Country", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GuestCountry, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GuestCountry, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone, " Phone", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @if (Model.GuestID == 0)
+        {
+        <div class="form-group">
+          <label class="control-label col-md-2">Guest Picture</label>
+            <div class="col-md-10">
+                <input class="form-control" type="file" id="UploadedFile" name="UploadedFile" />
+           </div>
+       </div>
+        }
+        else
+        {
+    <div class="form-group">
+        @Html.LabelFor(model => model.Likes, " Likes", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Likes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Likes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Dislikes, " DisLikes", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Dislikes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Dislikes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+        }
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+<div>    
+    @Html.ActionLink("Back to List", "Index")        
+</div>
+
+<hr />
+<h2>Details</h2>
+<table class="table section-to-print" width="70%%">
+    <tr>
+        <th> Name</th>
+        <th> Address</th>
+        <th> Country</th>
+        <th> Email</th>
+        <th> Phone</th>
+        <th>Likes</th>
+        <th>Dislikes</th>
+        
+        <th class="section-to-Not-print"></th>
+    </tr>
+    @foreach (var item in (IEnumerable<Guest>) ViewBag.Dets)
+    {
+        <tr>
+            
+            <td>
+                @item.GuestName
+            </td>
+            <td>
+                @item.GuestAddress             
+            </td>
+            <td>
+                @item.GuestCountry
+            </td>
+            <td>
+                @item.Email
+            </td>
+            <td>
+                @item.Phone
+            </td>
+            <td>
+                @item.Likes
+            </td>
+            <td>
+                @item.Dislikes
+            </td>
+            <td class="section-to-Not-print">
+                    @Html.ActionLink("Edit", "AddGuests", new { Eid = item.GuestID })                    
+            </td>
+        </tr>
+        
+    }
+
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

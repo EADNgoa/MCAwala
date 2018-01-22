@@ -1,0 +1,119 @@
+﻿@model PagedList.IPagedList<Reservation>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Reservations";
+}
+
+<center>
+    <h2 class="section-to-print"><b>@ViewBag.Title</b></h2>
+    
+    @using (Html.BeginForm("Index", "Reservation", FormMethod.Get))
+    {        
+        <div class="row section-to-Not-print">
+            <div>
+                <table>
+                    <tr style="text-align:center">
+                        <td>&nbsp; Registration Date: </td>
+                        <td> @Html.TextBox("rd",null, new  {@type="date", @class = "form-control" })</td>
+
+                        <td class="col-lg-1"></td>
+                        <td><input type="submit" value="Search" class="btn btn-default" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    }
+</center>
+
+<p>
+    @Html.ActionLink("Create New", "Manage")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Sr No
+        </th>
+        <th>
+            Registration Date
+        </th>
+        <th>
+            Reservation Source
+        </th>
+        <th>
+            Reservation Start
+        </th>
+        <th>
+            No Of Days
+        </th>
+        <th>
+            Check In
+        </th>
+        <th>
+            Check Out
+        </th>
+        <th>
+            Room No
+        </th>
+        <th>
+            Guest Comment
+        </th>
+        <th>
+            Cavala Reply
+        </th>
+       
+        <th></th>
+    </tr>
+    @{ int i = 1;}
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @i
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.RDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.ReservationSourceID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.Rstart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.NoOfDays)
+        </td>
+        <td>
+            @item.CheckIn
+
+
+        </td>
+        <td>
+            @item.CheckOut
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.CheckOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.RoomNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.GuestComment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelLocation => item.CavalaReply)
+        </td>
+       
+        <td>
+            @Html.ActionLink("Edit", "Manage", new { id = item.ReservationID })|
+            @Html.ActionLink("Bill", "ReserveDetails", new { id = item.ReservationID,ite=ChargeTypeEnum.Reservation })|
+            @Html.ActionLink("Guests", "AddGuests", new { id = item.ReservationID })
+            @Html.ActionLink("Reciepts", "AddReciepts", new { id = item.ReservationID,ite=ChargeTypeEnum.Reciept })
+
+        </td>
+    </tr>
+    i++;
+}
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+ new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
