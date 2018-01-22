@@ -40,6 +40,7 @@
         <th>Expires</th>
         <th>Lent to</th>
         <th>Deposit</th>
+        
         <th></th>
     </tr>
 
@@ -64,8 +65,13 @@
         <td>
             @Html.DisplayFor(modelLocation => location.DepositAmt)
         </td>
+       
         <td>
-            @Html.ActionLink("Edit", "LendingManage", new { id = location.CardIssueId })
+            @Html.ActionLink("Edit", "LendingManage", new { id = location.CardIssueId }) |
+            @if (location.ReturnedOn == null && location.ExpiresOn>DateTime.Now)
+            {
+                @Html.ActionLink("Recharge", "RechargeManage", new { id = location.CardIssueId })
+            }
         </td>
     </tr>
     }

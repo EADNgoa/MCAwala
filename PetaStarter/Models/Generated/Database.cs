@@ -542,12 +542,6 @@ namespace Cavala
 
 
 
-		[Column] public int CardId { get; set; }
-
-
-
-
-
 		[Column] public int? CardIssueId { get; set; }
 
 
@@ -609,6 +603,12 @@ namespace Cavala
 
 
 		[Column] public decimal? Amount { get; set; }
+
+
+
+
+
+		[Column] public bool Discarded { get; set; }
 
 
 

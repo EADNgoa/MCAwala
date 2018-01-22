@@ -125,7 +125,7 @@ namespace Cavala
     {
         public int CardIssueId { get; set; }
         public int CardId { get; set; }
-        public string CardName { get; set; }
+        public string CardName { get; set; }        
         public DateTime IssuedOn { get; set; }
         public DateTime? ReturnedOn { get; set; }
         public DateTime? ExpiresOn { get; set; }
@@ -134,6 +134,10 @@ namespace Cavala
         public decimal DepositAmt { get; set; }
     }
 
+    [MetadataType(typeof(CardIssueMetadata))]
+    public partial class CardIssue
+    {
+    }
 
     public enum ItemTypesEnum
     {
@@ -166,7 +170,7 @@ namespace Cavala
         All,
         Restaurant,
         Reservation,
-        Reciept
+        CashCard
     }
 
     public enum PayTypeEnum

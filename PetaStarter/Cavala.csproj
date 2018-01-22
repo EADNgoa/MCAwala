@@ -460,6 +460,7 @@
     <Content Include="Views\Restaurant\RecptPrint.cshtml" />
     <Content Include="Views\CashCard\LendingIndex.cshtml" />
     <Content Include="Views\CashCard\LendingManage.cshtml" />
+    <Content Include="Views\CashCard\RechargeManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
