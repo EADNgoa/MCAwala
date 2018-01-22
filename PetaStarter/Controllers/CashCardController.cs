@@ -115,7 +115,7 @@ namespace Cavala.Controllers
                     db.Insert(new Reciept { Amount = cardTransaction.RechargeAmt, ChargeID = cardTransaction.CardTransactionId, ChargeType = (int)ChargeTypeEnum.CashCard, PayMode = (int)PayMode,PayDetails=PayDetails, Rdate = DateTime.Now });
 
                     var crd = db.Single<CashCard>(ViewBag.IssuData.CardId);
-                    crd.Amount = (crd.Amount??0)+ cardTransaction.RechargeAmt;
+                    crd.Amount +=  cardTransaction.RechargeAmt;
                     db.Update(crd);
                     transaction.Complete();
                     return RedirectToAction("LendingIndex");
@@ -126,6 +126,25 @@ namespace Cavala.Controllers
                     throw ex;
                 }
             }
+        }
+
+        [EAAuthorize(FunctionName = "CashCard", Writable = true)]
+        public ActionResult RecptIndex(int id)//CardIssueId
+        {
+            
+            var issu = db.Single<CardIssue>(id);
+            ViewBag.Title = $"Receipts for card issued to {issu.ToPerson} on {issu.IssuedOn:dd-MMM-yy}. Card expires on {issu.ExpiresOn:dd-MMM-yy}";
+            return View("RecptIndex", base.BaseIndex<Reciept>(1, "r.*", $"Reciept r, CardTransaction ct where ChargeId={(int)ChargeTypeEnum.CashCard} and r.chargeId=CardTransactionId and cardIssueId={id}"));
+            
+        }
+
+        [EAAuthorize(FunctionName = "CashCard", Writable = true)]
+        public ActionResult RecptPrint(int id)
+        {
+            ViewBag.Receipt = db.Single<Reciept>(id);
+            var issu = db.Single<CardIssue>(id);
+            ViewBag.Title = $"Recharge of card issued to {issu.ToPerson} on {issu.IssuedOn:dd-MMM-yy}. Card expires on {issu.ExpiresOn:dd-MMM-yy}";
+            return View();
         }
 
         protected override void Dispose(bool disposing)

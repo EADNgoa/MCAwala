@@ -54,7 +54,9 @@ namespace Cavala.Controllers
         {
             if (PropName?.Length > 0) page = 1;
 
+
             return View("ResIndex", db.Fetch<ReservationSource>("Select * From ReservationSource where ReservationSouceName like '%" + PropName + "%'"));
+
         }
 
 

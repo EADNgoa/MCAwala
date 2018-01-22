@@ -20,6 +20,11 @@ namespace Cavala.Controllers
             return View();
         }
 
+        public ActionResult ErrorCust(string err)
+        {
+            return View(err);
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

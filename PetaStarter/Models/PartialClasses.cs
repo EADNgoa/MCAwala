@@ -241,9 +241,6 @@ namespace Cavala
         All,
         Restaurant,
         Reservation,
-        Food,
-        drink,
-        taxi,
         CashCard
     }
 
@@ -253,6 +250,7 @@ namespace Cavala
         Cash,
         CreditCard,
         DebitCard,
+        CashCard,
         Cheque,
         Internet
     }

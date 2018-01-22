@@ -22,7 +22,7 @@ input {
     color: black;
 }
 
-input[type=textarea] {
+textarea {
     color: black !important;
 }
 

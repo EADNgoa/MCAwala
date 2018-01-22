@@ -691,14 +691,18 @@ namespace Cavala
 	}
     
 	[TableName("dbo.Guests")]
+
 	[PrimaryKey("GuestID")]
+
 	[ExplicitColumns]
     public partial class Guest  
     {
 		[Column] public int GuestID { get; set; }
 		[Column] public string GuestName { get; set; }
 		[Column] public string GuestAddress { get; set; }
+
 		[Column] public string GuestCountry { get; set; }
+
 		[Column] public string Email { get; set; }
 		[Column] public string Phone { get; set; }
 		[Column] public string PhotoID { get; set; }
@@ -1138,7 +1142,9 @@ namespace Cavala
 	}
     
 	[TableName("dbo.Reservation")]
+
 	[PrimaryKey("ReservationID")]
+
 	[ExplicitColumns]
     public partial class Reservation  
     {
@@ -1149,13 +1155,19 @@ namespace Cavala
 		[Column] public int? NoOfDays { get; set; }
 		[Column] public DateTime? CheckIn { get; set; }
 		[Column] public DateTime? CheckOut { get; set; }
+
 		[Column] public string RoomNo { get; set; }
+
 		[Column] public string GuestComment { get; set; }
 		[Column] public string CavalaReply { get; set; }
 	}
     
 	[TableName("dbo.Reservation_Guest")]
+
+
 	[PrimaryKey("ReservationID", AutoIncrement=false)]
+
+
 	[ExplicitColumns]
     public partial class Reservation_Guest  
     {
@@ -1166,12 +1178,15 @@ namespace Cavala
     
 	[TableName("dbo.ReservationDetails")]
 	[PrimaryKey("ReservationDetailID")]
+
 	[ExplicitColumns]
     public partial class ReservationDetail  
     {
 		[Column] public int ReservationDetailID { get; set; }
 		[Column] public DateTime? RDdate { get; set; }
+
 		[Column] public string Description { get; set; }
+
 		[Column] public decimal? Amount { get; set; }
 		[Column] public int? ChargeID { get; set; }
 		[Column] public int? ChargeType { get; set; }
