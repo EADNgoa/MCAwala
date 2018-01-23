@@ -21,7 +21,7 @@ namespace Cavala.Controllers
             ViewBag.EDate = String.Format("{0:dd-MMM-yyyy}", EDate ?? DateTime.Today);
             return View("Receipt", base.BaseIndex<InvReceiptVw>(page, "InventoryTransactionID, TDate,QtyAdded, ItemName, RecvdByUserId,ChkByUserId, au.userName as RecvdBy,auc.UserName as ChkBy, UnitName  ",
                 "Items i, Aspnetusers au, Units u, InventoryTransaction it left outer join Aspnetusers auc  on it.ChkByUserId = auc.id  where it.itemId=i.itemId and it.RecvdByUserId = au.id and it.UnitId=u.UnitId " +
-                "and COALESCE(QtyAdded,0)>0 and ItemName like '%" + PropName + "%'" + ((ViewBag.EDate != null) ? " and TDate='" + (string)ViewBag.EDate + "'" : "")));
+                "and itemTypeId= "+(int)Ite+" and COALESCE(QtyAdded,0)>0 and ItemName like '%" + PropName + "%'" + ((ViewBag.EDate != null) ? " and TDate='" + (string)ViewBag.EDate + "'" : "")));
         }
 
         [EAAuthorize(FunctionName = "Inventory Checking", Writable = true)]
