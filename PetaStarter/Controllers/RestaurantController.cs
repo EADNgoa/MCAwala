@@ -207,13 +207,16 @@ namespace Cavala.Controllers
                             if (reciept.RecieptID > 0)//Edit mode
                             {
                                 var re = db.Single<Reciept>(reciept.RecieptID);
-                                card.Amount += re.Amount.Value;
+
+                                card.Amount +=(decimal) re.Amount;
+
                                 if (card.Amount < reciept.Amount)
                                 {
                                     db.AbortTransaction();
                                     return RedirectToAction("ErrorCust", "Home", new { err = "Insufficient Balance" });
                                 }
-                                card.Amount -= reciept.Amount.Value;
+
+                                card.Amount -= (decimal)reciept.Amount;
                                 db.Insert(new CardTransaction { RechargeAmt=re.Amount, AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });
                                 db.Update(reciept);
                             } else
@@ -223,7 +226,9 @@ namespace Cavala.Controllers
                                     db.AbortTransaction();
                                     return RedirectToAction("ErrorCust", "Home", new { err = "Insufficient Balance" });
                                 }
-                                card.Amount -= reciept.Amount.Value;
+
+                                card.Amount -= (decimal)reciept.Amount;
+
                                 db.Insert(new CardTransaction { AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });                                
                                 db.Insert(reciept);
                             }
