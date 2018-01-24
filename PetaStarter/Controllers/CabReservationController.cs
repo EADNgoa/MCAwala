@@ -48,7 +48,7 @@ namespace Cavala.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Cab Reservation", Writable = true)]
-        public ActionResult Manage([Bind(Include = "DriverID,DriverName,Mobile,IdPicture,UploadFile")] DriverDets drv)
+        public ActionResult Manage([Bind(Include = "DriverID,DriverName,Mobile,IdPicture,UploadedFile")] DriverDets drv)
         {
            
                     Driver d = new Driver

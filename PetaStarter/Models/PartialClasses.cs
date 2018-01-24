@@ -163,6 +163,20 @@ namespace Cavala
         public string IdPicture { get; set; }
         public HttpPostedFileBase UploadedFile { get; set; }
     }
+    public class ReservationDets
+    {
+        public int ReservationID { get; set; }
+        public DateTime RDate { get; set; }
+        public string ReservationSouceName { get; set; }
+        public int ReservationSourceID { get; set; }
+        public DateTime Rstart { get; set; }
+        public int NoOfDays { get; set; }
+        public DateTime CheckIn { get; set; }
+        public DateTime CheckOut { get; set; }
+        public string RoomNo { get; set; }
+        public string GuestComment { get; set; }
+        public string CavalaReply { get; set; }
+    }
 
 
     public class DiscountVw

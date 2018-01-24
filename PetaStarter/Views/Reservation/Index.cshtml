@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<Reservation>
+﻿@model PagedList.IPagedList<ReservationDets>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Reservations";
@@ -73,7 +73,7 @@
             @Html.DisplayFor(modelLocation => item.RDate)
         </td>
         <td>
-            @Html.DisplayFor(modelLocation => item.ReservationSourceID)
+            @Html.DisplayFor(modelLocation => item.ReservationSouceName)
         </td>
         <td>
             @Html.DisplayFor(modelLocation => item.Rstart)
@@ -89,9 +89,7 @@
         <td>
             @item.CheckOut
         </td>
-        <td>
-            @Html.DisplayFor(modelLocation => item.CheckOut)
-        </td>
+      
         <td>
             @Html.DisplayFor(modelLocation => item.RoomNo)
         </td>
