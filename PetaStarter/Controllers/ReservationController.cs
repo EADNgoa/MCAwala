@@ -17,7 +17,7 @@ namespace Cavala.Controllers
      
          
            page = 1;
-            var res = db.Fetch<Reservation>("Select * from Reservation r inner join ReservationSource rs on r.ReservationSourceID = rs.ReservationSourceID where ReservationID > 0 Order By ReservationID Desc");
+            var res = db.Fetch<ReservationDets>("Select * from Reservation r inner join ReservationSource rs on r.ReservationSourceID = rs.ReservationSourceID where ReservationID > 0 Order By ReservationID Desc");
             if (rd != null) res = res.Where(a => a.Rstart == rd).ToList();
             int pageSize = 10;
             int pageNumber = (page ?? 1);
