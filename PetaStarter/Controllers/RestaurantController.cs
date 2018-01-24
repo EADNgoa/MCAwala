@@ -47,7 +47,7 @@ namespace Cavala.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
-        public void ManageSave([Bind(Include = "OTID,LocationId, TDateTime, WaiterId,TableId,RoomNo,IsVoid,VoidedReason ")] OrderTicket ot)
+        public ActionResult ManageSave([Bind(Include = "OTID,LocationId, TDateTime, WaiterId,TableId,RoomNo,IsVoid,VoidedReason ")] OrderTicket ot)
         {            
             if (ot.IsVoid??false) ot.VoidedBy = User.Identity.GetUserId();
 
@@ -57,7 +57,7 @@ namespace Cavala.Controllers
             }
 
 
-            //return BaseSave<OrderTicket>(ot, ot.OTID > 0,"Order",new { ot.LocationId,UID=ot.WaiterId,TDate=ot.TDateTime});           
+            return BaseSave<OrderTicket>(ot, ot.OTID > 0,"Order",new { ot.LocationId,UID=ot.WaiterId,TDate=ot.TDateTime});           
 
         }
 
@@ -207,12 +207,15 @@ namespace Cavala.Controllers
                             if (reciept.RecieptID > 0)//Edit mode
                             {
                                 var re = db.Single<Reciept>(reciept.RecieptID);
+
                                 card.Amount +=(decimal) re.Amount;
+
                                 if (card.Amount < reciept.Amount)
                                 {
                                     db.AbortTransaction();
                                     return RedirectToAction("ErrorCust", "Home", new { err = "Insufficient Balance" });
                                 }
+
                                 card.Amount -= (decimal)reciept.Amount;
                                 db.Insert(new CardTransaction { RechargeAmt=re.Amount, AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });
                                 db.Update(reciept);
@@ -223,7 +226,9 @@ namespace Cavala.Controllers
                                     db.AbortTransaction();
                                     return RedirectToAction("ErrorCust", "Home", new { err = "Insufficient Balance" });
                                 }
+
                                 card.Amount -= (decimal)reciept.Amount;
+
                                 db.Insert(new CardTransaction { AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });                                
                                 db.Insert(reciept);
                             }
