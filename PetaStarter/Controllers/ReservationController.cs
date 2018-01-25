@@ -201,11 +201,23 @@ namespace Cavala.Controllers
                     return RedirectToAction("AddGuests");
                 }
                 catch (Exception ex)
-                {
+                 {
                     db.AbortTransaction();
                     throw ex;
                 }
             }
+        }
+        public ActionResult AddPreviousGuest(int? GID,int? RID)
+        {
+            // List<Cavala.Models.GuestViewModel> recs = db.Fetch<Cavala.Models.GuestViewModel>("Select * from Guests Where Phone = @0", Ph);
+            var item = new Reservation_Guest {GuestID=(int)GID,ReservationID=(int)RID ,IsLead=false};
+            db.Insert(item);
+            return RedirectToAction("AddGuests",new {id=RID });
+        }
+        public ActionResult ExistingGuestRec(string Ph)
+        {
+         List<Cavala.Models.GuestViewModel> recs = db.Fetch<Cavala.Models.GuestViewModel>("Select * from Guests Where Phone = @0",Ph);
+            return PartialView("GuestSearchPartial",recs);
         }
 
         [EAAuthorize(FunctionName = "Reservation", Writable = true)]
