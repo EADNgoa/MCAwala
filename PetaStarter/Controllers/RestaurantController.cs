@@ -83,7 +83,7 @@ namespace Cavala.Controllers
                 id = vwData.OTID;
 
             ViewBag.Order = db.Single<OrderTicket>(id);
-            ViewBag.orderDetails = db.Query<OrderDetailsVw>("Select od.*, ItemName as Item from orderTicketDetails od, Items i where od.itemId=i.ItemId and OTID=@0", id);
+            ViewBag.orderDetails = db.Query<OrderDetailsVw>("Select od.*, ItemName, Notes as Item from orderTicketDetails od, Items i where od.itemId=i.ItemId and OTID=@0", id);
             ViewBag.ItemName = MyExtensions.GetItemName(vwData?.ItemId, db);
             return PartialView(vwData);
         }
@@ -94,7 +94,7 @@ namespace Cavala.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
-        public ActionResult DetailsSave([Bind(Include = "OTDetailsId, OTID,ItemId, Qty,NC,NCtext")] OrderTicketDetail otd)
+        public ActionResult DetailsSave([Bind(Include = "OTDetailsId, OTID,ItemId, Qty,NC,NCtext,Notes")] OrderTicketDetail otd)
         {
             //first lets fetch the item price
             otd.Price = db.ExecuteScalar<decimal>("Select Price from Menu where Itemid=@0", otd.ItemId);
