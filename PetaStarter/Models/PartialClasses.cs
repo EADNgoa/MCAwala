@@ -202,6 +202,7 @@ namespace Cavala
         public string Discount { get; set; }
         public bool NC { get; set; }
         public string NCtext { get; set; }
+        public string Notes { get; set; }
     }
 
     public partial class CardIssueVw

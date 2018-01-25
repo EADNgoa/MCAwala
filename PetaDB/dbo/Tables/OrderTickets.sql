@@ -13,6 +13,7 @@
     [IsVoid] BIT NULL, 
     [VoidedBy] VARCHAR(50) NULL, 
     [VoidedReason] VARCHAR(MAX) NULL, 
+    [Notes] VARCHAR(300) NULL, 
     CONSTRAINT [FK_OrderTickets_LocationTbl] FOREIGN KEY ([LocationId]) REFERENCES [Location]([LocationId]),     
     CONSTRAINT [FK_OrderTickets_CashCard] FOREIGN KEY ([CardId]) REFERENCES [CashCard]([CardId]), 
     CONSTRAINT [FK_OrderTickets_AspNetUsers] FOREIGN KEY ([WaiterId]) REFERENCES [AspNetUsers]([Id]), 
