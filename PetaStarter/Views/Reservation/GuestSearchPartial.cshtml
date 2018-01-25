@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Cavala.Models.GuestViewModel>
+
+@if (Model != null)
+{
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="MastDet">      
+       <center><h4>Registered Guests</h4></center>
+        <table class="table table-condensed">
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Country
+                </th>
+            </tr>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" value="@item.GuestID" name="GID" />
+
+
+
+
+
+
+
+
+
+                        </td>
+                        <td>
+                            @item.GuestName
+                        </td>
+                        <td>
+                            @item.GuestAddress
+                        </td>
+                        <td>
+                            @item.GuestCountry
+                        </td>
+                    </tr>
+
+
+
+                }
+                <tr>
+                    <td>
+                        <input type="submit" value="Save" class="btn btn-default" />
+
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+}
