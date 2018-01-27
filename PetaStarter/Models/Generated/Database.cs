@@ -1388,12 +1388,6 @@ namespace Cavala
 
 
 
-
-
-		[Column] public string Notes { get; set; }
-
-
-
 	}
 
     
@@ -1487,6 +1481,12 @@ namespace Cavala
 
 
 		[Column] public string VoidedReason { get; set; }
+
+
+
+
+
+		[Column] public string Notes { get; set; }
 
 
 
