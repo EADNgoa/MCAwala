@@ -53,7 +53,7 @@
                                 <div class="form-group">
                                     <div class=" col-md-3">
                                         <input type="hidden" id="G" name="G" value="" />
-                                        <input type="hidden" id="F_@item.FunctionID" name="F_@item.FunctionID" value="@item.FunctionID" />
+                                        <input type="hidden" id="F" name="F" value="@item.FunctionID" />
 
                                         <input type="submit" value="Add" data-fid="@item.FunctionID" class="btn btn-default  " />
                                     </div>
@@ -103,8 +103,8 @@
                 $('#ExistingFunc').html("");
                 var $form = $(this),
                     url = $form.attr('action');
-                alert($(this).data('fid'))
-                var posting = $.post(url, { G: gp, F: $('#F').val() });
+                
+                var posting = $.post(url, { G: gp, F: $form["0"][1].value });
                 posting.done(function (data) { $('#ExistingFunc').load("/UserRights/ExistingFuncRec?GID=" + gp); });
 
             });
