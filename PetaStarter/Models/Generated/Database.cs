@@ -1388,6 +1388,12 @@ namespace Cavala
 
 
 
+
+
+		[Column] public string Notes { get; set; }
+
+
+
 	}
 
     
