@@ -218,6 +218,8 @@ namespace Cavala
         public decimal DepositAmt { get; set; }
     }
 
+    
+
     [MetadataType(typeof(CardIssueMetadata))]
     public partial class CardIssue
     {

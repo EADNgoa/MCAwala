@@ -151,16 +151,10 @@
             </div>
         }
     </div>
-    @using (Html.BeginForm("AddPreviousGuest", "Reservation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AddPreviousGuest", "Reservation", FormMethod.Post))
     {
         @Html.Hidden("RID", (int)ViewBag.ResDet.ReservationID)
-
-    <div class="col-md-6" id="ExistingGuests">
-     
-
-     
-    </div>
-
+        <div class="col-md-6" id="ExistingGuests"></div>
     }
 </div>
 
@@ -226,7 +220,7 @@
         $('#Phone').keyup(function () {
 
             var phone = $(this).val();
-            if (phone.length == 10) {
+            if (phone.length == 5) {
                 $('#ExistingGuests').html("");
                 $('#ExistingGuests').load("/Reservation/ExistingGuestRec?Ph=" + phone);
             }
