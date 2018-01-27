@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Cavala.Models.ExistingFuncViewModel>
+   
+
+
+
+
+    @if (Model != null)
+    {
+        <div class="row MastDet" style="margin-top:24%">
+            <h4><u><b>List of Users</b></u></h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Sr No
+                    </th>
+                    <th>
+                        Function Name
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 1;}
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @item.FunctionName
+                        </td>
+                        <td>
+                       
+                        </td>
+                      
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+    </div>
+ <br />
+   
+        }
+  <script>
+
+  </script>      
