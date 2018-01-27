@@ -34,7 +34,17 @@
                             @item.FunctionName
                         </td>
                         <td>
-                       
+                            @using (Html.BeginForm("DelFuncRec", "UserRights", FormMethod.Post, new { id = "Delrec", @class="drc"}))
+                            {
+                                <div class="form-group">
+                                    <div class=" col-md-3">
+                                        <input type="hidden" id="GroupID" name="GroupID" value="@item.GroupID" />
+                                        <input type="hidden" id="FunctionID" name="FunctionID" value="@item.FunctionID" />
+
+                                        <input type="submit" value="Delete User" data-fid="@item.FunctionID" class="btn btn-default " />
+                                    </div>
+                                </div>
+                            }
                         </td>
                       
                     </tr>
@@ -47,5 +57,21 @@
    
         }
   <script>
+       $(document).ready(function () {
+           $('.drc').submit(function (e) {
+               e.preventDefault();
+               $('#ExistingFunc').html("");
 
-  </script>      
+
+               var gp = $('#GroupID').val();
+
+
+               var $form = $(this),
+                   url = $form.attr('action');
+
+               var posting = $.post(url, { GroupID: $('#GroupID').val(), FunctionID: $form["0"][1].value  });
+               posting.done(function (data) { $('#ExistingFunc').load("/UserRights/DelFuncRec?GID=" +gp); });
+
+           });
+       })
+</script>          

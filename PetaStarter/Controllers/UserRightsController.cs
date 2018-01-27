@@ -50,7 +50,8 @@ namespace Cavala.Controllers
         public ActionResult AddFuncGroups(int? page)
         {
             ViewBag.GroupID = db.Fetch<Group>("Select GroupID,GroupName from Groups");
-            ViewBag.Func = db.Fetch<UserFunction>("Select * from UserFunctions");
+            ViewBag.Func = db.Fetch<Cavala.Models.ExistingFuncViewModel>("Select * from UserFunctions Where FunctionID NOT IN(Select * from UserFunctions uf inner join FunctionGroups fg on uf.FunctionID = fg.FunctionID inner join Groups g on g.GroupID = fg.GroupID)");
+
             return View();
                     
         }
@@ -62,7 +63,7 @@ namespace Cavala.Controllers
                 int gid = int.Parse(fm["G"]);
                 var item = new FunctionGroup() { FunctionID=fid , GroupID= (int)gid, Writable=true};
                 db.Insert(item);
-               
+                GID = gid;
             }
            
             if (fm["GroupID"] != null) GID = int.Parse(fm["GroupID"]);
@@ -72,16 +73,15 @@ namespace Cavala.Controllers
         }
         public ActionResult DelFuncRec(int? GID, FormCollection fm)
         {
-            if (fm["GroupID"] != null && fm["Id"] != null)
+            if (fm["GroupID"] != null && fm["FunctionID"] != null)
             {
-                string uid = fm["Id"];
+                string fid = fm["FunctionID"];
                 var gid = int.Parse(fm["GroupID"]);
-                var DeleteRec = db.Execute("Delete from UserGroups Where UserID=@0 and GroupID=@1 ", uid, gid);
+                var DeleteRec = db.Execute("Delete from FunctionGroups Where FunctionID=@0 and GroupID=@1 ", fid, gid);
                 GID = gid;
             }
-            List<Cavala.Models.ExistingUserViewModel> recs = db.Fetch<Cavala.Models.ExistingUserViewModel>("Select * from AspNetUsers anu inner join UserGroups ug on anu.Id = ug.UserID inner Join Groups g on g.GroupID = ug.GroupID Where ug.GroupID = @0", (int)GID);
-            ViewBag.func = db.Fetch<Cavala.Models.ExistingUserViewModel>("Select * from UserFunctions uf inner join FunctionGroups fg on uf.FunctionID =fg.FunctionID inner join Groups g on g.GroupID = fg.GroupID where fg.GroupID=@0;", (int)GID);
-            return PartialView("ExistingUsersPartial", recs);
+            List<Cavala.Models.ExistingFuncViewModel> recs = db.Fetch<Cavala.Models.ExistingFuncViewModel>("Select * from UserFunctions uf inner join FunctionGroups fg on uf.FunctionID = fg.FunctionID inner join Groups g on g.GroupID = fg.GroupID where fg.GroupID = @0", (int)GID);
+            return PartialView("ExistingFuncPartial", recs);
         }
 
         public ActionResult AutoCompleteGroups(string term)

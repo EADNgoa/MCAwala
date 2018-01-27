@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<AspNetRole>
+﻿@model PagedList.IPagedList<Cavala.Models.ExistingFuncViewModel>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Reservations";
@@ -6,7 +6,7 @@
 <center><h2>Add Functions To Groups</h2></center>
 <div class="col-md-6">
     <div class="row">
-        @using (Html.BeginForm("ExistingFuncRec", "UserRights", FormMethod.Post, new {id="fgform", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("ExistingFuncRec", "UserRights", FormMethod.Post, new { id = "fgform", enctype = "multipart/form-data" }))
         {
             @Html.Hidden("GroupID");
             <div class="form-group">
@@ -38,22 +38,22 @@
             </tr>
             <tbody>
                 @{int i = 1; }
-                @foreach(var item in (IEnumerable<UserFunction>)ViewBag.Func)
+                @foreach (var item in (IEnumerable<UserFunction>)ViewBag.Func)
                 {
                     <tr>
                         <td>
                             @i
                         </td>
                         <td>
-                           @item.FunctionName
+                         <Big>@item.Module  ></Big> @item.FunctionName
                         </td>
                         <td>
-                            @using (Html.BeginForm("ExistingFuncRec", "UserRights", FormMethod.Post, new { id = "Frec", @class="FunRec" }))
+                            @using (Html.BeginForm("ExistingFuncRec", "UserRights", FormMethod.Post, new { id = "Frec", @class = "FunRec" }))
                             {
                                 <div class="form-group">
                                     <div class=" col-md-3">
                                         <input type="hidden" id="G" name="G" value="" />
-                                        <input type="hidden" id="F_@item.FunctionID" name="F_@item.FunctionID" value="@item.FunctionID" />
+                                        <input type="hidden" id="F" name="F" value="@item.FunctionID" />
 
                                         <input type="submit" value="Add" data-fid="@item.FunctionID" class="btn btn-default  " />
                                     </div>
@@ -68,8 +68,8 @@
     </div>
 </div>
 <div class="col-md-6" id="ExistingFunc">
-   
-    
+
+
 </div>
 @section Scripts {
 
@@ -77,7 +77,7 @@
 }
 <script>
     $(document).ready(function () {
-        
+
         $("#fgform").submit(function (e) {
 
             e.preventDefault();
@@ -86,31 +86,31 @@
                 url = $form.attr('action');
             var posting = $.post(url, { GroupName: $('#GroupName').val(), GroupID: $('#GroupID').val() });
             posting.done(function (data) {
-                
+
                 $('#ExistingFunc').load("/UserRights/ExistingFuncRec?GID=" + gp);
-               
+
 
             });
         });
     })
 
-        
-        $(document).ready(function () {
-            $('.FunRec').submit(function (e) {
-                e.preventDefault();
-                var gp = $('#GroupID').val();
-                
-                $('#ExistingFunc').html("");
-                var $form = $(this),
-                    url = $form.attr('action');
-                alert($(this).data('fid'))
-                var posting = $.post(url, { G: gp, F: $('#F').val() });
-                posting.done(function (data) { $('#ExistingFunc').load("/UserRights/ExistingFuncRec?GID=" + gp); });
 
-            });
-        })
+    $(document).ready(function () {
+        $('.FunRec').submit(function (e) {
+            e.preventDefault();
+            var gp = $('#GroupID').val();
 
-   
+            $('#ExistingFunc').html("");
+            var $form = $(this),
+                url = $form.attr('action');
 
-    
+            var posting = $.post(url, { G: gp, F: $form["0"][1].value });
+            posting.done(function (data) { $('#ExistingFunc').load("/UserRights/ExistingFuncRec?GID=" + gp); });
+
+        });
+    })
+
+
+
+
 </script>
