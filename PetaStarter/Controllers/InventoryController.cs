@@ -123,7 +123,7 @@ namespace Cavala.Controllers
 
             //Since we know the Item, lets try to auto-set the portion unit
             ViewBag.itmUnit = db.ExecuteScalar<int?>("Select AUnitOfId from Items i, UnitConversion uc where i.UnitId=uc.OfUnitId and ItemId=@0", ViewBag.ITrecd.ItemId);
-            ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName", ViewBag.itmUnit?? 1004);//default to grams 1004
+            ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName", ViewBag.itmUnit?? db.First<Unit>("Select top 1 * from Unit"));
         }
 
         [EAAuthorize(FunctionName = "Inventory Portion", Writable = true)]
