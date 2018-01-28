@@ -220,7 +220,9 @@ namespace Cavala.Controllers
         }
         public ActionResult ExistingGuestRec(string Ph)
         {
+
          var recs = db.Fetch<Cavala.Models.GuestViewModel>($"Select * from Guests Where Phone like '%{Ph}%'");
+
             return PartialView("GuestSearchPartial",recs);
         }
 
