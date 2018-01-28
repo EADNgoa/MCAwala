@@ -202,6 +202,7 @@ namespace Cavala
         public string Discount { get; set; }
         public bool NC { get; set; }
         public string NCtext { get; set; }
+        public string Notes { get; set; }
     }
 
     public partial class CardIssueVw
@@ -216,6 +217,8 @@ namespace Cavala
         public string ContactDetails { get; set; }
         public decimal DepositAmt { get; set; }
     }
+
+    
 
     [MetadataType(typeof(CardIssueMetadata))]
     public partial class CardIssue

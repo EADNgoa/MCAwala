@@ -10,6 +10,7 @@
     [NC] BIT NULL, 
     [NCtext] VARCHAR(50) NULL, 
     [NCUserId] NVARCHAR(128) NULL, 
+	[Notes] VARCHAR(150) NULL, 
     CONSTRAINT [FK_OrderTicketDetails_OrderTickets] FOREIGN KEY ([OTID]) REFERENCES [OrderTickets]([OTID]), 
     CONSTRAINT [FK_OrderTicketDetails_ItemsTbl] FOREIGN KEY ([ItemId]) REFERENCES [Items]([ItemId]), 
     CONSTRAINT [FK_OrderTicketDetails_CourseTbl] FOREIGN KEY ([CourseId]) REFERENCES [Course]([CourseId]), 

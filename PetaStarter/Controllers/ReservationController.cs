@@ -207,16 +207,22 @@ namespace Cavala.Controllers
                 }
             }
         }
-        public ActionResult AddPreviousGuest(int? GID,int? RID)
+
+        [HttpPost]
+        public ActionResult AddPreviousGuest(int RID, IEnumerable<int> GID)
         {
-            // List<Cavala.Models.GuestViewModel> recs = db.Fetch<Cavala.Models.GuestViewModel>("Select * from Guests Where Phone = @0", Ph);
-            var item = new Reservation_Guest {GuestID=(int)GID,ReservationID=(int)RID ,IsLead=false};
-            db.Insert(item);
-            return RedirectToAction("AddGuests",new {id=RID });
+            foreach (var g in GID)
+            {
+                    var item = new Reservation_Guest { GuestID = g, ReservationID = (int)RID, IsLead = false };
+                    db.Insert(item);
+            }
+            return RedirectToAction("AddGuests", new { id = RID });
         }
         public ActionResult ExistingGuestRec(string Ph)
         {
-         List<Cavala.Models.GuestViewModel> recs = db.Fetch<Cavala.Models.GuestViewModel>("Select * from Guests Where Phone Like'%@0%'",Ph);
+
+         var recs = db.Fetch<Cavala.Models.GuestViewModel>($"Select * from Guests Where Phone like '%{Ph}%'");
+
             return PartialView("GuestSearchPartial",recs);
         }
 

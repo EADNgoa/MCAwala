@@ -39,7 +39,7 @@
                     @Html.DisplayFor(modelitem => item.Amount)
                 </td>
                 <td>
-                    @Html.ActionLink("Print", "RecptPrint", new { id = item.RecieptID })
+                    @Html.ActionLink("Print", "RecptPrint", new { id = item.RecieptID },new { target = "_blank" })
                 </td>
             </tr>
         }

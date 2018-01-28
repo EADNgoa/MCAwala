@@ -24,21 +24,12 @@
                 </th>
             </tr>
             <tbody>
-
+                
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            <input type="checkbox" value="@item.GuestID" name="GID" />
-
-
-
-
-
-
-
-
-
+                        <td>                            
+                            <input type="checkbox" value=@item.GuestID name="GID" />                            
                         </td>
                         <td>
                             @item.GuestName
