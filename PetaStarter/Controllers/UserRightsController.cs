@@ -53,7 +53,7 @@ namespace Cavala.Controllers
                 GID = gid;
             }
             List<Cavala.Models.ExistingUserViewModel> recs = db.Fetch<Cavala.Models.ExistingUserViewModel>("Select * from AspNetUsers anu inner join UserGroups ug on anu.Id = ug.UserID inner Join Groups g on g.GroupID = ug.GroupID Where ug.GroupID = @0", (int)GID);
-            ViewBag.func = db.Fetch<Cavala.Models.ExistingUserViewModel>("Select * from UserFunctions uf inner join FunctionGroups fg on uf.FunctionID =fg.FunctionID inner join Groups g on g.GroupID = fg.GroupID where fg.GroupID=@0;", (int)GID);
+            ViewBag.func = db.Fetch<Cavala.Models.ExistingUserViewModel>("Select * from UserFunctions uf inner join FunctionGroups fg on uf.FunctionID =fg.FunctionID inner join Groups g on g.GroupID = fg.GroupID where fg.GroupID=@0", (int)GID);
             return PartialView("ExistingUsersPartial", recs);
         }
 
@@ -61,7 +61,7 @@ namespace Cavala.Controllers
         public ActionResult AddFuncGroups(int? page)
         {
             ViewBag.GroupID = db.Fetch<Group>("Select GroupID,GroupName from Groups");
-            ViewBag.Func = db.Fetch<Cavala.Models.ExistingFuncViewModel>("Select FunctionID,FunctionName,Module from UserFunctions Where FunctionID NOT IN(Select uf.FunctionID from UserFunctions uf inner join FunctionGroups fg on uf.FunctionID = fg.FunctionID inner join Groups g on g.GroupID = fg.GroupID)");
+            ViewBag.Func = db.Fetch<Cavala.Models.ExistingFuncViewModel>("Select FunctionID,FunctionName,Module from UserFunctions");
             return View();
                     
         }
