@@ -1214,6 +1214,48 @@ namespace Cavala
 
     
 
+	[TableName("dbo.KOT")]
+
+
+
+	[PrimaryKey("KOTId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class KOT  
+    {
+
+
+
+		[Column] public int KOTId { get; set; }
+
+
+
+
+
+		[Column] public int OTID { get; set; }
+
+
+
+
+
+		[Column] public DateTime? TIssuedAt { get; set; }
+
+
+
+
+
+		[Column] public bool? IsFlying { get; set; }
+
+
+
+	}
+
+    
+
 	[TableName("dbo.Location")]
 
 
@@ -1394,6 +1436,18 @@ namespace Cavala
 
 
 
+
+
+		[Column] public int? KOTId { get; set; }
+
+
+
+
+
+		[Column] public DateTime? KOTready { get; set; }
+
+
+
 	}
 
     
@@ -1432,7 +1486,7 @@ namespace Cavala
 
 
 
-		[Column] public string RoomNo { get; set; }
+		[Column] public int? ReservationId { get; set; }
 
 
 

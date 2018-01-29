@@ -491,6 +491,7 @@
     <Content Include="Views\UserRights\ExistingUsersPartial.cshtml" />
     <Content Include="Views\UserRights\AddFuncGroups.cshtml" />
     <Content Include="Views\UserRights\ExistingFuncPartial.cshtml" />
+    <Content Include="Views\Shared\_FetchResId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
