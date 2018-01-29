@@ -172,6 +172,40 @@ namespace Cavala
 
     }
 
+    public class SecurityMetadata
+    {
+        [Required]
+        [StringLength(50)]
+        public string AttendanceSystemID;
+
+        [Required]
+        [StringLength(100)]
+        public string Name;
+
+        [Required]
+        [StringLength(350)]
+        public string Address;
+
+        [Required]
+        [StringLength(50)]
+        public string Mobile;
+
+    }
+
+    public class CashierMetadata
+    {
+     
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        public DateTime Tdate;
+
+        [Required]
+        [Range(0.0, Double.MaxValue)]
+        public decimal CashInHand;
+
+
+    }
+
 }
 
     //public class EmpTypeMetadata

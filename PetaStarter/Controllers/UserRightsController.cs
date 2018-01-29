@@ -18,6 +18,7 @@ namespace Cavala.Controllers
             return View();
 
         }
+        [EAAuthorize(FunctionName = "User Rights", Writable = true)]
         public ActionResult ExistingUserRec(int? GID, FormCollection fm)
         {
             try
@@ -65,6 +66,7 @@ namespace Cavala.Controllers
             return View();
                     
         }
+        [EAAuthorize(FunctionName = "User Rights", Writable = true)]
         public ActionResult ExistingFuncRec(int? GID, FormCollection fm)
         {
             try
@@ -88,6 +90,7 @@ namespace Cavala.Controllers
             List<Cavala.Models.ExistingFuncViewModel> recs = db.Fetch<Cavala.Models.ExistingFuncViewModel>("Select * from UserFunctions uf inner join FunctionGroups fg on uf.FunctionID = fg.FunctionID inner join Groups g on g.GroupID = fg.GroupID where fg.GroupID = @0", GID ?? 0);
             return PartialView("ExistingFuncPartial", recs);
         }
+        [EAAuthorize(FunctionName = "User Rights", Writable = true)]
         public ActionResult DelFuncRec(int? GID, FormCollection fm)
         {
             if (fm["GroupID"] != null && fm["FunctionID"] != null)

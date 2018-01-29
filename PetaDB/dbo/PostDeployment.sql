@@ -23,7 +23,8 @@ BEGIN
 INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (19, N'Reservation', N'Reservation')
 INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (1004, N'Cab Reservation', N'Cab Reservation')
 INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (2001, N'User Rights', N'Masters')
-
+INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (3001, N'Security', N'Masters')
+INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (3002, N'Cashier', N'Cashier')
 
 	SET IDENTITY_INSERT [dbo].[UserFunctions] OFF
 END

@@ -119,4 +119,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CabReservationID" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="6c3cfc05-1191-4aef-92d8-a7ce55c6becf" ChangeDateTime="01/29/2018 06:42:18">
+    <Property Name="ElementName" Value="[dbo].[CashierShiftChanges].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CashierShiftChanges]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CashierID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3b8f78d0-6c00-4dd9-a774-01c51701aca2" ChangeDateTime="01/29/2018 06:50:39">
+    <Property Name="ElementName" Value="[dbo].[SecurityGuard].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SecurityGuard]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SecurityGuardID" />
+  </Operation>
 </Operations>
