@@ -47,6 +47,14 @@ namespace Cavala
     public partial class CabReservation
     {
     }
+    [MetadataType(typeof(SecurityMetadata))]
+    public partial class SecurityGuard
+    {
+    }
+    [MetadataType(typeof(CashierMetadata))]
+    public partial class CashierShiftChange
+    {
+    }
     public class ItemsVw
     {
         public int ItemId { get; set; }
