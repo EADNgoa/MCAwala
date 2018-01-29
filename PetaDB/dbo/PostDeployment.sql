@@ -22,6 +22,8 @@ BEGIN
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (18, N'OrderReceipt', N'Dining')
 INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (19, N'Reservation', N'Reservation')
 INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (1004, N'Cab Reservation', N'Cab Reservation')
+INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (2001, N'User Rights', N'Masters')
+
 
 	SET IDENTITY_INSERT [dbo].[UserFunctions] OFF
 END

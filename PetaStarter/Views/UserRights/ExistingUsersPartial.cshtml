@@ -41,7 +41,7 @@
                                     <input type="hidden" id="GroupID" name="GroupID" value="@item.GroupID" />
                                     <input type="hidden" id="Id" name="Id" value="@item.Id" />
 
-                                    <input type="submit" value="Delete User" class="btn btn-default " />
+                                    <input type="submit" value="Delete User" data-uid="@item.Id" class="btn btn-default " />
                                 </div>
                             </div>
                              }
@@ -93,11 +93,10 @@
         
               var gp = $('#GroupID').val();
              
-
               var $form = $(this),
                   url = $form.attr('action');
 
-              var posting = $.post(url, { UserName: $('#UserName').val(), GroupID: $('#GroupID').val(), Id: $('#Id').val() });
+              var posting = $.post(url, { UserName: $('#UserName').val(), GroupID: $('#GroupID').val(), Id: $form["0"][1].value});
               posting.done(function (data) { $('#ExistingUsers').load("/UserRights/DelUserRec?GID=" + gp); });
 
           });
