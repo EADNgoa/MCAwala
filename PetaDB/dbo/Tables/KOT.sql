@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[KOT]
+(
+	[KOTId] INT NOT NULL IDENTITY PRIMARY KEY, 
+    [OTID] INT NOT NULL,
+    [TIssuedAt] DATETIME NULL, 
+    [IsFlying] BIT NULL 
+)

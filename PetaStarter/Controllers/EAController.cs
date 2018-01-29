@@ -74,6 +74,19 @@ namespace Cavala.Controllers
             return View(ObjToSave);
         }
 
+        protected ActionResult FetchResId()
+        {
+            return PartialView();
+        }
+
+        [EAAuthorize(FunctionName = "Order", Writable = true)]
+        public ActionResult _FetchResId(string roomNo)
+        {            
+            ViewBag.vwData = db.SingleOrDefault<IntStringVw>($"Select r.ReservationId as i, g.GuestName as s from reservation r, Guests g, reservation_Guest rg where RoomNo = '{roomNo.Trim() }' " +
+                "and r.reservationId= rg.reservationId and rg.GuestId = g.guestId and rg.IsLead=1" )?? new IntStringVw { i=0};
+
+            return PartialView();
+        }
         // GET: EA
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
             {
