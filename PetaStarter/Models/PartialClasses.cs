@@ -204,13 +204,14 @@ namespace Cavala
     public class OrderDetailsVw
     {
         public int OTdetailsId { get; set; }
-        public string Item { get; set; }
+        public string ItemName { get; set; }
         public decimal Qty { get; set; }
         public decimal Price { get; set; }
         public string Discount { get; set; }
         public bool NC { get; set; }
         public string NCtext { get; set; }
         public string Notes { get; set; }
+        public int KOT { get; set; }
     }
 
     public partial class CardIssueVw
@@ -226,7 +227,12 @@ namespace Cavala
         public decimal DepositAmt { get; set; }
     }
 
-    
+    public class IntStringVw
+    {
+        public int i { get; set; }
+        public string s { get; set; }
+    }
+
 
     [MetadataType(typeof(CardIssueMetadata))]
     public partial class CardIssue

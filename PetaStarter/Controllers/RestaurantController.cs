@@ -23,7 +23,7 @@ namespace Cavala.Controllers
         public ActionResult OrderPart(int LocationId, DateTime? OrderDate, string UID)
         {   
                 ViewBag.EDate = String.Format("{0:dd-MMM-yyyy}", OrderDate ?? DateTime.Today);
-                var VwData = db.Query<OrderTicket>("Select OTID,TDateTime,RoomNo,TableID,IsVoid from OrderTickets where LocationId=@0 " +
+                var VwData = db.Query<OrderTicket>("Select OTID,TDateTime,ReservationId,TableID,IsVoid from OrderTickets where LocationId=@0 " +
                     "and WaiterId=@1 and CONVERT(date,TDateTime)='" + (string)ViewBag.EDate + "' order by TDateTime desc", LocationId, (UID=="")?User.Identity.GetUserId(): UID);
                 ViewBag.lid = LocationId;
                 ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
@@ -47,7 +47,7 @@ namespace Cavala.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
-        public ActionResult ManageSave([Bind(Include = "OTID,LocationId, TDateTime, WaiterId,TableId,RoomNo,IsVoid,VoidedReason ")] OrderTicket ot)
+        public ActionResult ManageSave([Bind(Include = "OTID,LocationId, TDateTime, WaiterId,TableId,ReservationId,IsVoid,VoidedReason ")] OrderTicket ot)
         {            
             if (ot.IsVoid??false) ot.VoidedBy = User.Identity.GetUserId();
 
@@ -148,7 +148,11 @@ namespace Cavala.Controllers
             return View();
         }
 
-
+        [EAAuthorize(FunctionName = "Order", Writable = true)]
+        public ActionResult IssueKOT(int OTID)//id is OTID
+        {
+            return RedirectToAction("Details", new { id=OTID });
+        }
         [HttpGet]
         [EAAuthorize(FunctionName = "OrderReceipt", Writable = true)]
         public ActionResult Receipt(int? id)

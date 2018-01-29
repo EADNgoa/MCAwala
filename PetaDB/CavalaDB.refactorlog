@@ -119,6 +119,7 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CabReservationID" />
   </Operation>
+
   <Operation Name="Rename Refactor" Key="6c3cfc05-1191-4aef-92d8-a7ce55c6becf" ChangeDateTime="01/29/2018 06:42:18">
     <Property Name="ElementName" Value="[dbo].[CashierShiftChanges].[Id]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />
@@ -132,5 +133,27 @@
     <Property Name="ParentElementName" Value="[dbo].[SecurityGuard]" />
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="SecurityGuardID" />
+
+  <Operation Name="Rename Refactor" Key="f0a6de88-e662-49c6-b51e-1784db4872d5" ChangeDateTime="01/29/2018 06:42:52">
+    <Property Name="ElementName" Value="[dbo].[OrderTicketDetails].[KotDone]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[OrderTicketDetails]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="KOTDone" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e83437df-d399-4f1f-96fb-30714b4f649e" ChangeDateTime="01/29/2018 06:45:02">
+    <Property Name="ElementName" Value="[dbo].[KOT].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[KOT]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="KOTId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="08d7a680-03f9-468d-bca2-762353747d41" ChangeDateTime="01/29/2018 06:46:53">
+    <Property Name="ElementName" Value="[dbo].[OrderTicketDetails].[KOTDone]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[OrderTicketDetails]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="KOTId" />
+
   </Operation>
 </Operations>

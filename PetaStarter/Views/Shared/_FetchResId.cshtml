@@ -1,0 +1,55 @@
+﻿<div id="MyResId">
+    @if (ViewBag.vwData == null)
+    {
+        @*Initial view*@
+        <button id="StartFetch" type="button" class="btn btn-default">Link to Room</button>
+
+        @*Search Inputs*@
+        <div id="FetchDiv" class="form-group form-inline">
+            @using (Html.BeginForm())
+            {
+                @Html.Label("Enter Room No.", new { @class = "control-label col-md-2" })
+                <input type="text" class="form-control" id="RoomNo" />
+                <input id="FindRes" type="button" value="Search" class="btn btn-default" />
+            }
+        </div>
+    }
+    else
+    {
+        if (ViewBag.vwData.i == 0)
+        {
+            @Html.Label("No current reservation found for this room number. Try again", new { @class = "control-label" })
+            using (Html.BeginForm())
+            {                
+                <input type="text" class="form-control" id="RoomNo" />
+                <input id="FindRes" type="button" value="Search" class="btn btn-default" />
+            }
+        }
+        else
+        {
+            @Html.Hidden("ReservationId", (int)ViewBag.vwData.i)
+            @Html.Label($"Lead: {ViewBag.vwData.s}", new { @class = "control-label" })
+        }
+
+    }
+</div>
+
+
+<script>
+    $(function () {
+
+        $('#StartFetch').show();
+        $('#FetchDiv').hide();
+
+        $('#StartFetch').click(function () {
+            $(this).hide();
+            $('#FetchDiv').show();
+        });
+
+        $('#FindRes').click(function () {
+            var rn = $('#RoomNo').val();
+            $('#MyResId').load('@Url.Action("_FetchResId")', { roomNo: rn });
+
+        });
+    });
+</script>

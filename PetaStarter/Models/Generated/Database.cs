@@ -361,6 +361,51 @@ namespace Cavala
 		[Column] public string ItemTypeName { get; set; }
 	}
     
+
+
+	[TableName("dbo.KOT")]
+
+
+
+	[PrimaryKey("KOTId")]
+
+
+
+
+	[ExplicitColumns]
+
+    public partial class KOT  
+    {
+
+
+
+		[Column] public int KOTId { get; set; }
+
+
+
+
+
+		[Column] public int OTID { get; set; }
+
+
+
+
+
+		[Column] public DateTime? TIssuedAt { get; set; }
+
+
+
+
+
+		[Column] public bool? IsFlying { get; set; }
+
+
+
+	}
+
+    
+
+
 	[TableName("dbo.Location")]
 	[PrimaryKey("LocationId")]
 	[ExplicitColumns]
@@ -406,6 +451,16 @@ namespace Cavala
 		[Column] public string NCtext { get; set; }
 		[Column] public string NCUserId { get; set; }
 		[Column] public string Notes { get; set; }
+
+		[Column] public int? KOTId { get; set; }
+
+
+
+
+
+		[Column] public DateTime? KOTready { get; set; }
+
+
 	}
     
 	[TableName("dbo.OrderTickets")]
@@ -416,7 +471,8 @@ namespace Cavala
 		[Column] public int OTID { get; set; }
 		[Column] public int? LocationId { get; set; }
 		[Column] public DateTime? TDateTime { get; set; }
-		[Column] public string RoomNo { get; set; }
+
+		[Column] public int? ReservationId { get; set; }
 		[Column] public string TableId { get; set; }
 		[Column] public int? CardId { get; set; }
 		[Column] public string WaiterId { get; set; }
