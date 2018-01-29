@@ -34,7 +34,7 @@
                             @item.UserName
                         </td>
                         <td>
-                            @using (Html.BeginForm("DelUserRec","UserRights", FormMethod.Post, new { id = "drec"}))
+                            @using (Html.BeginForm("DelUserRec","UserRights", FormMethod.Post, new { id = "drec", @class="Dfuncrec"}))
                             {
                             <div class="form-group">
                                 <div class=" col-md-3">
@@ -87,7 +87,7 @@
         }
   <script>
       $(document).ready(function () {
-          $('#drec').submit(function (e) {
+          $('.Dfuncrec').submit(function (e) {
               e.preventDefault();
               $('#ExistingUsers').html("");
         
