@@ -29,5 +29,7 @@ namespace Cavala.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Cavala.KOT> KOTs { get; set; }
     }
 }

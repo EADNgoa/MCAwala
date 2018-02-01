@@ -52,7 +52,7 @@ namespace Cavala
         public int ItemId { get; set; }
         public string ItemName { get; set; }
         public string Type { get; set; }
-        public int ExpiryDays {get; set;}
+        public int ExpiryDays { get; set; }
         public string Unit { get; set; }
     }
 
@@ -73,10 +73,10 @@ namespace Cavala
     public class InvReceiptVw
     {
         public int InventoryTransactionId { get; set; }
-        public DateTime TDate { get; set; }  
+        public DateTime TDate { get; set; }
         public int ItemId { get; set; }
         public string ItemName { get; set; }
-        public decimal QtyAdded { get; set; }   
+        public decimal QtyAdded { get; set; }
         public string UnitName { get; set; }
         public decimal Wastage { get; set; }
         public string WastageUnitName { get; set; }
@@ -203,14 +203,15 @@ namespace Cavala
         public bool NC { get; set; }
         public string NCtext { get; set; }
         public string Notes { get; set; }
-        public int KOT { get; set; }
+        public int KOTId { get; set; }
+        public TimeSpan? KOTready { get; set; }
     }
 
     public partial class CardIssueVw
     {
         public int CardIssueId { get; set; }
         public int CardId { get; set; }
-        public string CardName { get; set; }        
+        public string CardName { get; set; }
         public DateTime IssuedOn { get; set; }
         public DateTime? ReturnedOn { get; set; }
         public DateTime? ExpiresOn { get; set; }
@@ -219,12 +220,19 @@ namespace Cavala
         public decimal DepositAmt { get; set; }
     }
 
+    //Use anywhere you need an int and string
     public class IntStringVw
     {
         public int i { get; set; }
         public string s { get; set; }
     }
 
+    public class KOTscreen
+    {
+        public string TableNo { get; set; }
+        public KOT kot {get; set;}
+        public IEnumerable<OrderDetailsVw> OrderDets { get; set; }
+    }
 
     [MetadataType(typeof(CardIssueMetadata))]
     public partial class CardIssue

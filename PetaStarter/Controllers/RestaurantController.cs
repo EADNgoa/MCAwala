@@ -21,43 +21,43 @@ namespace Cavala.Controllers
 
         [EAAuthorize(FunctionName = "Order", Writable = false)]
         public ActionResult OrderPart(int LocationId, DateTime? OrderDate, string UID)
-        {   
-                ViewBag.EDate = String.Format("{0:dd-MMM-yyyy}", OrderDate ?? DateTime.Today);
-                var VwData = db.Query<OrderTicket>("Select OTID,TDateTime,ReservationId,TableID,IsVoid from OrderTickets where LocationId=@0 " +
-                    "and WaiterId=@1 and CONVERT(date,TDateTime)='" + (string)ViewBag.EDate + "' order by TDateTime desc", LocationId, (UID=="")?User.Identity.GetUserId(): UID);
-                ViewBag.lid = LocationId;
-                ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
-                ViewBag.UID = MyExtensions.GetUsersInGroup("Waiter", db);
-                return PartialView(VwData);         
+        {
+            ViewBag.EDate = String.Format("{0:dd-MMM-yyyy}", OrderDate ?? DateTime.Today);
+            var VwData = db.Query<OrderTicket>("Select OTID,TDateTime,ReservationId,TableID,IsVoid from OrderTickets where LocationId=@0 " +
+                "and WaiterId=@1 and CONVERT(date,TDateTime)='" + (string)ViewBag.EDate + "' order by TDateTime desc", LocationId, (UID == "") ? User.Identity.GetUserId() : UID);
+            ViewBag.lid = LocationId;
+            ViewBag.LocationID = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
+            ViewBag.UID = MyExtensions.GetUsersInGroup("Waiter", db);
+            return PartialView(VwData);
         }
 
 
         [HttpPost]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
         public ActionResult Manage(int? id, int LocationId, DateTime OrderDate, string UID)
-        {            
-            var vwData = base.BaseCreateEdit<OrderTicket>(id, "OTID")??new OrderTicket();
+        {
+            var vwData = base.BaseCreateEdit<OrderTicket>(id, "OTID") ?? new OrderTicket();
             ViewBag.LoID = LocationId;
-            vwData.TDateTime = vwData.TDateTime?? DateTime.Now;
-            ViewBag.UID = (UID=="") ? User.Identity.GetUserId():UID;
+            vwData.TDateTime = vwData.TDateTime ?? DateTime.Now;
+            ViewBag.UID = (UID == "") ? User.Identity.GetUserId() : UID;
 
             return PartialView(vwData);
         }
-                
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
         public ActionResult ManageSave([Bind(Include = "OTID,LocationId, TDateTime, WaiterId,TableId,ReservationId,IsVoid,VoidedReason ")] OrderTicket ot)
-        {            
-            if (ot.IsVoid??false) ot.VoidedBy = User.Identity.GetUserId();
+        {
+            if (ot.IsVoid ?? false) ot.VoidedBy = User.Identity.GetUserId();
 
             if (ModelState.IsValid)
             {
-                var r = (ot.OTID > 0) ? db.Update(ot) : db.Insert(ot);                
+                var r = (ot.OTID > 0) ? db.Update(ot) : db.Insert(ot);
             }
 
 
-            return BaseSave<OrderTicket>(ot, ot.OTID > 0,"Order",new { ot.LocationId,UID=ot.WaiterId,TDate=ot.TDateTime});           
+            return BaseSave<OrderTicket>(ot, ot.OTID > 0, "Order", new { ot.LocationId, UID = ot.WaiterId, TDate = ot.TDateTime });
 
         }
 
@@ -88,9 +88,9 @@ namespace Cavala.Controllers
             return PartialView(vwData);
         }
 
-       
 
-    
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Order", Writable = true)]
@@ -114,7 +114,7 @@ namespace Cavala.Controllers
             return RedirectToAction("Details", new { id = otd.OTID });
         }
 
-        
+
 
         public ActionResult AutoCompleteItems(string term, int LocationId)
         {
@@ -149,9 +149,22 @@ namespace Cavala.Controllers
         }
 
         [EAAuthorize(FunctionName = "Order", Writable = true)]
-        public ActionResult IssueKOT(int OTID)//id is OTID
+        public ActionResult IssueKOT(int OTID, bool IsFlying)//id is OTID
         {
-            return RedirectToAction("Details", new { id=OTID });
+            //fetch all items in this order that are not yet KOTed
+            var notKOTed = db.Query<OrderTicketDetail>("where KOTid is null").ToList();
+
+            //(if any)Create a KOT and put its ID against these items
+            if (notKOTed != null)
+            {
+                var k = db.Insert(new KOT { OTID = OTID, TIssuedAt = DateTime.Now, IsFlying = IsFlying });
+                notKOTed.ForEach(kot =>
+                {
+                    kot.KOTId = (int)k;
+                    db.Update(kot);
+                });
+            }
+            return RedirectToAction("Details", new { id = OTID });
         }
         [HttpGet]
         [EAAuthorize(FunctionName = "OrderReceipt", Writable = true)]
@@ -172,17 +185,17 @@ namespace Cavala.Controllers
             var vwData = base.BaseCreateEdit<Reciept>(RecId, "RecieptId") ?? new Reciept();
             vwData.Rdate = DateTime.Now;
             if (RecId.HasValue)//edit mode
-               id = vwData.ChargeID;
-                        
+                id = vwData.ChargeID;
 
-            var slvals = Enum.GetValues(typeof(PayTypeEnum)).Cast<PayTypeEnum>().Select(v => new SelectListItem{Text = v.ToString(),Value = ((int)v).ToString()}).ToList();
+
+            var slvals = Enum.GetValues(typeof(PayTypeEnum)).Cast<PayTypeEnum>().Select(v => new SelectListItem { Text = v.ToString(), Value = ((int)v).ToString() }).ToList();
             ViewBag.PayMode = slvals.Where(s => s.Value != "0");
 
             ViewBag.Order = db.Single<OrderTicket>(id);
             //ViewBag.PayDetails = new SelectList(db.Fetch<CashCard>("Select c.CardName,ci.CardIssueId as [CardId] from CashCard c, cardissue ci where c.discarded=0 and c.CardId=ci.CardId and GetDate() " +
             //    "between ci.IssuedOn and coalesce(ci.ReturnedOn,GetDate()) and ci.ExpiresOn>GETDATE()"), "CardId", "CardName");
-            ViewBag.RecptDetails = db.Query<Reciept>("Select * from Reciept where ChargeType = @0 and ChargeId=@1",ChargeTypeEnum.Restaurant, id);
-            
+            ViewBag.RecptDetails = db.Query<Reciept>("Select * from Reciept where ChargeType = @0 and ChargeId=@1", ChargeTypeEnum.Restaurant, id);
+
             return PartialView(vwData);
         }
 
@@ -205,14 +218,14 @@ namespace Cavala.Controllers
                         {
                             var card = db.Single<CashCard>("select * from CashCard where CardName=@0", reciept.PayDetails.Trim());
                             var cardIssu = db.Single<CardIssue>("Select ci.* from CashCard c, cardissue ci where c.CardId=ci.CardId and c.discarded=0 and c.CardName=@0 " +
-                                "and GetDate() between ci.IssuedOn and coalesce(ci.ReturnedOn,GetDate()) and ci.ExpiresOn>GETDATE()",card.CardName);
+                                "and GetDate() between ci.IssuedOn and coalesce(ci.ReturnedOn,GetDate()) and ci.ExpiresOn>GETDATE()", card.CardName);
                             reciept.ChargeType = (int)ChargeTypeEnum.Restaurant;
 
                             if (reciept.RecieptID > 0)//Edit mode
                             {
                                 var re = db.Single<Reciept>(reciept.RecieptID);
 
-                                card.Amount +=(decimal) re.Amount;
+                                card.Amount += (decimal)re.Amount;
 
                                 if (card.Amount < reciept.Amount)
                                 {
@@ -221,7 +234,7 @@ namespace Cavala.Controllers
                                 }
 
                                 card.Amount -= (decimal)reciept.Amount;
-                                db.Insert(new CardTransaction { RechargeAmt=re.Amount, AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });
+                                db.Insert(new CardTransaction { RechargeAmt = re.Amount, AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });
                                 db.Update(reciept);
                             } else
                             {
@@ -233,7 +246,7 @@ namespace Cavala.Controllers
 
                                 card.Amount -= (decimal)reciept.Amount;
 
-                                db.Insert(new CardTransaction { AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });                                
+                                db.Insert(new CardTransaction { AmountSpent = reciept.Amount, CardIssueId = cardIssu.CardIssueId, OTID = reciept.ChargeID, TDateTime = DateTime.Now });
                                 db.Insert(reciept);
                             }
                             db.Update(card);
@@ -246,24 +259,54 @@ namespace Cavala.Controllers
                         }
                     }
                 }
-            
+
                 reciept.ChargeType = (int)ChargeTypeEnum.Restaurant;
-                var r = (reciept.RecieptID> 0) ? db.Update(reciept) : db.Insert(reciept);
-                return RedirectToAction("Receipt", new { id = reciept.ChargeID});
+                var r = (reciept.RecieptID > 0) ? db.Update(reciept) : db.Insert(reciept);
+                return RedirectToAction("Receipt", new { id = reciept.ChargeID });
             }
 
-            return RedirectToAction("Receipt", new { id = reciept.ChargeID});
+            return RedirectToAction("Receipt", new { id = reciept.ChargeID });
         }
 
         [EAAuthorize(FunctionName = "Order", Writable = true)]
         public ActionResult RecptPrint(int id)
-        {            
+        {
             ViewBag.Receipt = db.Single<Reciept>(id);
             var ord = db.Single<OrderTicket>(ViewBag.Receipt.ChargeID);
             ViewBag.Title = $"Bill no. {ord.OTID} on {(DateTime)ord.TDateTime: dd-MMM-yyyy} for Table(s): {ord.TableId}";
             return View();
         }
 
+        [EAAuthorize(FunctionName = "KOT", Writable = false)]
+        public ActionResult ShowKOT(int? LocationId)
+        {
+            if (LocationId.HasValue)
+            {
+                ViewBag.RestaurantName = db.ExecuteScalar<string>("Select LocationName from Location where LocationId = @0", LocationId);
+                var kots = db.Query<KOT>("Select * from KOT where KOTId in (Select distinct KOTId from OrderTicketDetails od, OrderTickets o where od.OTID=o.OTID and KOTready is null and o.LocationId=@0)", LocationId).ToList();
+                List<KOTscreen> Klist = new List<KOTscreen>();
+                kots.ForEach(k =>
+                {
+                    KOTscreen ks = new KOTscreen { kot = k };
+                    ks.TableNo = db.ExecuteScalar<string>("Select TableId from OrderTickets where OTID =@0", k.OTID);
+                    ks.OrderDets = db.Query<OrderDetailsVw>("Select od.*, ItemName, Notes as Item from orderTicketDetails od, Items i where od.itemId = i.ItemId and OTID =@0 and od.KOTId=@1", k.OTID, k.KOTId);
+                    Klist.Add(ks);
+                });
+                return View("ShowKOT", Klist.OrderByDescending(k => k.kot.IsFlying));
+            } else
+            {
+                ViewBag.OurRestaurants = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
+                return View("ShowKOT");
+            }
+        }
+
+        [HttpPost]
+        public void KOTitemReady(int id)
+        {
+            var od = db.Single<OrderTicketDetail>(id);
+            od.KOTready = DateTime.Now;
+            db.Update(od);            
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -66,7 +66,7 @@ namespace Cavala.Controllers
                         it.RecvdByUserId = User.Identity.GetUserId();
 
                         //If the current user is the dept head then auto check 
-                        //it.ChkByUserId = MyExtensions.IsPermitted(db, "Inventory Checking", true, it.RecvdByUserId) ? it.RecvdByUserId : null;
+                        it.ChkByUserId = MyExtensions.IsPermitted(db, "Inventory Checking", true, it.RecvdByUserId) ? it.RecvdByUserId : null;
                     } else
                         OldTransQty = db.ExecuteScalar<decimal>("Select QtyAdded from InventoryTransaction where InventoryTransactionId=@0", it.InventoryTransactionId);
 
@@ -123,7 +123,7 @@ namespace Cavala.Controllers
 
             //Since we know the Item, lets try to auto-set the portion unit
             ViewBag.itmUnit = db.ExecuteScalar<int?>("Select AUnitOfId from Items i, UnitConversion uc where i.UnitId=uc.OfUnitId and ItemId=@0", ViewBag.ITrecd.ItemId);
-            ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName", ViewBag.itmUnit?? db.First<Unit>("Select top 1 * from Unit"));
+            ViewBag.UnitID = new SelectList(db.Fetch<Unit>("Select UnitID,UnitName from Units"), "UnitID", "UnitName", ViewBag.itmUnit?? db.First<Unit>("Select top 1 * from Units"));
         }
 
         [EAAuthorize(FunctionName = "Inventory Portion", Writable = true)]

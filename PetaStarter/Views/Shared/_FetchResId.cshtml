@@ -9,7 +9,7 @@
             @using (Html.BeginForm())
             {
                 @Html.Label("Enter Room No.", new { @class = "control-label col-md-2" })
-                <input type="text" class="form-control" id="RoomNo" />
+                <input type="text" class="form-control" id="RoomNo" placeholder="Enter Room No." />
                 <input id="FindRes" type="button" value="Search" class="btn btn-default" />
             }
         </div>
@@ -18,7 +18,7 @@
     {
         if (ViewBag.vwData.i == 0)
         {
-            @Html.Label("No current reservation found for this room number. Try again", new { @class = "control-label" })
+            @Html.Label("Not found, Please try again", new { @class = "control-label" })
             using (Html.BeginForm())
             {                
                 <input type="text" class="form-control" id="RoomNo" />

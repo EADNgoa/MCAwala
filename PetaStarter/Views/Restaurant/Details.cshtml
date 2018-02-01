@@ -93,15 +93,20 @@
     <a target="_blank" href="~/Restaurant/Bill/@ViewBag.Order.OTID?ite=@ItemTypesEnum.All">Full Bill</a>
     <a target="_blank" href="~/Restaurant/Bill/@ViewBag.Order.OTID?ite=@ItemTypesEnum.DrinksAlc">Split (Alc) Bill</a>
     <a target="_blank" href="~/Restaurant/Bill/@ViewBag.Order.OTID?ite=@ItemTypesEnum.DrinksNAlc">Split (Non-Alc) Bill</a>
-    <a id="OrderList" style="float:right;" >KOT</a>
+    <a id="OrderList" style="float:right;">KOT</a> |&nbsp;
+    <a id="OrderListFly" style="float:right;">Flying KOT</a> |
 </p>
 
 <script>
     $("#OrderList").click(function (event) {
 
         $('#OrderPart').html("");
-        $('#OrderPart').load('@Url.Action("IssueKOT")', { OTID: @ViewBag.Order.OTID} );
+        $('#OrderPart').load('@Url.Action("IssueKOT")', { OTID: @ViewBag.Order.OTID, IsFlying:false} );
+    });
+    $("#OrderListFly").click(function (event) {
 
+        $('#OrderPart').html("");
+        $('#OrderPart').load('@Url.Action("IssueKOT")', { OTID: @ViewBag.Order.OTID, IsFlying:true} );
     });
 
      $("#GoBack").click(function (event) {
@@ -182,7 +187,7 @@
         <td>@item.Notes</td>
         <td>@((item.NC) ? "Free" : "")</td>
         <td>@item.NCtext</td>
-        <td>@item.KOT</td>
+        <td>@(item.KOTId>0? item.KOTId.ToString():"")</td>
         <td class="section-to-Not-print">
             <a class="EditOrder" data-val="@item.OTdetailsId">Edit</a>
         </td>

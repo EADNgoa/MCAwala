@@ -213,7 +213,6 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EAController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -423,8 +422,6 @@
     <Content Include="Views\Shared\pli.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Shared\_ReportsLayout.cshtml" />
-    <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\Customer\Manage.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Groups\Manage.cshtml" />
     <Content Include="Views\Units\Index.cshtml" />
@@ -492,6 +489,8 @@
     <Content Include="Views\UserRights\AddFuncGroups.cshtml" />
     <Content Include="Views\UserRights\ExistingFuncPartial.cshtml" />
     <Content Include="Views\Shared\_FetchResId.cshtml" />
+    <Content Include="Views\Restaurant\KOT.cshtml" />
+    <Content Include="Views\Restaurant\ShowKOT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
