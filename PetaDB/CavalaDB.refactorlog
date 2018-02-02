@@ -133,7 +133,7 @@
     <Property Name="ParentElementName" Value="[dbo].[SecurityGuard]" />
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="SecurityGuardID" />
-
+  </Operation>
   <Operation Name="Rename Refactor" Key="f0a6de88-e662-49c6-b51e-1784db4872d5" ChangeDateTime="01/29/2018 06:42:52">
     <Property Name="ElementName" Value="[dbo].[OrderTicketDetails].[KotDone]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />

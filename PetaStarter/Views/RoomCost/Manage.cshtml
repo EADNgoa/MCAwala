@@ -1,0 +1,57 @@
+﻿@model ReservationDetail
+
+@{
+    ViewBag.Title = "Manage Room Water Bottles";
+}
+
+<h2>Manage Locations</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Water Botles</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (Model?.ReservationDetailID > 0)
+        {
+            @Html.HiddenFor(model => model.ReservationDetailID)
+        }
+        <div class="form-group">
+            @Html.Label("Link to reservation", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (Model?.ChargeID > 0)
+                {
+                    @Html.HiddenFor(model => model.ChargeID)
+                    @Html.Label(Model.ChargeID.ToString())
+                }
+                else
+                {
+                    @Html.Partial("_FetchResId", null)
+                }
+            </div>
+        </div>  
+        <div class="form-group">
+                @Html.Label("Room Water Bottle", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBox("Qty", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
