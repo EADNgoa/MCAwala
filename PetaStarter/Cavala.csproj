@@ -201,6 +201,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\RoomCostController.cs" />
+    <Compile Include="Controllers\SecurityGuardController.cs" />
+    <Compile Include="Controllers\CashierController.cs" />
     <Compile Include="Controllers\UserRightsController.cs" />
     <Compile Include="Controllers\CashCardController.cs" />
     <Compile Include="Controllers\CabReservationController.cs" />
@@ -497,10 +500,16 @@
     <Content Include="Views\UserRights\ExistingUsersPartial.cshtml" />
     <Content Include="Views\UserRights\AddFuncGroups.cshtml" />
     <Content Include="Views\UserRights\ExistingFuncPartial.cshtml" />
+    <Content Include="Views\SecurityGuard\Index.cshtml" />
+    <Content Include="Views\SecurityGuard\Manage.cshtml" />
+    <Content Include="Views\Cashier\Index.cshtml" />
+    <Content Include="Views\Cashier\Manage.cshtml" />
     <Content Include="Views\Shared\_FetchResId.cshtml" />
     <Content Include="Views\Restaurant\KOT.cshtml" />
     <Content Include="Views\Restaurant\ChooseRestaurant.cshtml" />
     <Content Include="Views\Restaurant\ShowKOT.cshtml" />
+    <Content Include="Views\RoomCost\Index.cshtml" />
+    <Content Include="Views\RoomCost\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

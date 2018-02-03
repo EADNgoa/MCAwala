@@ -20,10 +20,13 @@ BEGIN
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (16, N'Menu', N'Dining')
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (17, N'Discounts', N'Masters')
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (18, N'OrderReceipt', N'Dining')
+
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (19, N'Reservation', N'Reservation')
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (20, N'Cab Reservation', N'Cab Reservation')
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (21, N'User Rights', N'Masters')
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (22, N'KOT', N'Kitchen')
+INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (23, N'Security', N'Masters')
+INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (24, N'Cashier', N'Cashier')
 
 
 	SET IDENTITY_INSERT [dbo].[UserFunctions] OFF
@@ -62,10 +65,26 @@ END
 --used in Kitchen inventory receipt
 IF NOT EXISTS (SELECT * FROM Location WHERE LocationName = 'Kitchen Load point')
 	INSERT INTO [dbo].Location (LocationName, LocationTypeId) VALUES ('Kitchen Load point', 4)
+IF NOT EXISTS (SELECT * FROM Location WHERE LocationName = 'Room Service')
+    INSERT INTO [dbo].Location (LocationName, LocationTypeId) VALUES ('Room Service', 1)
+
 
 --used in Restaurant Order screen
 IF NOT EXISTS (SELECT * FROM Groups WHERE GroupName = 'Waiter')
 	INSERT INTO [dbo].Groups (GroupName) VALUES ('Waiter')
+
+--Used in Room Costs  Screen
+	
+IF NOT EXISTS (SELECT * FROM Units WHERE UnitName = 'Pieces')
+	SET IDENTITY_INSERT [dbo].[Units] ON
+
+	INSERT INTO [dbo].Units (UnitName) VALUES (1,'Pieces')
+SET IDENTITY_INSERT [dbo].[Units] OFF
+
+IF NOT EXISTS (SELECT * FROM Items WHERE ItemName = 'Room Water Bottle')
+	INSERT INTO [dbo].Items (ItemName,ItemTypeId,ExpiryDays,UnitId) VALUES ('Room Water Bottle',3,180,1)
+	
+
 
 
 	
