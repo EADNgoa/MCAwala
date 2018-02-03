@@ -62,10 +62,26 @@ END
 --used in Kitchen inventory receipt
 IF NOT EXISTS (SELECT * FROM Location WHERE LocationName = 'Kitchen Load point')
 	INSERT INTO [dbo].Location (LocationName, LocationTypeId) VALUES ('Kitchen Load point', 4)
+IF NOT EXISTS (SELECT * FROM Location WHERE LocationName = 'Room Service')
+    INSERT INTO [dbo].Location (LocationName, LocationTypeId) VALUES ('Room Service', 1)
+
 
 --used in Restaurant Order screen
 IF NOT EXISTS (SELECT * FROM Groups WHERE GroupName = 'Waiter')
 	INSERT INTO [dbo].Groups (GroupName) VALUES ('Waiter')
+
+--Used in Room Costs  Screen
+	
+IF NOT EXISTS (SELECT * FROM Units WHERE UnitName = 'Pieces')
+	SET IDENTITY_INSERT [dbo].[Units] ON
+
+	INSERT INTO [dbo].Units (UnitName) VALUES (1,'Pieces')
+SET IDENTITY_INSERT [dbo].[Units] OFF
+
+IF NOT EXISTS (SELECT * FROM Items WHERE ItemName = 'Room Water Bottle')
+	INSERT INTO [dbo].Items (ItemName,ItemTypeId,ExpiryDays,UnitId) VALUES ('Room Water Bottle',3,180,1)
+	
+
 
 
 	
