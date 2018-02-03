@@ -1,0 +1,35 @@
+﻿@model Cavala.KOTscreen
+
+<div class="btn @((Model.kot.IsFlying??false) ? "btn-warning" : "btn-primary")">
+    <table class="table-condensed table-bordered table-@Model.kot.KOTId" >
+        <thead>
+            <tr>
+                <th>
+                    <h3>
+                        KOT :  @Model.kot.KOTId
+                        Table: @Model.TableNo
+                    </h3>
+                </th>
+                <th colspan="3" style="text-align:right;">@($"At {Model.kot.TIssuedAt:HH:mm}")</th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var item in Model.OrderDets)
+                {
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.Qty</td>
+                        <td>@item.Notes</td>
+                        @if(item.KOTready==null)
+                        {
+                            <td><input type="checkbox" data-val=@item.OTdetailsId data-kot=@item.KOTId class="form-control ClickActive" id="KOTready" /></td>
+                        } else
+                        {
+                            <td style="background-color:green;"></td>
+                        }
+
+                    </tr>
+                }
+        </tbody>
+    </table>
+</div>

@@ -66,7 +66,7 @@ namespace Cavala.Controllers
                         it.RecvdByUserId = User.Identity.GetUserId();
 
                         //If the current user is the dept head then auto check 
-                        //it.ChkByUserId = MyExtensions.IsPermitted(db, "Inventory Checking", true, it.RecvdByUserId) ? it.RecvdByUserId : null;
+                        it.ChkByUserId = MyExtensions.IsPermitted(db, "Inventory Checking", true, it.RecvdByUserId) ? it.RecvdByUserId : null;
                     } else
                         OldTransQty = db.ExecuteScalar<decimal>("Select QtyAdded from InventoryTransaction where InventoryTransactionId=@0", it.InventoryTransactionId);
 

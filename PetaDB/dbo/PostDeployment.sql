@@ -20,11 +20,14 @@ BEGIN
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (16, N'Menu', N'Dining')
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (17, N'Discounts', N'Masters')
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (18, N'OrderReceipt', N'Dining')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (19, N'Reservation', N'Reservation')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (1004, N'Cab Reservation', N'Cab Reservation')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (2001, N'User Rights', N'Masters')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (3001, N'Security', N'Masters')
-INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (3002, N'Cashier', N'Cashier')
+
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (19, N'Reservation', N'Reservation')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (20, N'Cab Reservation', N'Cab Reservation')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (21, N'User Rights', N'Masters')
+	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (22, N'KOT', N'Kitchen')
+INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (23, N'Security', N'Masters')
+INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (24, N'Cashier', N'Cashier')
+
 
 	SET IDENTITY_INSERT [dbo].[UserFunctions] OFF
 END
