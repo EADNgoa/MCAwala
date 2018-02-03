@@ -1,7 +1,7 @@
 ﻿@model OrderTicketDetail
 
 @{
-    ViewBag.Title = $"Order Details of order {ViewBag.Order.OTID}";
+    ViewBag.Title = $"Order Details of order {ViewBag.Order.OTID} at {ViewBag.RestaurantName}";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -20,72 +20,72 @@
 </Div>
 
 
-@using (Html.BeginForm("DetailsSave", "Restaurant", FormMethod.Post, new { id="OrderDetsFm"}))
+@using (Html.BeginForm("DetailsSave", "Restaurant", FormMethod.Post, new { id = "OrderDetsFm" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+    <div class="form-horizontal">
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.Hidden("OTID", (int)ViewBag.Order.OTID)
-    @Html.HiddenFor(model => model.ItemId)
-    @if (Model?.OTdetailsId > 0)
-    {
-        @Html.HiddenFor(model => model.OTdetailsId)
-    }
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("OTID", (int)ViewBag.Order.OTID)
+        @Html.HiddenFor(model => model.ItemId)
+        @if (Model?.OTdetailsId > 0)
+        {
+            @Html.HiddenFor(model => model.OTdetailsId)
+        }
 
-    <div class="form-group">
-        @Html.Label("Item Name", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="text" id="ItemName" name="ItemName" style="color:black;" data-autocomplete-idholder="#ItemId" value="@ViewBag.ItemName" data-autocombo-url="@Url.Action("AutoCompleteItems",new { LocationId = ViewBag.Order.LocationId})" class="form-control" />
+        <div class="form-group">
+            @Html.Label("Item Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="ItemName" name="ItemName" style="color:black;" data-autocomplete-idholder="#ItemId" value="@ViewBag.ItemName" data-autocombo-url="@Url.Action("AutoCompleteItems",new { LocationId = ViewBag.Order.LocationId})" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Qty, "Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Notes, "Notes, Extras", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NC, "Is Free?", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NC, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NC, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NCtext, "No Charge reason", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NCtext, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NCtext, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @if (ViewBag.Order.IsPaid ?? false)
+                {
+                    @:This order is paid for. Please make a new order if more items are purchased
+                }
+                else
+                {
+                    <input type="submit" value="Save" class="btn btn-default" />
+                }
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Qty, "Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Notes, "Notes, Extras", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.NC, "Is Free?", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.NC, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NC, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.NCtext, "No Charge reason", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.NCtext, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NCtext, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @if (ViewBag.Order.IsPaid ?? false)
-            {
-                @:This order is paid for. Please make a new order if more items are purchased
-            }
-            else
-            {
-                <input type="submit" value="Save" class="btn btn-default" />
-            }
-        </div>
-    </div>
-</div>
 }
 
 <p>
@@ -93,8 +93,8 @@
     <a target="_blank" href="~/Restaurant/Bill/@ViewBag.Order.OTID?ite=@ItemTypesEnum.All">Full Bill</a>
     <a target="_blank" href="~/Restaurant/Bill/@ViewBag.Order.OTID?ite=@ItemTypesEnum.DrinksAlc">Split (Alc) Bill</a>
     <a target="_blank" href="~/Restaurant/Bill/@ViewBag.Order.OTID?ite=@ItemTypesEnum.DrinksNAlc">Split (Non-Alc) Bill</a>
-    <a id="OrderList" style="float:right;">KOT</a> |&nbsp;
-    <a id="OrderListFly" style="float:right;">Flying KOT</a> |
+    <a class="SigRtoClients" id="OrderList" style="float:right;">KOT</a> |&nbsp;
+    <a class="SigRtoClients" id="OrderListFly" style="float:right;">Flying KOT</a> |
 </p>
 
 <script>
@@ -174,24 +174,24 @@
 
     @foreach (var item in odv)
     {
-    <tr>
+        <tr>
 
-        <td>
-            @item.ItemName
-        </td>
-        <td>
-            @item.Price
-        </td>
-        <td>@item.Discount</td>
-        <td>@item.Qty</td>
-        <td>@item.Notes</td>
-        <td>@((item.NC) ? "Free" : "")</td>
-        <td>@item.NCtext</td>
-        <td>@(item.KOTId>0? item.KOTId.ToString():"")</td>
-        <td class="section-to-Not-print">
-            <a class="EditOrder" data-val="@item.OTdetailsId">Edit</a>
-        </td>
-    </tr>
+            <td>
+                @item.ItemName
+            </td>
+            <td>
+                @item.Price
+            </td>
+            <td>@item.Discount</td>
+            <td>@item.Qty</td>
+            <td>@item.Notes</td>
+            <td>@((item.NC) ? "Free" : "")</td>
+            <td>@item.NCtext</td>
+            <td>@(item.KOTId > 0 ? item.KOTId.ToString() : "")</td>
+            <td class="section-to-Not-print">
+                <a class="EditOrder" data-val="@item.OTdetailsId">Edit</a>
+            </td>
+        </tr>
     }
 
 </table>
@@ -207,4 +207,37 @@
             $('#OrderPart').load('@Url.Action("Details")', { DetId: $(this).data('val'), LocationId: $("#LoID").val(), OrderDate: $("#OrderDate").val(), UID: $("#UID").val() });
 
         });
+</script>
+
+
+<!--Script references. -->
+<!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+<!--Reference the SignalR library. -->
+<script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+<!--Reference the autogenerated SignalR hub script. -->
+<script src="~/signalr/hubs"></script>
+<!--SignalR script to update the chat page and send messages.-->
+<script>
+    $(function () {
+        // Reference the auto-generated proxy for the hub.
+        var chat = $.connection.taskMasterHub;
+        $.connection.hub.logging = true;
+
+        // Create a function that the hub can call back to display messages.
+        chat.client.GetOurKOTs = function () {
+            location.href = location.href;
+        };
+
+
+        // Start the connection.
+        $.connection.hub.start().done(function () {
+            $('.SigRtoClients').click(function () {
+                // Call the Send method on the hub.                
+                chat.server.groupSendKOT('@ViewBag.RestaurantName');
+            });
+        });
+
+    });
+
+
 </script>

@@ -40,6 +40,9 @@ namespace Cavala
             new SelectList(db.Fetch<AspNetUser>("Select Id, email as UserName from AspNetUsers a, Groups g, UserGroups ug where a.id=ug.UserId and ug.GroupId=g.GroupId and g.GroupName=@0", GroupName), "Id", "UserName", selectedValue)            
         );
 
+        public static string GetLocationName(int? id, Repository db) => (
+            db.ExecuteScalar<string>("Select LocationName from Location where LocationId=@0", id ?? 0) ?? ""
+        );
 
         public static string GetItemName(int? id, Repository db) => (
             db.ExecuteScalar<string>("Select ItemName from Items where ItemId=@0", id ?? 0) ?? ""

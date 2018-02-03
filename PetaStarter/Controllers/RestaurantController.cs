@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.SignalR;
+using SignalRChat;
 
 namespace Cavala.Controllers
 {
@@ -81,8 +83,9 @@ namespace Cavala.Controllers
             var vwData = base.BaseCreateEdit<OrderTicketDetail>(DetId, "OTdetailsID") ?? new OrderTicketDetail();
             if (DetId.HasValue)//edit mode
                 id = vwData.OTID;
-
+            
             ViewBag.Order = db.Single<OrderTicket>(id);
+            ViewBag.RestaurantName = MyExtensions.GetLocationName(ViewBag.Order.LocationId,db);
             ViewBag.orderDetails = db.Query<OrderDetailsVw>("Select od.*, ItemName, Notes as Item from orderTicketDetails od, Items i where od.itemId=i.ItemId and OTID=@0", id);
             ViewBag.ItemName = MyExtensions.GetItemName(vwData?.ItemId, db);
             return PartialView(vwData);
@@ -163,9 +166,14 @@ namespace Cavala.Controllers
                     kot.KOTId = (int)k;
                     db.Update(kot);
                 });
+                //var context = GlobalHost.ConnectionManager.GetHubContext<TaskMasterHub>();
+                //context.Clients.All.GetOurKOTs();
+                
             }
             return RedirectToAction("Details", new { id = OTID });
         }
+
+
         [HttpGet]
         [EAAuthorize(FunctionName = "OrderReceipt", Writable = true)]
         public ActionResult Receipt(int? id)
@@ -278,26 +286,32 @@ namespace Cavala.Controllers
         }
 
         [EAAuthorize(FunctionName = "KOT", Writable = false)]
-        public ActionResult ShowKOT(int? LocationId)
-        {
-            if (LocationId.HasValue)
-            {
-                ViewBag.RestaurantName = db.ExecuteScalar<string>("Select LocationName from Location where LocationId = @0", LocationId);
-                var kots = db.Query<KOT>("Select * from KOT where KOTId in (Select distinct KOTId from OrderTicketDetails od, OrderTickets o where od.OTID=o.OTID and KOTready is null and o.LocationId=@0)", LocationId).ToList();
-                List<KOTscreen> Klist = new List<KOTscreen>();
-                kots.ForEach(k =>
-                {
-                    KOTscreen ks = new KOTscreen { kot = k };
-                    ks.TableNo = db.ExecuteScalar<string>("Select TableId from OrderTickets where OTID =@0", k.OTID);
-                    ks.OrderDets = db.Query<OrderDetailsVw>("Select od.*, ItemName, Notes as Item from orderTicketDetails od, Items i where od.itemId = i.ItemId and OTID =@0 and od.KOTId=@1", k.OTID, k.KOTId);
-                    Klist.Add(ks);
-                });
-                return View("ShowKOT", Klist.OrderByDescending(k => k.kot.IsFlying));
-            } else
-            {
+        public ActionResult ChooseRestaurant()
+        {            
                 ViewBag.OurRestaurants = MyExtensions.GetLocations(LocationTypesEnum.Restaurant, db);
-                return View("ShowKOT");
-            }
+                return View("ChooseRestaurant");            
+        }
+
+        [EAAuthorize(FunctionName = "KOT", Writable = false)]
+        public ActionResult ShowKOT(int LocationId)
+        {            
+            ViewBag.RestaurantName = db.ExecuteScalar<string>("Select LocationName from Location where LocationId = @0", LocationId);
+            var kots = db.Query<KOT>("Select * from KOT where KOTId in (Select distinct KOTId from OrderTicketDetails od, OrderTickets o where od.OTID=o.OTID and KOTready is null and o.LocationId=@0)", LocationId).ToList();
+                
+            return View("ShowKOT", GetKOTDetails(kots).OrderByDescending(k => k.kot.IsFlying));            
+        }
+
+        private List<KOTscreen> GetKOTDetails(List<KOT> kots)
+        {
+            List<KOTscreen> Klist = new List<KOTscreen>();
+            kots.ForEach(k =>
+            {
+                KOTscreen ks = new KOTscreen { kot = k };
+                ks.TableNo = db.ExecuteScalar<string>("Select TableId from OrderTickets where OTID =@0", k.OTID);
+                ks.OrderDets = db.Query<OrderDetailsVw>("Select od.*, ItemName, Notes as Item from orderTicketDetails od, Items i where od.itemId = i.ItemId and OTID =@0 and od.KOTId=@1", k.OTID, k.KOTId);
+                Klist.Add(ks);
+            });
+            return Klist;
         }
 
         [HttpPost]
