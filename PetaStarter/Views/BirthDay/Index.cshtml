@@ -1,0 +1,44 @@
+﻿@model IEnumerable<AspNetUser>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Birth Day List For This Month";
+}
+
+<center>
+    <h2 class="section-to-print"><b>@ViewBag.Title</b></h2>
+    
+
+</center>
+
+<p>
+    @Html.ActionLink("Create New", "Manage")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            User Name
+        </th>
+       <th>
+           Birth Date
+       </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirthDate)
+        </td>
+        
+
+        <td>
+            @Html.ActionLink("Edit", "Manage", new { id = item.Id})
+        </td>
+    </tr>
+}
+
+</table>

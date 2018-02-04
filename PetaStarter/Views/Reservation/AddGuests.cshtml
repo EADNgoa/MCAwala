@@ -127,6 +127,15 @@
                 else
                 {
                     <div class="form-group">
+                        @Html.LabelFor(model => model.PhotoID, "Photo", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <img src="/Images/@Model.PhotoID" style="width:100px;height:100px"/>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
                         @Html.LabelFor(model => model.Likes, " Likes", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Likes, new { htmlAttributes = new { @class = "form-control" } })

@@ -3,16 +3,16 @@
 @{
     ViewBag.Title = $"Bill";
 }
-
-<h2>@ViewBag.Title</h2>
+<center><h2 class="section-to-print">@ViewBag.Title</h2>
+</center>
 
 <Div class="MastDet">
-    <table class="table" width="70%">
+    <table class="table section-to-print " width="70%">
         <tr>
             <td>Reservation Date</td>
-            <td>@String.Format("{0:dd-MM-yyyy}",ViewBag.ResDet.RDate)</td>
+            <td>@String.Format("{0:dd-MM-yyyy}", ViewBag.ResDet.RDate)</td>
         </tr>
-    
+
         <tr>
             <td>Check In</td>
             <td>@ViewBag.ResDet.CheckIn</td>
@@ -26,59 +26,61 @@
             <td>@ViewBag.ResDet.RoomNo</td>
         </tr>
     </table>
+</Div>
+
+<div class="section-to-Not-print">
+    @using (Html.BeginForm("ReserveDetails", "Reservation", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal ">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @if (Model?.ReservationDetailID > 0)
+            {
+                @Html.HiddenFor(model => model.ReservationDetailID)
+                @Html.HiddenFor(model => model.ChargeID)
+                @Html.HiddenFor(model => model.ChargeType)
+
+
+            }
+            else
+            {
+                @Html.Hidden("ChargeID", (int)ViewBag.ResDet.ReservationID)
+                @Html.Hidden("ChargeType", (int)ViewBag.Ite)
+
+
+            }
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Description, 3, 43, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amount, "Amount", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
 </div>
+<div class="section-to-Not-print">
+    @Html.ActionLink("Back to List", "Index")   |
+    <input type="button" onclick="javascript:window.print();" value="Print" class="eabutton section-to-not-print" />
 
-
-@using (Html.BeginForm("ReserveDetails","Reservation",FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        @if (Model?.ReservationDetailID > 0)
-        {
-            @Html.HiddenFor(model => model.ReservationDetailID)
-            @Html.HiddenFor(model => model.ChargeID)
-            @Html.HiddenFor(model => model.ChargeType)
-
-
-        }
-        else
-        {
-            @Html.Hidden("ChargeID",(int)ViewBag.ResDet.ReservationID)
-            @Html.Hidden("ChargeType", (int)ViewBag.Ite)
-
-
-        }
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description,3,43, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Amount, "Amount", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">          
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>    
-    @Html.ActionLink("Back to List", "Index")        
 </div>
 
 <hr />
@@ -89,38 +91,50 @@
         <th>Description</th>
         <th>Qty</th>
         <th>Amount</th>
-        
+
         <th class="section-to-Not-print"></th>
     </tr>
 
-    @{ 
+    @{
         var fsv = (IEnumerable<ReservationDetail>)ViewBag.Dets;
+        decimal Tot = 0;
     }
-    
+
 
     @foreach (var item in fsv)
     {
         <tr>
-            
+
             <td>
-                @item.RDdate
+                @item.RDdate.Value.ToString("dd-MM-yyyy")
             </td>
             <td>
-                @item.Description             
+                @item.Description
             </td>
             <td>
                 @item.Qty
             </td>
             <td>
+                @{ Tot += (decimal)item.Amount; }
                 @item.Amount
             </td>
-            
+
             <td class="section-to-Not-print">
-                    @Html.ActionLink("Edit", "ReserveDetails", new { Eid = item.ReservationDetailID,Ite = (int)ViewBag.ite}) 
-                    
+                @Html.ActionLink("Edit", "ReserveDetails", new { Eid = item.ReservationDetailID, Ite = (int)ViewBag.ite })
+
             </td>
         </tr>
-    }
+    
+     }
+    <tr>
+        <td>
+            Total:
+        </td>
+        <td>
+            @{decimal t = (decimal)Tot-ViewBag.TotRcpts;}
+            @t
+        </td>
+    </tr>
 
 </table>
 
