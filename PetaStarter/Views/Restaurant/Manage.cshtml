@@ -1,5 +1,9 @@
 ﻿@model OrderTicket
 
+<div class="alert alert-info">
+    <strong>Attention!</strong> Check if the bill is to be split
+</div>
+
 @using (Html.BeginForm("ManageSave", "Restaurant", FormMethod.Post, new { id = "OrderFm" }))
 {
     @Html.AntiForgeryToken()

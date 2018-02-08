@@ -169,7 +169,11 @@ input[type=checkbox] {
         top: 0;
     }
 
-    .section-to-print, .section-to-print * {
+    tr {
+        height: 37px;
+    }
+
+     .section-to-print, .section-to-print * {
         visibility: visible;
     }
 
