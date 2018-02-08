@@ -45,7 +45,7 @@ namespace Cavala.Controllers
                 WebMail.SmtpServer = "smtp.gmail.com";
                 WebMail.SmtpPort = 25;
                 WebMail.UserName = "diptesh naik";
-                WebMail.Password = "warislove123";
+                WebMail.Password = " ";
                 WebMail.From = "diptesh03@gmail.com";
 
                 // Send email
