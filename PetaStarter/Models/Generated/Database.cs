@@ -150,6 +150,19 @@ namespace Cavala
 		[Column] public DateTime? BirthDate { get; set; }
 	}
     
+	[TableName("dbo.AutoEmail")]
+	[PrimaryKey("AutoID")]
+	[ExplicitColumns]
+    public partial class AutoEmail  
+    {
+		[Column] public int AutoID { get; set; }
+		[Column] public int? GuestID { get; set; }
+		[Column] public string Salutation { get; set; }
+		[Column] public string Body { get; set; }
+		[Column] public string Closing { get; set; }
+		[Column] public string LuckyDraw { get; set; }
+	}
+    
 	[TableName("dbo.CabReservation")]
 	[PrimaryKey("CabReservationID")]
 	[ExplicitColumns]
@@ -221,6 +234,8 @@ namespace Cavala
     {
 		[Column] public DateTime TableReservationTime { get; set; }
 		[Column] public int? CardExpiryDays { get; set; }
+		[Column] public int? Reminders { get; set; }
+		[Column] public int? BotlePerDay { get; set; }
 	}
     
 	[TableName("dbo.Course")]
@@ -456,6 +471,16 @@ namespace Cavala
 		[Column] public string PayDetails { get; set; }
 	}
     
+	[TableName("dbo.Reminders")]
+	[PrimaryKey("ReminderID")]
+	[ExplicitColumns]
+    public partial class Reminder  
+    {
+		[Column] public int ReminderID { get; set; }
+		[Column] public DateTime? Tdate { get; set; }
+		[Column] public string Description { get; set; }
+	}
+    
 	[TableName("dbo.Reservation")]
 	[PrimaryKey("ReservationID")]
 	[ExplicitColumns]
@@ -517,6 +542,19 @@ namespace Cavala
 		[Column] public string Name { get; set; }
 		[Column] public string Address { get; set; }
 		[Column] public string Mobile { get; set; }
+		[Column] public DateTime? BirthDate { get; set; }
+	}
+    
+	[TableName("dbo.SecurityGuardDetails")]
+	[PrimaryKey("SecurityGuardDetailID")]
+	[ExplicitColumns]
+    public partial class SecurityGuardDetail  
+    {
+		[Column] public int SecurityGuardDetailID { get; set; }
+		[Column] public int? SecurityGuardID { get; set; }
+		[Column] public string Description { get; set; }
+		[Column] public DateTime? Tdate { get; set; }
+		[Column] public string Path { get; set; }
 	}
     
 	[TableName("dbo.Stock")]
