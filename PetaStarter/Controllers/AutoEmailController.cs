@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -25,7 +27,7 @@ namespace Cavala.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "ThankYou Letter", Writable = true)]
-        public ActionResult Manage([Bind(Include = "AutoID,GuestID,Salutation,Body,Closing,LuckyDraw")] AutoEmail auto)
+        public ActionResult Manage([Bind(Include = "AutoID,GuestID,Body,LuckyDraw")] AutoEmail auto)
         {
              base.BaseSave<AutoEmail>(auto, auto.AutoID > 0);
             return View();
@@ -35,29 +37,36 @@ namespace Cavala.Controllers
         public ActionResult SendEmail(int? id)
         {
             var ThankYouLet = db.FirstOrDefault<AutoEmail>("Select * From AutoEmail");
-            var customerEmail = "erryl1@hotmail.com";
+            var customerEmail = "sarlekar41@gmail.com";
             var Body = ThankYouLet.Body;
+            var lw = ThankYouLet.LuckyDraw;
             var errorMessage = "";
-            var debuggingFlag = false;
+            SmtpClient smtpClient = new SmtpClient();
+            MailMessage message = new MailMessage();
             try
             {
-                // Initialize WebMail helper
-                WebMail.SmtpServer = "smtp.gmail.com";
-                WebMail.SmtpPort = 25;
-                WebMail.UserName = "diptesh naik";
-                WebMail.Password = " ";
-                WebMail.From = "diptesh03@gmail.com";
 
-                // Send email
-                WebMail.Send(to: customerEmail,
-                    subject: "ThankYou Letter ",
-                    body: Body
-                );
+                MailAddress fromAddress = new MailAddress("diptesh03@gmail.com","Diptesh Naik");
+                smtpClient.Host = "localhost";
+                smtpClient.Port = 25;
+                smtpClient.Host = "smtp.gmail.com";
+                message.From = fromAddress;
+                message.To.Add(customerEmail);
+                message.Subject = "Thank You Letter";
+                message.IsBodyHtml = false;
+                message.Body = Body+"\n\n\n"+lw;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential("diptesh03@gmail.com", "  ");
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(message);
+
             }
-            catch (Exception ex)
+            catch (System.Net.Mail.SmtpException ex)
             {
-                errorMessage = ex.Message;
+                Response.Write(ex.ToString());
             }
+          
+
             return View();
         }
 

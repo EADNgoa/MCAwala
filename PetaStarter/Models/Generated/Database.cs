@@ -157,9 +157,7 @@ namespace Cavala
     {
 		[Column] public int AutoID { get; set; }
 		[Column] public int? GuestID { get; set; }
-		[Column] public string Salutation { get; set; }
 		[Column] public string Body { get; set; }
-		[Column] public string Closing { get; set; }
 		[Column] public string LuckyDraw { get; set; }
 	}
     
