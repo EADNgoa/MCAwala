@@ -193,6 +193,7 @@ namespace Cavala
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
         public string RoomNo { get; set; }
+        public string CformNo { get; set; }
         public string GuestComment { get; set; }
         public string CavalaReply { get; set; }
     }

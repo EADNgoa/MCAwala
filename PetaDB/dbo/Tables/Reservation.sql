@@ -8,6 +8,8 @@
     [CheckIn] DATETIME NULL, 
     [CheckOut] DATETIME NULL, 
     [RoomNo] VARCHAR(50) NULL, 
+ [CformNo] VARCHAR(50) NULL, 
+
     [GuestComment] VARCHAR(MAX) NULL, 
     [CavalaReply] VARCHAR(MAX) NULL, 
     CONSTRAINT [FK_Reservation_ReservationSource] FOREIGN KEY ([ReservationSourceID]) REFERENCES [ReservationSource]([ReservationSourceID])

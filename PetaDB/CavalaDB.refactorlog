@@ -154,6 +154,15 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="KOTId" />
   </Operation>
+
+  <Operation Name="Rename Refactor" Key="342fbdff-3377-4697-898a-b0e9e38be081" ChangeDateTime="02/12/2018 03:22:51">
+    <Property Name="ElementName" Value="[dbo].[Reservation].[RoomNo]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Reservation]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CformNo" />
+    </Operation>
+
   <Operation Name="Rename Refactor" Key="8079f3a6-7def-4591-94b5-6b0154812250" ChangeDateTime="02/03/2018 09:06:26">
     <Property Name="ElementName" Value="[dbo].[Reminders].[Id]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />

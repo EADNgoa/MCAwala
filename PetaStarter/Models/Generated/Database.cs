@@ -150,6 +150,17 @@ namespace Cavala
 		[Column] public DateTime? BirthDate { get; set; }
 	}
     
+	[TableName("dbo.AutoEmail")]
+	[PrimaryKey("AutoID")]
+	[ExplicitColumns]
+    public partial class AutoEmail  
+    {
+		[Column] public int AutoID { get; set; }
+		[Column] public int? GuestID { get; set; }
+		[Column] public string Body { get; set; }
+		[Column] public string LuckyDraw { get; set; }
+	}
+    
 	[TableName("dbo.CabReservation")]
 	[PrimaryKey("CabReservationID")]
 	[ExplicitColumns]
@@ -481,6 +492,7 @@ namespace Cavala
 		[Column] public DateTime? CheckIn { get; set; }
 		[Column] public DateTime? CheckOut { get; set; }
 		[Column] public string RoomNo { get; set; }
+		[Column] public string CformNo { get; set; }
 		[Column] public string GuestComment { get; set; }
 		[Column] public string CavalaReply { get; set; }
 	}
