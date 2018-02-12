@@ -129,7 +129,7 @@ namespace Cavala.Controllers
         public ActionResult Bill(int id, ItemTypesEnum ite)
         {
             ViewBag.Order = db.Single<OrderTicket>(id);
-            PetaPoco.Sql sq = new PetaPoco.Sql("Select od.*, ItemName as Item from orderTicketDetails od, Items i where od.itemId=i.ItemId and OTID=@0", id);
+            PetaPoco.Sql sq = new PetaPoco.Sql("Select od.*, ItemName from orderTicketDetails od, Items i where od.itemId=i.ItemId and OTID=@0", id);
 
             switch (ite)
             {

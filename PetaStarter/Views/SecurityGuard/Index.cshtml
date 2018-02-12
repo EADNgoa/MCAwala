@@ -64,7 +64,9 @@
         </td>
 
         <td>
-            @Html.ActionLink("Edit", "Manage", new { id = item.SecurityGuardID})
+            @Html.ActionLink("Edit", "Manage", new { id = item.SecurityGuardID})|@Html.ActionLink("Lodge Complain", "LodgeComplain", new { id = item.SecurityGuardID })
+
+
         </td>
     </tr>
 }

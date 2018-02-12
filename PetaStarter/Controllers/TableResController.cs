@@ -21,7 +21,7 @@ namespace Cavala.Controllers
         public ActionResult TableList(int LocationId)
         {
             ViewBag.Lid = LocationId;
-            return PartialView("TableList", base.BaseIndex<TableResVw>(1, "r.TableReservationId,t.TableId, t.TableName,r.TDateTime as ResTime,r.PersonName", $" TableReservation r right Outer Join [Tables] t on t.TableId=r.TableId and convert(varchar(11),r.TDateTime,120) >='{DateTime.Now.ToString("yyyy-MM-dd")}' where t.LocationId ={LocationId} order by TableName ASC, r.TDateTime desc"));
+            return PartialView("TableList", base.BaseIndex<TableResVw>(1, "r.TableReservationId,t.TableId, t.TableName,r.NoOfPax,r.TDateTime as ResTime,r.PersonName", $" TableReservation r right Outer Join [Tables] t on t.TableId=r.TableId and convert(varchar(11),r.TDateTime,120) >='{DateTime.Now.ToString("yyyy-MM-dd")}' where t.LocationId ={LocationId} order by TableName ASC, r.TDateTime ASC"));
         }
                 
         

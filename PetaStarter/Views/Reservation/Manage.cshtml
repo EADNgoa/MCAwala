@@ -10,7 +10,12 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+    <div class="alert alert-info alert-dismissable">
+        <strong>Things To be Given:</strong><ul><li>Welcome Drink</li><li>Cold Towel</li></ul>
+    </div>
+    <div class="alert alert-info alert-dismissable">
+        <strong>Printed Info:</strong><ul><li>Break Fast</li><li>Pool Timing</li><li>Events</li><li>Others.</li></ul>
+    </div>
     <div class="form-horizontal">
         <h4>Reservation</h4>
         <hr />
