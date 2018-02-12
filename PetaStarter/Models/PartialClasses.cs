@@ -119,6 +119,7 @@ namespace Cavala
     {
         public int TableReservationId { get; set; }
         public int TableId { get; set; }
+        public int NoOfPax { get; set; }
         public string TableName { get; set; }
         public DateTime? ResTime { get; set; }
         public string PersonName { get; set; }
