@@ -492,6 +492,7 @@ namespace Cavala
 		[Column] public DateTime? CheckIn { get; set; }
 		[Column] public DateTime? CheckOut { get; set; }
 		[Column] public string RoomNo { get; set; }
+		[Column] public string CformNo { get; set; }
 		[Column] public string GuestComment { get; set; }
 		[Column] public string CavalaReply { get; set; }
 	}

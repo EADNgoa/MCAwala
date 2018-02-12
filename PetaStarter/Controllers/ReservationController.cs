@@ -42,9 +42,10 @@ namespace Cavala.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [EAAuthorize(FunctionName = "Reservation", Writable = true)]
-        public ActionResult Manage([Bind(Include = "ReservationID,RDate,ReservationSourceID,Rstart,NoOfDays,CheckIn,CheckOut,RoomNo,GuestComment,CavalaReply")] Reservation reservation)
+        public ActionResult Manage([Bind(Include = "ReservationID,RDate,ReservationSourceID,Rstart,NoOfDays,CheckIn,CheckOut,RoomNo,CformNo,GuestComment,CavalaReply")] Reservation reservation)
         {
-            reservation.RDate = DateTime.Now;
+            if(reservation.ReservationID==0) reservation.RDate = DateTime.Now;
+
             return base.BaseSave<Reservation>(reservation, reservation.ReservationID > 0);
         }
 
