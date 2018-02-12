@@ -33,6 +33,7 @@ namespace Cavala.Controllers
                     DriverID=rec.DriverID,
                     DriverName=rec.DriverName,
                     Mobile=rec.Mobile,
+                    IdPicture=rec.IdPicture
                 };
                 return View(ci);
             }

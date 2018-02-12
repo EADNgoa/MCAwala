@@ -103,12 +103,11 @@
     <Build Include="dbo\Tables\Drivers.sql" />
     <Build Include="dbo\Tables\CabReservation.sql" />
     <PostDeploy Include="dbo\PostDeployment.sql" />
-
     <Build Include="dbo\Tables\CashierShiftChanges.sql" />
     <Build Include="dbo\Tables\SecurityGuard.sql" />
-
     <Build Include="dbo\Tables\KOT.sql" />
-
+    <Build Include="dbo\Tables\SecurityGuardDetails.sql" />
+    <Build Include="dbo\Tables\Reminders.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CavalaDB.refactorlog" />

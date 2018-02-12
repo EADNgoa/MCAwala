@@ -149,7 +149,17 @@ namespace Cavala
 
         public HttpPostedFileBase UploadedFile { get; set; }
     }
+    public class SecurityDets
+    {
+        public int SecurityGuardDetailID { get; set; }
+        public int SecurityGuardID { get; set; }
+        public string Description { get; set; }
+        public DateTime Tdate { get; set; }
+        public string Path { get; set; }
+    
 
+        public HttpPostedFileBase UploadedFile { get; set; }
+    }
     public class CabReservationDets
     {
         public int CabReservationID { get; set; }

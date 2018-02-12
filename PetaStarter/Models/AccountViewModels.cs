@@ -64,9 +64,11 @@ namespace Cavala.Models
 
     public class RegisterViewModel
     {
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd-mmm-yyyy hh:mm}", ApplyFormatInEditMode = true)]
-        public string BirthDate;
+     
+
+
+
+
 
         [Required]
         [StringLength(30, MinimumLength =4)]

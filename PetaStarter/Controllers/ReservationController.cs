@@ -86,6 +86,7 @@ namespace Cavala.Controllers
             ViewBag.ite = ChargeTypeEnum.Reservation;
             ViewBag.ResDet = db.FirstOrDefault<Reservation>("Select * From Reservation Where ReservationID = @0",id);
             ViewBag.Dets = db.Fetch<ReservationDetail>("Select * from ReservationDetails where ChargeID = @0 and ChargeType = @1",id,(int) ChargeTypeEnum.Reservation);
+            ViewBag.TotRcpts = db.ExecuteScalar<decimal>("Select Sum(Amount) as Amount From Reciept Where ChargeID =@0 and ChargeType = @1 Group By ChargeID,ChargeType",id,ChargeTypeEnum.Reservation);
             return View(base.BaseCreateEdit<ReservationDetail>(Eid, "ReservationDetailID"));
         }
 
