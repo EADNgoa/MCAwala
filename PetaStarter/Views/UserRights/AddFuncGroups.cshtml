@@ -51,11 +51,12 @@
                             @using (Html.BeginForm("ExistingFuncRec", "UserRights", FormMethod.Post, new { id = "Frec", @class = "FunRec" }))
                             {
                                 <div class="form-group">
-                                    <div class=" col-md-3">
+                                    <div class=" col-md-12">
                                         <input type="hidden" id="G" name="G" value="" />
                                         <input type="hidden" id="F" name="F" value="@item.FunctionID" />
+                                        <input type="submit" id="sub" name="sub" value="Read" data-fid="@item.FunctionID" class="btn btn-default  " />
 
-                                        <input type="submit" value="Add" data-fid="@item.FunctionID" class="btn btn-default  " />
+                                        <input type="submit" id="sub" name="sub" value="Write" data-fid="@item.FunctionID" class="btn btn-default  " />
                                     </div>
                                 </div>
                             }
@@ -99,12 +100,12 @@
         $('.FunRec').submit(function (e) {
             e.preventDefault();
             var gp = $('#GroupID').val();
-
+            var sb = $('#sub').val();
             $('#ExistingFunc').html("");
             var $form = $(this),
                 url = $form.attr('action');
 
-            var posting = $.post(url, { G: gp, F: $form["0"][1].value });
+            var posting = $.post(url, { G: gp, F: $form["0"][1].value,sub:sb });
             posting.done(function (data) { $('#ExistingFunc').load("/UserRights/ExistingFuncRec?GID=" + gp); });
 
         });

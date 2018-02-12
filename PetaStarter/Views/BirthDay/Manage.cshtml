@@ -12,20 +12,10 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Units and Portions</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @if (Model?.Id.Length > 0)
-        {
-            @Html.HiddenFor(model => model.Id)
-        }
-        <div class="form-group">
-            @Html.LabelFor(model => model.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Id, null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    
+           @Html.Hidden("Id",(string)ViewBag.Id)        
         <div class="form-group">
             @Html.LabelFor(model => model.BirthDate, "Birth Date", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
