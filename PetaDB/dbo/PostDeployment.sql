@@ -27,6 +27,8 @@ BEGIN
 	INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (22, N'KOT', N'Kitchen')
 INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (23, N'Security', N'Masters')
 INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (24, N'Cashier', N'Cashier')
+INSERT INTO [dbo].[UserFunctions] ([FunctionID], [FunctionName], [Module]) VALUES (25, N'Birthday', N'Birthday')
+
 
 
 	SET IDENTITY_INSERT [dbo].[UserFunctions] OFF
