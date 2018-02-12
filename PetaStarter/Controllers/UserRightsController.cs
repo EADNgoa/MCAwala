@@ -62,12 +62,12 @@ namespace Cavala.Controllers
         public ActionResult AddFuncGroups(int? page)
         {
             ViewBag.GroupID = db.Fetch<Group>("Select GroupID,GroupName from Groups");
-            ViewBag.Func = db.Fetch<Cavala.Models.ExistingFuncViewModel>("Select FunctionID,FunctionName,Module from UserFunctions");
+            ViewBag.Func = db.Fetch<Cavala.Models.ExistingFuncViewModel>("Select FunctionID,FunctionName,Module from UserFunctions ORDER BY Module,FunctionName ASC");
             return View();
                     
         }
         [EAAuthorize(FunctionName = "User Rights", Writable = true)]
-        public ActionResult ExistingFuncRec(int? GID, FormCollection fm)
+        public ActionResult ExistingFuncRec(int? GID, FormCollection fm,string sub)
         {
             try
             {
@@ -75,7 +75,15 @@ namespace Cavala.Controllers
                 {
                     int fid = int.Parse(fm["F"]);
                     int gid = int.Parse(fm["G"]);
-                    var item = new FunctionGroup() { FunctionID = fid, GroupID = (int)gid, Writable = true };
+                    var item = new FunctionGroup() { FunctionID = fid, GroupID = (int)gid};
+                    if(sub == "Read")
+                    {
+                        item.Writable = false;
+                    }
+                    else if (sub == "Write")
+                    {
+                        item.Writable = true;
+                    }
                     db.Insert(item);
                     GID = gid;
                 }

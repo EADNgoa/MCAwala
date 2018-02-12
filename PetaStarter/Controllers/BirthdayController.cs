@@ -9,11 +9,12 @@ namespace Cavala.Controllers
     public class BirthdayController : EAController
     {
         // GET: Clients
-        [EAAuthorize(FunctionName ="Units",Writable =false)]
+        [EAAuthorize(FunctionName ="Birthday",Writable =false)]
         public ActionResult Index(int? page, string PropName)
-        {
+        { 
             if (PropName?.Length > 0) page = 1;
            var res= db.Fetch<AspNetUser>("Select UserName, BirthDate From AspNetUsers where MONTH(BirthDate) = MONTH(GetDate())");
+           ViewBag.Users = db.Fetch<AspNetUser>("Select Id, UserName, BirthDate From AspNetUsers");
 
             return View(res);
         }
@@ -21,12 +22,12 @@ namespace Cavala.Controllers
 
 
         // GET: Clients/Create
-        [EAAuthorize(FunctionName = "Units", Writable = true)]
-        public ActionResult Manage(int? id)
+        [EAAuthorize(FunctionName = "Birthday", Writable = true)]
+        public ActionResult Manage(string id)
         {
-            ViewBag.Id = new SelectList(db.Fetch<AspNetUser>("Select Id,UserName from AspNetUsers"), "Id", "UserName");
+            ViewBag.Id = id;
 
-            return View(base.BaseCreateEdit<AspNetUser>(id, "Id"));
+            return View();
         }
 
         // POST: Customer/Create
@@ -34,7 +35,7 @@ namespace Cavala.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [EAAuthorize(FunctionName = "Units", Writable = true)]
+        [EAAuthorize(FunctionName = "Birthday", Writable = true)]
         public ActionResult Manage(DateTime? BirthDate,string Id)
         {
             string dt = BirthDate.Value.ToString("yyyy-MM-dd");

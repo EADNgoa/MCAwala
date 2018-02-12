@@ -18,6 +18,9 @@
                         Function Name
                     </th>
                     <th>
+                        Read/Write
+                    </th>
+                    <th>
 
                     </th>
                 </tr>
@@ -32,6 +35,9 @@
                         </td>
                         <td>
                             @item.FunctionName
+                        </td>
+                        <td>
+                            @item.Writable
                         </td>
                         <td>
                             @using (Html.BeginForm("DelFuncRec", "UserRights", FormMethod.Post, new { id = "Delrec", @class="drc"}))

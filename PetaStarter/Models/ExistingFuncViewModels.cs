@@ -20,6 +20,7 @@ namespace Cavala.Models
         public int FunctionID { get; set; }
         public string FunctionName { get; set; }
         public string Module { get; set; }
+        public bool Writable { get; set; }
 
         public int GroupID { get; set; }
         public string GroupName { get; set; }

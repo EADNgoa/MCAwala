@@ -21,8 +21,7 @@
        <th>
            Birth Date
        </th>
-        
-        <th></th>
+
     </tr>
 
 @foreach (var item in Model) {
@@ -33,12 +32,39 @@
         <td>
             @Html.DisplayFor(modelItem => item.BirthDate)
         </td>
-        
-
-        <td>
-            @Html.ActionLink("Edit", "Manage", new { id = item.Id})
-        </td>
     </tr>
 }
+
+</table>
+<center><h2>List Of Users</h2>
+</center>
+<table class="table">
+    <tr>
+        <th>
+            User Name
+        </th>
+        <th>
+            Birth Date
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item2 in ViewBag.Users)
+    {
+        <tr>
+            <td>
+                @item2.UserName
+            </td>
+            <td>
+               @item2.BirthDate.ToString("dd-MM-yyyy")
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Edit", "Manage", new { id = item2.Id })
+            </td>
+        </tr>
+    }
 
 </table>
