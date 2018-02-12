@@ -201,6 +201,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AutoEmailController.cs" />
     <Compile Include="Controllers\RoomCostController.cs" />
     <Compile Include="Controllers\SecurityGuardController.cs" />
     <Compile Include="Controllers\CashierController.cs" />
@@ -512,11 +513,15 @@
     <Content Include="Views\Restaurant\ShowKOT.cshtml" />
     <Content Include="Views\RoomCost\Index.cshtml" />
     <Content Include="Views\RoomCost\Manage.cshtml" />
+
+    <Content Include="Views\AutoEmail\Manage.cshtml" />
+
     <Content Include="Views\BirthDay\Index.cshtml" />
     <Content Include="Views\BirthDay\Manage.cshtml" />
     <Content Include="Views\SecurityGuard\LodgeComplain.cshtml" />
     <Content Include="Views\Reminder\Index.cshtml" />
     <Content Include="Views\Reminder\Manage.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
